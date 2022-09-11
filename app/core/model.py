@@ -16,7 +16,7 @@ convention = {
 }
 
 
-class Base(DeclarativeBase):  # type: ignore
+class Base(DeclarativeBase):
     """Base for all SQLAlchemy declarative models.
 
     Attributes
@@ -27,12 +27,10 @@ class Base(DeclarativeBase):  # type: ignore
         Date/time of last instance update.
     """
 
-    __name__: str
-
     table_name_pattern = re.compile(r"(?<!^)(?=[A-Z])")
 
     # noinspection PyMethodParameters
-    @declared_attr  # type: ignore[misc]
+    @declared_attr.directive
     def __tablename__(cls) -> str:  # pylint: disable=no-self-argument
         return re.sub(cls.table_name_pattern, "_", cls.__name__).lower()
 

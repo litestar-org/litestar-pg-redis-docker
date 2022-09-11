@@ -112,7 +112,7 @@ class Repository(Generic[T_model]):
         ...
 
     @overload
-    async def execute(self, statement: "Executable", **kwargs: Any) -> "Result[Any]":  # type: ignore
+    async def execute(self, statement: "Executable", **kwargs: Any) -> "Result[Any]":
         ...
 
     async def execute(self, statement: "Executable", **kwargs: Any) -> "Result[Any]":

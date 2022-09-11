@@ -92,4 +92,10 @@ repos:
       - id: mypy
         exclude: "alembic/versions"
         additional_dependencies:
-          ["starlite", "asyncpg", "types-redis", "types-requests"]
+          [
+            "starlite",
+            "git+https://github.com/sqlalchemy/sqlalchemy",
+            "asyncpg",
+            "types-redis",
+            "types-requests",
+          ]
