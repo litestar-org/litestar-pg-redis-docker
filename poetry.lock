@@ -716,7 +716,7 @@ sqlcipher = ["sqlcipher3_binary"]
 type = "git"
 url = "https://github.com/sqlalchemy/sqlalchemy.git"
 reference = "main"
-resolved_reference = "befa8e92675dea992423011b929dfc7ca45de6b6"
+resolved_reference = "d5905ccd7df000143194975f8f3d72fcef0672e3"
 
 [[package]]
 name = "starlette"
@@ -789,7 +789,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "types-redis"
-version = "4.3.21"
+version = "4.3.21.1"
 description = "Typing stubs for redis"
 category = "dev"
 optional = false
@@ -1657,8 +1657,8 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 types-redis = [
-    {file = "types-redis-4.3.21.tar.gz", hash = "sha256:fd017a6733af193d14f1bb29b4ff79c0abc906e8654158d17aba457a6381afe2"},
-    {file = "types_redis-4.3.21-py3-none-any.whl", hash = "sha256:cca7e17e3efb5dfdc7c9841bd5963fdd717ab68c4d2d8c6f49a9175fe2f29ce4"},
+    {file = "types-redis-4.3.21.1.tar.gz", hash = "sha256:493814829643fc04a14595eda6ccd69bdc0606477541ccda54238ce3f60bc993"},
+    {file = "types_redis-4.3.21.1-py3-none-any.whl", hash = "sha256:65b8c842f406932218f8ce636f75e5a03cb6b382d3922cb3e5f87e127e6d434d"},
 ]
 types-requests = [
     {file = "types-requests-2.28.11.tar.gz", hash = "sha256:7ee827eb8ce611b02b5117cfec5da6455365b6a575f5e3ff19f655ba603e6b4e"},
