@@ -716,7 +716,7 @@ sqlcipher = ["sqlcipher3_binary"]
 type = "git"
 url = "https://github.com/sqlalchemy/sqlalchemy.git"
 reference = "main"
-resolved_reference = "befa8e92675dea992423011b929dfc7ca45de6b6"
+resolved_reference = "d5905ccd7df000143194975f8f3d72fcef0672e3"
 
 [[package]]
 name = "starlette"
@@ -734,7 +734,7 @@ full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart", "pyyam
 
 [[package]]
 name = "starlite"
-version = "1.23.1"
+version = "1.24.0"
 description = "Light-weight and flexible ASGI API Framework"
 category = "main"
 optional = false
@@ -1641,8 +1641,8 @@ starlette = [
     {file = "starlette-0.21.0.tar.gz", hash = "sha256:b1b52305ee8f7cfc48cde383496f7c11ab897cd7112b33d998b1317dc8ef9027"},
 ]
 starlite = [
-    {file = "starlite-1.23.1-py3-none-any.whl", hash = "sha256:d655a8e01103d0f207fc9018afe0934fdb9d3fc8947eb15dc37176e10d6e4593"},
-    {file = "starlite-1.23.1.tar.gz", hash = "sha256:e5e505be7d17b58999cb74c77837b44b205aad84b9e6eaa1e9dcff44ab665e63"},
+    {file = "starlite-1.24.0-py3-none-any.whl", hash = "sha256:89772727bf0fb4b2ef4dee89e759ed34f9843eb5e2d85831c7bdbcf6660c5505"},
+    {file = "starlite-1.24.0.tar.gz", hash = "sha256:eaf624832ead68e87f884ec1770e7e58462ae620a276838dff5e5bf434ea4e31"},
 ]
 starlite-multipart = [
     {file = "starlite-multipart-1.1.0.tar.gz", hash = "sha256:bd5b25a614fadc237fe4da60f0c43c5e7d045a523d4e3685237047e1e228da87"},
