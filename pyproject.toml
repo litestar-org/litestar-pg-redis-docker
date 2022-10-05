@@ -13,11 +13,13 @@ asyncpg = "*"
 httpx = "*"
 pydantic = "*"
 redis = "*"
+saq = "*"
 sentry-sdk = "*"
 sqlalchemy = { git = "https://github.com/sqlalchemy/sqlalchemy.git", branch = "main" }
 starlite = "*"
 uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
+starlite-jwt = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "*"
@@ -25,7 +27,7 @@ pytest = "*"
 pytest-asyncio = "*"
 pytest-cov = "*"
 pytest-dotenv = "*"
-starlite = { extras = ["full"], version = "*" }
+starlite = { extras = ["testing"], version = "*" }
 types-redis = "*"
 types-requests = "*"
 
@@ -59,15 +61,16 @@ env_files = [".env.example"]
 
 [tool.pylint.MESSAGE_CONTROL]
 disable = [
-    "line-too-long",
+    "cyclic-import",
+    "duplicate-code",
     "invalid-name",
+    "line-too-long",
     "missing-class-docstring",
     "missing-module-docstring",
     "too-few-public-methods",
-    "duplicate-code",
 ]
 enable = "useless-suppression"
-extension-pkg-allow-list = ["pydantic","asyncpg.pgproto.pgproto"]
+extension-pkg-allow-list = ["pydantic", "asyncpg.pgproto.pgproto", "orjson"]
 
 [tool.pylint.VARIABLES]
 ignored-argument-names = "args|kwargs|_|__"

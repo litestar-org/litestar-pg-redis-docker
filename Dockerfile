@@ -1,7 +1,7 @@
 FROM python:3.10-slim AS base
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends curl git build-essential \
+    && apt-get install -y --no-install-recommends curl git build-essential python3-setuptools \
     && apt-get autoremove -y
 ENV POETRY_HOME="/opt/poetry"
 RUN curl -sSL https://install.python-poetry.org | python3 -
