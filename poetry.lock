@@ -569,6 +569,22 @@ pytest = ">=4.6"
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
 
 [[package]]
+name = "pytest-docker"
+version = "1.0.1"
+description = "Simple pytest fixtures for Docker and docker-compose based tests"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+attrs = ">=19.2.0"
+pytest = ">=4.0,<8.0"
+
+[package.extras]
+docker-compose-v1 = ["docker-compose (>=1.27.3,<2.0)"]
+tests = ["pytest-pycodestyle (>=2.0.0,<3.0)", "pytest-pylint (>=0.14.1,<1.0)", "requests (>=2.22.0,<3.0)"]
+
+[[package]]
 name = "pytest-dotenv"
 version = "0.5.2"
 description = "A py.test plugin that parses environment files before running tests"
@@ -788,7 +804,7 @@ sqlcipher = ["sqlcipher3_binary"]
 type = "git"
 url = "https://github.com/sqlalchemy/sqlalchemy.git"
 reference = "main"
-resolved_reference = "b6eed88ef4ebb3fd7035b4e366bf6653ebb26d15"
+resolved_reference = "3ab59694dbe04bf967e9af18d1ae49e1c5ea44ed"
 
 [[package]]
 name = "starlette"
@@ -1008,7 +1024,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "912861362d64975aeb370d4906ba2ce458d1f52cfb843e17a071c3f074e34f74"
+content-hash = "96f3d8b7cdbd5cf2cc51c87a2314c0beab95e0c895ba70fb1721b301ffc80634"
 
 [metadata.files]
 alembic = [
@@ -1587,6 +1603,10 @@ pytest-asyncio = [
 pytest-cov = [
     {file = "pytest-cov-4.0.0.tar.gz", hash = "sha256:996b79efde6433cdbd0088872dbc5fb3ed7fe1578b68cdbba634f14bb8dd0470"},
     {file = "pytest_cov-4.0.0-py3-none-any.whl", hash = "sha256:2feb1b751d66a8bd934e5edfa2e961d11309dc37b73b0eabe73b5945fee20f6b"},
+]
+pytest-docker = [
+    {file = "pytest-docker-1.0.1.tar.gz", hash = "sha256:f6e8a1e660e2ba63a5bd28703cbb13636e0febd4623dafe047afa8254fb9db8f"},
+    {file = "pytest_docker-1.0.1-py3-none-any.whl", hash = "sha256:5dd39b10747f166d04946ba5b2bfb64e105b692679ca7191de9869d8f8f0640b"},
 ]
 pytest-dotenv = [
     {file = "pytest-dotenv-0.5.2.tar.gz", hash = "sha256:2dc6c3ac6d8764c71c6d2804e902d0ff810fa19692e95fe138aefc9b1aa73732"},

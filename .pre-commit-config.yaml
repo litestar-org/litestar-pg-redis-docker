@@ -39,7 +39,6 @@ repos:
     rev: 1.7.4
     hooks:
       - id: bandit
-        exclude: "test_*"
         args: ["-iii", "-ll", "-s=B308,B703"]
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.32.2
@@ -74,7 +73,7 @@ repos:
     rev: "v2.15.3"
     hooks:
       - id: pylint
-        exclude: "^(alembic|tests).*$"
+        exclude: "^(alembic).*$"
         args: ["--unsafe-load-any-extension=y"]
         additional_dependencies:
           [
@@ -87,6 +86,8 @@ repos:
             "starlite",
             "starlite_jwt",
             "uvicorn",
+            "pytest",
+            "pytest_docker",
           ]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v0.982"

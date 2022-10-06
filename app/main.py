@@ -15,7 +15,7 @@ from app.lib import (
     response,
     sentry,
     settings,
-    sqlalchemy,
+    sqlalchemy_plugin,
     static_files,
 )
 from app.lib.auth import jwt_auth
@@ -49,7 +49,7 @@ app = Starlite(
     response_class=response.Response,
     route_handlers=[health_check, user_controllers.router, router],
     middleware=[jwt_auth.middleware],
-    plugins=[SQLAlchemyPlugin(config=sqlalchemy.config)],
+    plugins=[SQLAlchemyPlugin(config=sqlalchemy_plugin.config)],
     on_shutdown=[worker_instance.stop, redis.close],
     on_startup=[sentry.configure, worker_on_app_startup],
     static_files_config=static_files.config,

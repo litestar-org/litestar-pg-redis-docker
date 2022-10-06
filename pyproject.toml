@@ -21,11 +21,12 @@ uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
 starlite-jwt = "^1.4.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pre-commit = "*"
 pytest = "*"
 pytest-asyncio = "*"
 pytest-cov = "*"
+pytest-docker = "*"
 pytest-dotenv = "*"
 starlite = { extras = ["testing"], version = "*" }
 types-redis = "*"

@@ -1,15 +1,12 @@
 import logging
 from collections import abc
 from functools import partial
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import orjson
 import saq
 
 from .redis import redis
-
-if TYPE_CHECKING:
-    from sqlalchemy.ext.asyncio import AsyncSession  # noqa:F401
 
 __all__ = [
     "Queue",
