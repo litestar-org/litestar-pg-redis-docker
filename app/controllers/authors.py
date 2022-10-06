@@ -1,6 +1,7 @@
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.status import HTTP_200_OK
 from starlite import Provide, Router, delete, get, post, put
 
 from app.domain.authors import Author, Repository
@@ -41,7 +42,7 @@ async def update_author(data: Author, service: Service, author_id: UUID) -> Auth
     return await service.update(author_id, data)
 
 
-@delete(DETAIL_ROUTE, status_code=200)
+@delete(DETAIL_ROUTE, status_code=HTTP_200_OK)
 async def delete_author(service: Service, author_id: UUID) -> Author:
     """Delete Author by ID."""
     return await service.delete(author_id)
