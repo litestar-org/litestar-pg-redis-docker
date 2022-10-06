@@ -19,7 +19,7 @@ def provides_service(db_session: AsyncSession, user: User) -> Service:
 
 @get()
 async def get_authors(service: Service) -> list[Author]:
-    """Get list of authors."""
+    """Get a list of authors."""
     return await service.list()
 
 
