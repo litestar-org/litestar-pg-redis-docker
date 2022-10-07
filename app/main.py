@@ -1,6 +1,6 @@
 import asyncio
 
-import uvicorn
+import uvicorn  # type:ignore[import]
 from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 from starlite import Provide, Starlite
 from starlite.plugins.sql_alchemy import SQLAlchemyPlugin
@@ -18,11 +18,9 @@ from app.lib import (
     sqlalchemy_plugin,
     static_files,
 )
-from app.lib.auth import jwt_auth
 from app.lib.dependencies import create_collection_dependencies, provide_user
 from app.lib.health import health_check
 from app.lib.redis import redis
-from app.lib.users import controllers as user_controllers
 from app.lib.worker import Worker, queue
 
 from .controllers import router
@@ -47,8 +45,7 @@ app = Starlite(
     logging_config=logging.config,
     openapi_config=openapi.config,
     response_class=response.Response,
-    route_handlers=[health_check, user_controllers.router, router],
-    middleware=[jwt_auth.middleware],
+    route_handlers=[health_check, router],
     plugins=[SQLAlchemyPlugin(config=sqlalchemy_plugin.config)],
     on_shutdown=[worker_instance.stop, redis.close],
     on_startup=[sentry.configure, worker_on_app_startup],

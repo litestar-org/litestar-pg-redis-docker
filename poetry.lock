@@ -393,17 +393,6 @@ python-versions = ">=3.6"
 pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
 
 [[package]]
-name = "picologging"
-version = "0.8.1"
-description = "A fast and lightweight logging library for Python"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-dev = ["black", "pytest", "pytest-cov", "rich"]
-
-[[package]]
 name = "platformdirs"
 version = "2.5.2"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
@@ -484,7 +473,7 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pydantic-factories"
-version = "1.7.1"
+version = "1.8.1"
 description = "Mock data generation for pydantic based models"
 category = "main"
 optional = false
@@ -567,22 +556,6 @@ pytest = ">=4.6"
 
 [package.extras]
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
-
-[[package]]
-name = "pytest-docker"
-version = "1.0.1"
-description = "Simple pytest fixtures for Docker and docker-compose based tests"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-attrs = ">=19.2.0"
-pytest = ">=4.0,<8.0"
-
-[package.extras]
-docker-compose-v1 = ["docker-compose (>=1.27.3,<2.0)"]
-tests = ["pytest-pycodestyle (>=2.0.0,<3.0)", "pytest-pylint (>=0.14.1,<1.0)", "requests (>=2.22.0,<3.0)"]
 
 [[package]]
 name = "pytest-dotenv"
@@ -804,7 +777,7 @@ sqlcipher = ["sqlcipher3_binary"]
 type = "git"
 url = "https://github.com/sqlalchemy/sqlalchemy.git"
 reference = "main"
-resolved_reference = "3ab59694dbe04bf967e9af18d1ae49e1c5ea44ed"
+resolved_reference = "6bf32f56e28d14f6ba15517dea34a87d37bbe644"
 
 [[package]]
 name = "starlette"
@@ -822,16 +795,17 @@ full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart", "pyyam
 
 [[package]]
 name = "starlite"
-version = "1.24.0"
+version = "1.25.0"
 description = "Light-weight and flexible ASGI API Framework"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
+develop = false
 
 [package.dependencies]
-httpx = {version = ">=0.22", optional = true, markers = "extra == \"testing\" or extra == \"full\""}
+cryptography = {version = "*", optional = true}
+httpx = {version = ">=0.22", optional = true}
 orjson = "*"
-picologging = "*"
 pydantic = "*"
 pydantic-factories = "*"
 pydantic-openapi-schema = "*"
@@ -843,8 +817,16 @@ typing-extensions = "*"
 [package.extras]
 brotli = ["brotli"]
 cryptography = ["cryptography"]
-full = ["brotli", "cryptography", "httpx (>=0.22)"]
-testing = ["httpx (>=0.22)"]
+full = ["brotli", "cryptography", "httpx (>=0.22)", "picologging", "structlog"]
+picologging = ["picologging"]
+structlog = ["structlog"]
+testing = ["cryptography", "httpx (>=0.22)"]
+
+[package.source]
+type = "git"
+url = "https://github.com/starlite-api/starlite.git"
+reference = "main"
+resolved_reference = "e3a1a3687044d74e64794541ba9f44a58d15cbe0"
 
 [[package]]
 name = "starlite-jwt"
@@ -895,27 +877,8 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "types-requests"
-version = "2.28.11.1"
-description = "Typing stubs for requests"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-types-urllib3 = "<1.27"
-
-[[package]]
-name = "types-urllib3"
-version = "1.26.25"
-description = "Typing stubs for urllib3"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "typing-extensions"
-version = "4.3.0"
+version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
@@ -1024,7 +987,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "96f3d8b7cdbd5cf2cc51c87a2314c0beab95e0c895ba70fb1721b301ffc80634"
+content-hash = "94e359db9b188d896da8256fea9f555aec9223cacfd93a37f7ad410b4d5b478f"
 
 [metadata.files]
 alembic = [
@@ -1486,38 +1449,6 @@ packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
     {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
 ]
-picologging = [
-    {file = "picologging-0.8.1-cp310-cp310-macosx_10_15_universal2.whl", hash = "sha256:262afe4b6189a2c84db8a0b43255ea44288b3a86caa1f2c997fd79b899882c9d"},
-    {file = "picologging-0.8.1-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:d6f7e80c7036b0d101c61c963089127fe777147d191dcbb6554d17532137fdc0"},
-    {file = "picologging-0.8.1-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:8ad5edd2f74432c5520b22dcf3dd18f5c99c6319452d326c3e4c2d2a9e77431a"},
-    {file = "picologging-0.8.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c6fd92dd034e19fd9f34af5442a4c3d56876427c8efaeb70bbe1fd60e5e45fbf"},
-    {file = "picologging-0.8.1-cp310-cp310-win32.whl", hash = "sha256:c17351e6fe9bbd1c646105a88e2b54529c85f756c369d3bb030e07dac2ca31ce"},
-    {file = "picologging-0.8.1-cp310-cp310-win_amd64.whl", hash = "sha256:b7e12162ec7c62bac42c2cfafaee73d787ee3006d37425431bc85eae18324c92"},
-    {file = "picologging-0.8.1-cp311-cp311-macosx_10_15_universal2.whl", hash = "sha256:f76ab45250ea48a5bd8c8f78dc60b6268deca643f3e4d0880a161f96c39b4901"},
-    {file = "picologging-0.8.1-cp311-cp311-macosx_10_15_x86_64.whl", hash = "sha256:aa4278eb5dedc6e34004dd8bf1dec30fac36c89c5730ae46b024a0c6b73792df"},
-    {file = "picologging-0.8.1-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:9470c0ed2c5cb1bb46ed3c25b678ff92c3c7a3072c61451879d85442cdb30e26"},
-    {file = "picologging-0.8.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:625626f283c9c5c17baeb32c1722a048d630cce43cbb064baa16ec192b1a485e"},
-    {file = "picologging-0.8.1-cp311-cp311-win32.whl", hash = "sha256:07ebb45bcc9e4cf59abf902faf408ccab5217eb6e6c0f270bbc055481f9590de"},
-    {file = "picologging-0.8.1-cp311-cp311-win_amd64.whl", hash = "sha256:05b267a0979b4b6fa21ad33a8e9194b72808653fb4785c6682ec9fa958ab9c02"},
-    {file = "picologging-0.8.1-cp37-cp37m-macosx_10_15_x86_64.whl", hash = "sha256:307b5e3a8740e1bfe2872448ca0b0410a159bfba8ddeb46a30d97469801d4703"},
-    {file = "picologging-0.8.1-cp37-cp37m-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d4e48cde8e4302a13fe64869dcbd158a70d49c22f812f19e9e34aaddc4fbf4fa"},
-    {file = "picologging-0.8.1-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:281f4bff6ec169fe21faa63576b80219471822541fb8e6072f03e231c97c8489"},
-    {file = "picologging-0.8.1-cp37-cp37m-win32.whl", hash = "sha256:392e5823d38531cf6c516ddaaf2d7ffee8640ae5783039401899352048a90a41"},
-    {file = "picologging-0.8.1-cp37-cp37m-win_amd64.whl", hash = "sha256:3b7c3084cbb56a33d20b32ad1f4b7eb1f7bc07f4a737b98c2f374c635a11f0b6"},
-    {file = "picologging-0.8.1-cp38-cp38-macosx_10_15_universal2.whl", hash = "sha256:a99f94e5ef0e05123a9dfd56979fcb0ef87ef307e5d6955781a7d5af3aae332d"},
-    {file = "picologging-0.8.1-cp38-cp38-macosx_10_15_x86_64.whl", hash = "sha256:2ea4226d1dad2ad1a7206b23e1969a9593fe47fbd8e3e74c76d59ebe58c2679e"},
-    {file = "picologging-0.8.1-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:f20a93feedaa4617258215444946a3f7ea768465536eeea2172b4754b4d08bb1"},
-    {file = "picologging-0.8.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8b25d97b9d94e78f181319f39f25b34f4907ab420df9f8efafae8432e174c576"},
-    {file = "picologging-0.8.1-cp38-cp38-win32.whl", hash = "sha256:04f6cd30441300798b3d20353acba554c51488097b523ff1dff33c689c3e5dde"},
-    {file = "picologging-0.8.1-cp38-cp38-win_amd64.whl", hash = "sha256:ea507fd1f7c71e9da9484ab234ea4613979abf994c59602d64640fced81d994f"},
-    {file = "picologging-0.8.1-cp39-cp39-macosx_10_15_universal2.whl", hash = "sha256:1c5993c9d219f9c4c6bf8ab9091db4e15d6dfb484cdada7d939ea7902a7b0575"},
-    {file = "picologging-0.8.1-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:41ff34882e1358a8d6606701394cfceca8b810ce5b289d37229219cacde8bd29"},
-    {file = "picologging-0.8.1-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:bf77b97df9f3a2b754f5237ea96c92fa6b4f703c881f9ffad275b7832b4aa7ac"},
-    {file = "picologging-0.8.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:74933bf930b60904ef66b7b4b695952ca86442c023dcf9917ea63a124de22fa2"},
-    {file = "picologging-0.8.1-cp39-cp39-win32.whl", hash = "sha256:0662cee1a580cbc92c709a703e8be09642c04b1ccd06e22a70af206f571f51c3"},
-    {file = "picologging-0.8.1-cp39-cp39-win_amd64.whl", hash = "sha256:176f2b87e3638b100cde401de64e4886293f3cc2937af805d0b15669561baedb"},
-    {file = "picologging-0.8.1.tar.gz", hash = "sha256:c0e263937a7fad3d3ec91c2311356f7ff699f605e960fac3eae409ff5b2f330a"},
-]
 platformdirs = [
     {file = "platformdirs-2.5.2-py3-none-any.whl", hash = "sha256:027d8e83a2d7de06bbac4e5ef7e023c02b863d7ea5d079477e722bb41ab25788"},
     {file = "platformdirs-2.5.2.tar.gz", hash = "sha256:58c8abb07dcb441e6ee4b11d8df0ac856038f944ab98b7be6b27b2a3c7feef19"},
@@ -1581,8 +1512,8 @@ pydantic = [
     {file = "pydantic-1.10.2.tar.gz", hash = "sha256:91b8e218852ef6007c2b98cd861601c6a09f1aa32bbbb74fab5b1c33d4a1e410"},
 ]
 pydantic-factories = [
-    {file = "pydantic-factories-1.7.1.tar.gz", hash = "sha256:d0df91b2c3acb701209f3652731b98568e7b6b747985c86e868e8682d199810e"},
-    {file = "pydantic_factories-1.7.1-py3-none-any.whl", hash = "sha256:baa1ee39fea7992909910b0b528d904fed9f0ed38955c75690e0c94e5ef4c4ed"},
+    {file = "pydantic-factories-1.8.1.tar.gz", hash = "sha256:42d15a812d317799bd81dffb1ae92bfb4d30b7a9099bcd4aa5af476210ec790c"},
+    {file = "pydantic_factories-1.8.1-py3-none-any.whl", hash = "sha256:c26aab6e9a72d1c143199e697262a3989e2d751ed6e7f2d6c1c0c379a0b3c93b"},
 ]
 pydantic-openapi-schema = [
     {file = "pydantic-openapi-schema-1.3.0.tar.gz", hash = "sha256:2aed6913080f1dae94234e00d0905504c6aab65ab6afe246ed7aa98da989f69e"},
@@ -1603,10 +1534,6 @@ pytest-asyncio = [
 pytest-cov = [
     {file = "pytest-cov-4.0.0.tar.gz", hash = "sha256:996b79efde6433cdbd0088872dbc5fb3ed7fe1578b68cdbba634f14bb8dd0470"},
     {file = "pytest_cov-4.0.0-py3-none-any.whl", hash = "sha256:2feb1b751d66a8bd934e5edfa2e961d11309dc37b73b0eabe73b5945fee20f6b"},
-]
-pytest-docker = [
-    {file = "pytest-docker-1.0.1.tar.gz", hash = "sha256:f6e8a1e660e2ba63a5bd28703cbb13636e0febd4623dafe047afa8254fb9db8f"},
-    {file = "pytest_docker-1.0.1-py3-none-any.whl", hash = "sha256:5dd39b10747f166d04946ba5b2bfb64e105b692679ca7191de9869d8f8f0640b"},
 ]
 pytest-dotenv = [
     {file = "pytest-dotenv-0.5.2.tar.gz", hash = "sha256:2dc6c3ac6d8764c71c6d2804e902d0ff810fa19692e95fe138aefc9b1aa73732"},
@@ -1703,10 +1630,7 @@ starlette = [
     {file = "starlette-0.21.0-py3-none-any.whl", hash = "sha256:0efc058261bbcddeca93cad577efd36d0c8a317e44376bcfc0e097a2b3dc24a7"},
     {file = "starlette-0.21.0.tar.gz", hash = "sha256:b1b52305ee8f7cfc48cde383496f7c11ab897cd7112b33d998b1317dc8ef9027"},
 ]
-starlite = [
-    {file = "starlite-1.24.0-py3-none-any.whl", hash = "sha256:89772727bf0fb4b2ef4dee89e759ed34f9843eb5e2d85831c7bdbcf6660c5505"},
-    {file = "starlite-1.24.0.tar.gz", hash = "sha256:eaf624832ead68e87f884ec1770e7e58462ae620a276838dff5e5bf434ea4e31"},
-]
+starlite = []
 starlite-jwt = [
     {file = "starlite-jwt-1.4.0.tar.gz", hash = "sha256:3756c194d98bd19bf1f7d9fa050b8046b0e6338a1d8fc6e075f60b5a30475925"},
     {file = "starlite_jwt-1.4.0-py3-none-any.whl", hash = "sha256:a5d035411935c1030c4e373d4a7eda52920ab00f8a39909841fc6cc5a2f722ff"},
@@ -1727,17 +1651,9 @@ types-redis = [
     {file = "types-redis-4.3.21.1.tar.gz", hash = "sha256:493814829643fc04a14595eda6ccd69bdc0606477541ccda54238ce3f60bc993"},
     {file = "types_redis-4.3.21.1-py3-none-any.whl", hash = "sha256:65b8c842f406932218f8ce636f75e5a03cb6b382d3922cb3e5f87e127e6d434d"},
 ]
-types-requests = [
-    {file = "types-requests-2.28.11.1.tar.gz", hash = "sha256:02b1806c5b9904edcd87fa29236164aea0e6cdc4d93ea020cd615ef65cb43d65"},
-    {file = "types_requests-2.28.11.1-py3-none-any.whl", hash = "sha256:1ff2c1301f6fe58b5d1c66cdf631ca19734cb3b1a4bbadc878d75557d183291a"},
-]
-types-urllib3 = [
-    {file = "types-urllib3-1.26.25.tar.gz", hash = "sha256:5aef0e663724eef924afa8b320b62ffef2c1736c1fa6caecfc9bc6c8ae2c3def"},
-    {file = "types_urllib3-1.26.25-py3-none-any.whl", hash = "sha256:c1d78cef7bd581e162e46c20a57b2e1aa6ebecdcf01fd0713bb90978ff3e3427"},
-]
 typing-extensions = [
-    {file = "typing_extensions-4.3.0-py3-none-any.whl", hash = "sha256:25642c956049920a5aa49edcdd6ab1e06d7e5d467fc00e0506c44ac86fbfca02"},
-    {file = "typing_extensions-4.3.0.tar.gz", hash = "sha256:e6d2677a32f47fc7eb2795db1dd15c1f34eff616bcaf2cfb5e997f854fa1c4a6"},
+    {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
+    {file = "typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.12-py2.py3-none-any.whl", hash = "sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997"},

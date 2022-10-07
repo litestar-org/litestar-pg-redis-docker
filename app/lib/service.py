@@ -1,13 +1,10 @@
-from typing import TYPE_CHECKING, Any, Generic, overload
+from typing import TYPE_CHECKING, Any, Generic
 
-from . import settings
 from .repository.sqlalchemy import T_model
-from .users.types import UserTypes
 
 if TYPE_CHECKING:
     from .repository.abc import AbstractRepository
     from .repository.types import FilterTypes
-    from .users import User
 
 
 class ServiceException(Exception):
@@ -19,33 +16,13 @@ class UnauthorizedException(ServiceException):
 
 
 class Service(Generic[T_model]):
-    def __init__(self, repository: "AbstractRepository[T_model]", user: "User") -> None:
+    def __init__(self, repository: "AbstractRepository[T_model]") -> None:
         """Generic Service object.
 
         Args:
             repository: Instance conforming to `AbstractRepository` interface.
-            user: The user associated with the request.
         """
         self.repository = repository
-        self.user = user
-
-    @overload
-    async def authorize_user(self, data: None) -> None:
-        ...
-
-    @overload
-    async def authorize_user(self, data: T_model) -> T_model:
-        ...
-
-    async def authorize_user(self, data: T_model | None) -> T_model | None:
-        """Subclass to change default user behavior."""
-        if self.user.name == settings.api.DEFAULT_USER_NAME:
-            raise UnauthorizedException("Default user can't do anything by default")
-        if data is not None:
-            del data.id
-            del data.created
-            del data.updated
-        return data
 
     async def authorize_item_id(self, id_: Any, data: T_model) -> None:
         """Check that the identifier `id_` matches the identifier attribute in
@@ -70,7 +47,7 @@ class Service(Generic[T_model]):
         Returns:
             The object with restricted attribute values removed.
         """
-        return await self.authorize_user(data)
+        return data
 
     async def create(self, data: T_model) -> T_model:
         """Wraps repository instance creation.
@@ -86,13 +63,8 @@ class Service(Generic[T_model]):
 
     # noinspection PyMethodMayBeStatic
     async def authorize_list(self) -> None:
-        """Authorize collection access.
-
-        Can use `self.user` here.
-        """
-        await self.authorize_user(data=None)
-        if self.user.type is not UserTypes.admin:
-            raise UnauthorizedException("Only admins can access collection routes by default")
+        """Authorize collection access."""
+        return
 
     async def list(self, *filters: "FilterTypes", **kwargs: Any) -> list[T_model]:
         """Wraps repository scalars operation.
@@ -118,7 +90,7 @@ class Service(Generic[T_model]):
             T_model
         """
         await self.authorize_item_id(id_, data)
-        return await self.authorize_user(data)
+        return data
 
     async def update(self, id_: Any, data: T_model) -> T_model:
         """Wraps repository update operation.
@@ -144,7 +116,7 @@ class Service(Generic[T_model]):
             T_model
         """
         await self.authorize_item_id(id_, data)
-        return await self.authorize_user(data)
+        return data
 
     async def upsert(self, id_: Any, data: T_model) -> T_model:
         """Wraps repository upsert operation.
@@ -166,7 +138,7 @@ class Service(Generic[T_model]):
         Args:
             id_: Identifier of item to be retrieved.
         """
-        return await self.authorize_user(data=None)
+        return
 
     async def get(self, id_: Any) -> T_model:
         """Wraps repository scalar operation.
@@ -186,7 +158,7 @@ class Service(Generic[T_model]):
         Args:
             id_: Identifier of item to be retrieved.
         """
-        return await self.authorize_user(data=None)
+        return
 
     async def delete(self, id_: Any) -> T_model:
         """Wraps repository delete operation.

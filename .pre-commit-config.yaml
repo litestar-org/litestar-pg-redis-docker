@@ -77,29 +77,40 @@ repos:
         args: ["--unsafe-load-any-extension=y"]
         additional_dependencies:
           [
+            "alembic",
             "asyncpg",
+            "asyncpg-stubs",
             "git+https://github.com/sqlalchemy/sqlalchemy",
             "httpx",
-            "redis",
+            "pytest",
+            "pytest-docker",
             "saq",
             "sentry-sdk",
             "starlite",
             "starlite_jwt",
+            "types-redis",
             "uvicorn",
-            "pytest",
-            "pytest_docker",
           ]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v0.982"
     hooks:
       - id: mypy
-        exclude: "alembic/versions"
+        exclude: "alembic"
+        args: ["--show-traceback"]
         additional_dependencies:
           [
+            "alembic",
             "asyncpg",
+            "asyncpg-stubs",
             "git+https://github.com/sqlalchemy/sqlalchemy",
+            "httpx",
+            "pytest",
+            "pytest-docker",
+            "saq",
+            "sentry-sdk",
+            "git+https://github.com/starlite-api/starlite",
             "starlite",
             "starlite_jwt",
-            "saq",
             "types-redis",
+            "uvicorn",
           ]

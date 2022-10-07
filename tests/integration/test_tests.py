@@ -35,7 +35,6 @@ def test_db_session_dependency(engine: "AsyncEngine") -> None:
 
     Args:
         engine: The patched SQLAlchemy engine instance.
-        monkeypatch: _
     """
 
     @get("/db-session-test", opt={"exclude_from_auth": True})
@@ -45,4 +44,21 @@ def test_db_session_dependency(engine: "AsyncEngine") -> None:
     app.register(db_session_dependency_patched)
     with TestClient(app) as client:
         response = client.get("/db-session-test")
+        assert response.json()["result"] == "db_session.bind is engine = True"
+
+
+def test_db_session_dependency_2(engine: "AsyncEngine") -> None:
+    """Test that handlers receive session attached to patched engine.
+
+    Args:
+        engine: The patched SQLAlchemy engine instance.
+    """
+
+    @get("/db-session-test2", opt={"exclude_from_auth": True})
+    async def db_session_dependency_patched(db_session: AsyncSession) -> dict[str, str]:
+        return {"result": f"{db_session.bind is engine = }"}
+
+    app.register(db_session_dependency_patched)
+    with TestClient(app) as client:
+        response = client.get("/db-session-test2")
         assert response.json()["result"] == "db_session.bind is engine = True"

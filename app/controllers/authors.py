@@ -6,16 +6,15 @@ from starlite import Provide, Router, delete, get, post, put
 
 from app.domain.authors import Author, Repository
 from app.lib.service import Service as BaseService
-from app.lib.users import User
 
 Service = BaseService[Author]
 
 DETAIL_ROUTE = "/{author_id:uuid}"
 
 
-def provides_service(db_session: AsyncSession, user: User) -> Service:
+def provides_service(db_session: AsyncSession) -> Service:
     """Constructs repository and service objects for the request."""
-    return Service(Repository(session=db_session), user)
+    return Service(Repository(session=db_session))
 
 
 @get()

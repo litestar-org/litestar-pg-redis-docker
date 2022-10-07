@@ -16,7 +16,8 @@ redis = "*"
 saq = "*"
 sentry-sdk = "*"
 sqlalchemy = { git = "https://github.com/sqlalchemy/sqlalchemy.git", branch = "main" }
-starlite = "*"
+starlite = { git = "https://github.com/starlite-api/starlite.git", branch = "main" }
+# starlite = "*"
 uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
 starlite-jwt = "^1.4.0"
@@ -26,11 +27,10 @@ pre-commit = "*"
 pytest = "*"
 pytest-asyncio = "*"
 pytest-cov = "*"
-pytest-docker = "*"
 pytest-dotenv = "*"
-starlite = { extras = ["testing"], version = "*" }
+# starlite = { extras = ["testing"], version = "*" }
+starlite = { extras = ["testing"], git = "https://github.com/starlite-api/starlite.git", branch = "main" }
 types-redis = "*"
-types-requests = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -56,7 +56,7 @@ exclude_lines = [
 omit = ["tests/*"]
 
 [tool.pytest.ini_options]
-addopts = "--cov=app -v --doctest-modules --doctest-glob=*.md --ignore=alembic"
+addopts = "--cov=app -v --doctest-modules --doctest-glob=*.md --ignore=alembic --ignore=tests/integration"
 asyncio_mode = "auto"
 env_files = [".env.example"]
 

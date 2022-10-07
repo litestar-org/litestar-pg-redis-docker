@@ -8,12 +8,10 @@ from typing import Any
 
 import asyncpg
 import pytest
-from pytest_docker.plugin import Services
+from pytest_docker.plugin import Services  # type:ignore[import]
 from redis.asyncio import Redis
 from redis.exceptions import ConnectionError as RedisConnectionError
-from sqlalchemy import text
 from sqlalchemy.engine import URL
-from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
 
@@ -21,6 +19,16 @@ from app import lib
 from app.main import app, worker_instance
 
 here = Path(__file__).parent
+
+
+@pytest.fixture(scope="session")
+def event_loop() -> abc.Iterator[asyncio.AbstractEventLoop]:
+    """Need the event loop scoped to the session so that we can use it to check
+    containers are ready in session scoped containers fixture."""
+    policy = asyncio.get_event_loop_policy()
+    loop = policy.new_event_loop()
+    yield loop
+    loop.close()
 
 
 @pytest.fixture(scope="session")
@@ -54,57 +62,72 @@ async def wait_until_responsive(
     raise Exception("Timeout reached while waiting on service!")
 
 
-async def redis_responsive(redis: Redis) -> bool:
+async def redis_responsive(host: str) -> bool:
     """
     Args:
-        redis: Redis client instance.
+        host: docker IP address.
 
     Returns:
         Boolean indicating if we can connect to the redis server.
     """
+    client: Redis = Redis(host=host, port=6379)
     try:
-        return await redis.ping()
-    except RedisConnectionError:
+        return await client.ping()
+    except (ConnectionError, RedisConnectionError):
         return False
+    finally:
+        await client.close()
 
 
-@pytest.fixture()
-async def redis(docker_ip: str, docker_services: Services) -> Redis:
-    """Redis instance for end-to-end testing.
-
-    Args:
-        docker_ip: IP address for TCP connection to Docker containers.
-        docker_services: Fixture that starts and stops services.
-
-    Returns:
-        Async redis client instance.
-    """
-    port = docker_services.port_for("redis", 6379)
-    redis: Redis = Redis(host=docker_ip, port=port)
-    await wait_until_responsive(timeout=30.0, pause=0.1, check=redis_responsive, redis=redis)
-    return redis
-
-
-async def db_responsive(engine: AsyncEngine) -> bool:
+async def db_responsive(host: str) -> bool:
     """
     Args:
-        engine: SQLAlchemy async engine instance.
+        host: docker IP address.
 
     Returns:
         Boolean indicating if we can connect to the database.
     """
     try:
-        async with engine.begin() as connection:
-            try:
-                return (await connection.execute(text("SELECT 1"))).scalar() == 1
-            except DBAPIError:
-                return False
+        conn = await asyncpg.connect(
+            host=host, port=5432, user="postgres", database="postgres", password="super-secret"
+        )
     except (ConnectionError, asyncpg.CannotConnectNowError):
         return False
+    else:
+        try:
+            return (await conn.fetchrow("SELECT 1"))[0] == 1  # type:ignore[index,no-any-return]
+        finally:
+            await conn.close()
+
+
+@pytest.fixture(scope="session", autouse=True)
+async def _containers(docker_ip: str, docker_services: Services) -> None:  # pylint: disable=unused-argument
+    """Starts containers for required services, fixture waits until they are
+    responsive before returning.
+
+    Args:
+        docker_ip:
+        docker_services:
+    """
+    await wait_until_responsive(timeout=30.0, pause=0.1, check=db_responsive, host=docker_ip)
+    await wait_until_responsive(timeout=30.0, pause=0.1, check=redis_responsive, host=docker_ip)
 
 
 @pytest.fixture()
-async def engine(docker_ip: str, docker_services: Services) -> AsyncEngine:
+async def redis(docker_ip: str) -> Redis:
+    """
+
+    Args:
+        docker_ip: IP of docker host.
+
+    Returns:
+        Redis client instance, function scoped.
+    """
+    return Redis(host=docker_ip, port=6379)
+
+
+@pytest.fixture()
+async def engine(docker_ip: str) -> AsyncEngine:
     """Postgresql instance for end-to-end testing.
 
     Args:
@@ -114,21 +137,19 @@ async def engine(docker_ip: str, docker_services: Services) -> AsyncEngine:
     Returns:
         Async SQLAlchemy engine instance.
     """
-    port = docker_services.port_for("postgres", 5432)
     engine = create_async_engine(
         URL(
             drivername="postgresql+asyncpg",
             username="postgres",
             password="super-secret",
             host=docker_ip,
-            port=port,
+            port=5432,
             database="postgres",
             query={},  # type:ignore[arg-type]
         ),
         echo=False,
         poolclass=NullPool,
     )
-    await wait_until_responsive(timeout=30.0, pause=0.1, check=db_responsive, engine=engine)
     return engine
 
 

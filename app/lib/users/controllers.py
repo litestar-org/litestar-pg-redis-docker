@@ -38,9 +38,9 @@ async def delete_user(user_id: UUID, service: Service) -> User:
     return await service.delete(user_id)
 
 
-def provides_service(db_session: AsyncSession, user: User) -> Service:
+def provides_service(db_session: AsyncSession) -> Service:
     """Constructs repository and service objects for the request."""
-    return Service(Repository(session=db_session), user)
+    return Service(Repository(session=db_session))
 
 
 router = Router(
