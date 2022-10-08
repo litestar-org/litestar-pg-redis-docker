@@ -4,7 +4,7 @@ from functools import partial
 from typing import Any
 
 import orjson
-import saq
+import saq  # type:ignore[import]
 
 from .redis import redis
 
