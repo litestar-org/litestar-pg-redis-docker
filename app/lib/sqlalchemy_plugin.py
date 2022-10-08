@@ -6,7 +6,7 @@ from orjson import dumps, loads
 from sqlalchemy import event
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
-from starlite.plugins.sql_alchemy import SQLAlchemyConfig as _SQLAlchemyConfig
+from starlite.plugins.sql_alchemy import SQLAlchemyConfig, SQLAlchemyPlugin
 from starlite.plugins.sql_alchemy.config import (
     SESSION_SCOPE_KEY,
     SESSION_TERMINUS_ASGI_EVENTS,
@@ -19,8 +19,10 @@ if TYPE_CHECKING:
     from starlite.types import Message, Scope
 
 __all__ = [
-    "engine",
     "async_session_factory",
+    "config",
+    "engine",
+    "plugin",
 ]
 
 
@@ -84,27 +86,33 @@ def _sqla_on_connect(dbapi_connection: Any, _: Any) -> Any:
     )
 
 
-class SQLAlchemyConfig(_SQLAlchemyConfig):
-    @staticmethod
-    async def before_send_handler(message: "Message", _: "State", scope: "Scope") -> None:
-        session = cast(AsyncSession | None, scope.get(SESSION_SCOPE_KEY))
-        try:
-            if session is not None and message["type"] == "http.response.start":
-                if 200 <= message["status"] < 300:
-                    await session.commit()
-                else:
-                    await session.rollback()
-        finally:
-            if session is not None and message["type"] in SESSION_TERMINUS_ASGI_EVENTS:
-                await session.close()
-                del scope[SESSION_SCOPE_KEY]  # type:ignore[misc]
+async def before_send_handler(message: "Message", _: "State", scope: "Scope") -> None:
+    """Custom `before_send_handler` for SQLAlchemy plugin that inspects the
+    status of response and commits, or rolls back the database.
 
-    def update_app_state(self, state: "State") -> None:
-        state[self.engine_app_state_key] = engine
-        state[self.session_maker_app_state_key] = async_session_factory
+    Args:
+        message: ASGI message
+        _:
+        scope: ASGI scope
+    """
+    session = cast(AsyncSession | None, scope.get(SESSION_SCOPE_KEY))
+    try:
+        if session is not None and message["type"] == "http.response.start":
+            if 200 <= message["status"] < 300:
+                await session.commit()
+            else:
+                await session.rollback()
+    finally:
+        if session is not None and message["type"] in SESSION_TERMINUS_ASGI_EVENTS:
+            await session.close()
+            del scope[SESSION_SCOPE_KEY]  # type:ignore[misc]
 
 
 config = SQLAlchemyConfig(
-    connection_string=settings.db.URL,
+    before_send_handler=before_send_handler,
     dependency_key=settings.api.DB_SESSION_DEPENDENCY_KEY,
+    engine_instance=engine,
+    session_maker_instance=async_session_factory,
 )
+
+plugin = SQLAlchemyPlugin(config=config)
