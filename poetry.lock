@@ -605,7 +605,7 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pydantic-factories"
-version = "1.8.1"
+version = "1.7.1"
 description = "Mock data generation for pydantic based models"
 category = "main"
 optional = false
@@ -1023,7 +1023,7 @@ testing = ["cryptography", "httpx (>=0.22)"]
 type = "git"
 url = "https://github.com/starlite-api/starlite.git"
 reference = "main"
-resolved_reference = "e3a1a3687044d74e64794541ba9f44a58d15cbe0"
+resolved_reference = "24dcf20d0bc918015374a14b67d8cbb52ba92f3c"
 
 [[package]]
 name = "starlite-jwt"
@@ -1040,7 +1040,7 @@ starlite = ">=1.24.0"
 
 [[package]]
 name = "starlite-multipart"
-version = "1.1.0"
+version = "1.1.1"
 description = "Toolkit for working with multipart/formdata messages."
 category = "main"
 optional = false
@@ -1195,7 +1195,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "8577e393f5bf3d7314107a22777e7194f87a1681fcc294d2b4173922b67c318e"
+content-hash = "62b0c6576430acddae0d4238146f82124155286b7d2e58ff75a4e63de4fcea77"
 
 [metadata.files]
 alembic = [
@@ -1764,8 +1764,8 @@ pydantic = [
     {file = "pydantic-1.10.2.tar.gz", hash = "sha256:91b8e218852ef6007c2b98cd861601c6a09f1aa32bbbb74fab5b1c33d4a1e410"},
 ]
 pydantic-factories = [
-    {file = "pydantic-factories-1.8.1.tar.gz", hash = "sha256:42d15a812d317799bd81dffb1ae92bfb4d30b7a9099bcd4aa5af476210ec790c"},
-    {file = "pydantic_factories-1.8.1-py3-none-any.whl", hash = "sha256:c26aab6e9a72d1c143199e697262a3989e2d751ed6e7f2d6c1c0c379a0b3c93b"},
+    {file = "pydantic-factories-1.7.1.tar.gz", hash = "sha256:d0df91b2c3acb701209f3652731b98568e7b6b747985c86e868e8682d199810e"},
+    {file = "pydantic_factories-1.7.1-py3-none-any.whl", hash = "sha256:baa1ee39fea7992909910b0b528d904fed9f0ed38955c75690e0c94e5ef4c4ed"},
 ]
 pydantic-openapi-schema = [
     {file = "pydantic-openapi-schema-1.3.0.tar.gz", hash = "sha256:2aed6913080f1dae94234e00d0905504c6aab65ab6afe246ed7aa98da989f69e"},
@@ -1936,8 +1936,8 @@ starlite-jwt = [
     {file = "starlite_jwt-1.4.0-py3-none-any.whl", hash = "sha256:a5d035411935c1030c4e373d4a7eda52920ab00f8a39909841fc6cc5a2f722ff"},
 ]
 starlite-multipart = [
-    {file = "starlite-multipart-1.1.0.tar.gz", hash = "sha256:bd5b25a614fadc237fe4da60f0c43c5e7d045a523d4e3685237047e1e228da87"},
-    {file = "starlite_multipart-1.1.0-py3-none-any.whl", hash = "sha256:c7b45545e70504b115f46a5046006a5bd41b1399cf829b9dede04af7a84b3981"},
+    {file = "starlite-multipart-1.1.1.tar.gz", hash = "sha256:a8155a8f36bb3f2b335700cb46b91f5614e04ec49113f8894bbd834f5cbc7979"},
+    {file = "starlite_multipart-1.1.1-py3-none-any.whl", hash = "sha256:924bcb4364c8607d826204a358c41f8494018856743ea97eb85e9b8f1a44652d"},
 ]
 texttable = [
     {file = "texttable-1.6.4-py2.py3-none-any.whl", hash = "sha256:dd2b0eaebb2a9e167d1cefedab4700e5dcbdb076114eed30b58b97ed6b37d6f2"},

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any
+from typing import TYPE_CHECKING, Any, TypeVar
 from uuid import UUID, uuid4
 
 from sqlalchemy import MetaData
@@ -13,6 +13,13 @@ from sqlalchemy.orm import (
     mapped_column,
     registry,
 )
+
+from . import dto
+
+if TYPE_CHECKING:
+    from pydantic import BaseModel
+
+T_base = TypeVar("T_base", bound="Base")
 
 convention = {
     "ix": "ix_%(column_0_label)s",
@@ -58,11 +65,23 @@ class Base(DeclarativeBase):
         type_annotation_map={UUID: pg.UUID, dict: pg.JSONB},
     )
 
-    id: Mapped[UUID] = mapped_column(default=uuid4, primary_key=True)
-    created: Mapped[datetime] = mapped_column(default=datetime.now)
-    updated: Mapped[datetime] = mapped_column(default=datetime.now)
+    id: Mapped[UUID] = mapped_column(default=uuid4, primary_key=True, info={"dto": dto.Mode.read_only})
+    created: Mapped[datetime] = mapped_column(default=datetime.now, info={"dto": dto.Mode.read_only})
+    updated: Mapped[datetime] = mapped_column(default=datetime.now, info={"dto": dto.Mode.read_only})
 
     # noinspection PyMethodParameters
     @declared_attr.directive
     def __tablename__(cls) -> str:  # pylint: disable=no-self-argument
         return cls.__name__.lower()
+
+    @classmethod
+    def from_dto(cls: type[T_base], dto_instance: "BaseModel") -> T_base:
+        """Construct an instance of the SQLAlchemy model from the Pydantic DTO.
+
+        Args:
+            dto_instance: A pydantic model
+
+        Returns:
+            An instance of the SQLAlchemy model.
+        """
+        return cls(**dto_instance.dict(exclude_unset=True))

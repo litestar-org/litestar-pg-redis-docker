@@ -46,7 +46,7 @@ class Worker(saq.Worker):  # type:ignore[misc]
     # same issue: https://github.com/samuelcolvin/arq/issues/182
     SIGNALS: list[str] = []
 
-    def on_app_startup(self) -> None:
+    async def on_app_startup(self) -> None:
         """Attach the worker to the running event loop."""
         loop = asyncio.get_running_loop()
         loop.create_task(self.start())

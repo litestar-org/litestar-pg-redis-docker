@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_200_OK
 from starlite import Dependency, Provide, Router, delete, get, post, put
 
-from app.domain.authors import Author, Repository
+from app.domain.authors import Author, ReadDTO, Repository, WriteDTO
 from app.lib.service import Service as BaseService
 
 Service = BaseService[Author]
@@ -18,33 +18,33 @@ def provides_service(db_session: AsyncSession) -> Service:
 
 
 @get()
-async def get_authors(service: Service = Dependency(skip_validation=True)) -> list[Author]:
+async def get_authors(service: Service = Dependency(skip_validation=True)) -> list[ReadDTO]:
     """Get a list of authors."""
-    return await service.list()
+    return [ReadDTO.from_orm(item) for item in await service.list()]
 
 
 @post()
-async def create_author(data: Author, service: Service) -> Author:
+async def create_author(data: WriteDTO, service: Service) -> ReadDTO:
     """Create an `Author`."""
-    return await service.create(data)
+    return ReadDTO.from_orm(await service.create(Author.from_dto(data)))
 
 
 @get(DETAIL_ROUTE)
-async def get_author(service: Service, author_id: UUID) -> Author:
+async def get_author(service: Service, author_id: UUID) -> ReadDTO:
     """Get Author by ID."""
-    return await service.get(author_id)
+    return ReadDTO.from_orm(await service.get(author_id))
 
 
 @put(DETAIL_ROUTE)
-async def update_author(data: Author, service: Service, author_id: UUID) -> Author:
+async def update_author(data: WriteDTO, service: Service, author_id: UUID) -> ReadDTO:
     """Update an author."""
-    return await service.update(author_id, data)
+    return ReadDTO.from_orm(await service.update(author_id, Author.from_dto(data)))
 
 
 @delete(DETAIL_ROUTE, status_code=HTTP_200_OK)
-async def delete_author(service: Service, author_id: UUID) -> Author:
+async def delete_author(service: Service, author_id: UUID) -> ReadDTO:
     """Delete Author by ID."""
-    return await service.delete(author_id)
+    return ReadDTO.from_orm(await service.delete(author_id))
 
 
 router = Router(

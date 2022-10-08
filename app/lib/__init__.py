@@ -4,6 +4,7 @@ __all__ = [
     "client",
     "compression",
     "dependencies",
+    "dto",
     "endpoint_decorator",
     "exceptions",
     "health",

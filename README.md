@@ -79,6 +79,8 @@ Close and reopen your shell, or `$ source ~/.bashrc` to get the alias working in
 
 ```bash
 tox -e lint
+# run a specific hook
+tox -e lint mypy
 ```
 
 #### Unit tests
