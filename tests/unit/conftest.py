@@ -6,9 +6,21 @@ from uuid import UUID
 import pytest
 
 from app.domain import authors
-from app.lib import worker
+from app.lib import sqlalchemy_plugin, worker
 
 from .utils import GenericMockRepository
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _patch_sqlalchemy_plugin() -> abc.Iterator:
+    monkeypatch = pytest.MonkeyPatch()
+    monkeypatch.setattr(
+        sqlalchemy_plugin.SQLAlchemyConfig,  # type:ignore[attr-defined]
+        "on_shutdown",
+        MagicMock(),
+    )
+    yield
+    monkeypatch.undo()
 
 
 @pytest.fixture(scope="session", autouse=True)

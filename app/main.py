@@ -10,7 +10,6 @@ being loaded before that mocking has been completed.
 When writing tests, always use the `app` fixture, never import the app directly from this module.
 """
 import uvicorn  # type:ignore[import]
-from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 from starlite import Provide, Starlite
 from starlite.plugins.sql_alchemy import SQLAlchemyPlugin
 
@@ -30,6 +29,7 @@ from app.lib import (
 from app.lib.dependencies import create_collection_dependencies, provide_user
 from app.lib.health import health_check
 from app.lib.redis import redis
+from app.lib.repository.exceptions import RepositoryException
 from app.lib.worker import create_worker_instance
 
 from .controllers import router
@@ -39,10 +39,13 @@ dependencies.update(create_collection_dependencies())
 worker_instance = create_worker_instance(worker.functions)
 
 app = Starlite(
+    after_exception=[exceptions.after_exception_hook_handler],
     cache_config=cache.config,
     compression_config=compression.config,
     dependencies=dependencies,
-    exception_handlers={HTTP_500_INTERNAL_SERVER_ERROR: exceptions.logging_exception_handler},
+    exception_handlers={
+        RepositoryException: exceptions.repository_exception_to_http_response,  # type:ignore[dict-item]
+    },
     logging_config=logging.config,
     openapi_config=openapi.config,
     response_class=response.Response,
