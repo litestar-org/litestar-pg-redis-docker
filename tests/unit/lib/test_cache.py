@@ -1,10 +1,8 @@
-from app.lib import cache
-from app.lib import settings
-
+import pytest
 from starlite.config.cache import default_cache_key_builder
 from starlite.testing import RequestFactory
 
-import pytest
+from app.lib import cache, settings
 
 
 def test_cache_key_builder(monkeypatch: pytest.MonkeyPatch) -> None:
