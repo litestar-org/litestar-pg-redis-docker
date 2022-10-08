@@ -32,7 +32,7 @@ class Service(Generic[T_model]):
             id_: Identifier, ideally sourced independently of `data`.
             data: The data for update/upsert.
         """
-        if not self.repository.get_id_attribute_value(data) == id_:
+        if self.repository.get_id_attribute_value(data) != id_:
             raise UnauthorizedException("Identifier in data must match `id_`")
 
     # noinspection PyMethodMayBeStatic
@@ -64,7 +64,6 @@ class Service(Generic[T_model]):
     # noinspection PyMethodMayBeStatic
     async def authorize_list(self) -> None:
         """Authorize collection access."""
-        return
 
     async def list(self, *filters: "FilterTypes", **kwargs: Any) -> list[T_model]:
         """Wraps repository scalars operation.
@@ -138,7 +137,6 @@ class Service(Generic[T_model]):
         Args:
             id_: Identifier of item to be retrieved.
         """
-        return
 
     async def get(self, id_: Any) -> T_model:
         """Wraps repository scalar operation.
@@ -158,7 +156,6 @@ class Service(Generic[T_model]):
         Args:
             id_: Identifier of item to be retrieved.
         """
-        return
 
     async def delete(self, id_: Any) -> T_model:
         """Wraps repository delete operation.
