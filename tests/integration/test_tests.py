@@ -5,14 +5,14 @@ from starlite import get
 from starlite.testing import TestClient
 
 from app.lib import sqlalchemy_plugin
-from app.main import app
 
 if TYPE_CHECKING:
     from redis.asyncio import Redis
     from sqlalchemy.ext.asyncio import AsyncEngine
+    from starlite import Starlite
 
 
-def test_engine_on_app(engine: "AsyncEngine") -> None:
+def test_engine_on_app(app: "Starlite", engine: "AsyncEngine") -> None:
     """Test that the app's engine is patched.
 
     Args:
@@ -21,7 +21,7 @@ def test_engine_on_app(engine: "AsyncEngine") -> None:
     assert app.state[sqlalchemy_plugin.config.engine_app_state_key] is engine
 
 
-def test_cache_on_app(redis: "Redis") -> None:
+def test_cache_on_app(app: "Starlite", redis: "Redis") -> None:
     """Test that the app's cache is patched.
 
     Args:
@@ -30,7 +30,7 @@ def test_cache_on_app(redis: "Redis") -> None:
     assert app.cache.backend is redis
 
 
-def test_db_session_dependency(engine: "AsyncEngine") -> None:
+def test_db_session_dependency(app: "Starlite", engine: "AsyncEngine") -> None:
     """Test that handlers receive session attached to patched engine.
 
     Args:
@@ -47,7 +47,7 @@ def test_db_session_dependency(engine: "AsyncEngine") -> None:
         assert response.json()["result"] == "db_session.bind is engine = True"
 
 
-def test_db_session_dependency_2(engine: "AsyncEngine") -> None:
+def test_db_session_dependency_2(app: "Starlite", engine: "AsyncEngine") -> None:
     """Test that handlers receive session attached to patched engine.
 
     Args:

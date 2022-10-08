@@ -2,7 +2,6 @@
 import asyncio
 import timeit
 from collections import abc
-from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -12,11 +11,12 @@ from pytest_docker.plugin import Services  # type:ignore[import]
 from redis.asyncio import Redis
 from redis.exceptions import ConnectionError as RedisConnectionError
 from sqlalchemy.engine import URL
-from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.pool import NullPool
 
-from app import lib
-from app.main import app, worker_instance
+from app.lib import orm
+from app.lib import redis as lib_redis_module
+from app.lib import sqlalchemy_plugin
 
 here = Path(__file__).parent
 
@@ -154,24 +154,18 @@ async def engine(docker_ip: str) -> AsyncEngine:
 
 
 @pytest.fixture(autouse=True)
-async def _seed_db(engine: AsyncEngine) -> abc.AsyncIterator[None]:
+async def _seed_db(engine: AsyncEngine, raw_authors: list[dict[str, Any]]) -> abc.AsyncIterator[None]:
     """Populate test database with.
 
     Args:
         engine: The SQLAlchemy engine instance.
     """
-    metadata = lib.orm.Base.registry.metadata
+    metadata = orm.Base.registry.metadata
     author_table = metadata.tables["author"]
     async with engine.begin() as conn:
         await conn.run_sync(metadata.create_all)
     async with engine.begin() as conn:
-        await conn.execute(
-            author_table.insert(),
-            [
-                {"name": "Agatha Christie", "dob": date(1890, 9, 15)},
-                {"name": "Leo Tolstoy", "dob": date(1828, 9, 9)},
-            ],
-        )
+        await conn.execute(author_table.insert(), raw_authors)
     yield
     async with engine.begin() as conn:
         await conn.run_sync(metadata.drop_all)
@@ -179,13 +173,9 @@ async def _seed_db(engine: AsyncEngine) -> abc.AsyncIterator[None]:
 
 @pytest.fixture(autouse=True)
 def _patch_db(engine: AsyncEngine, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(lib.sqlalchemy_plugin, "engine", engine)
-    monkeypatch.setitem(app.state, lib.sqlalchemy_plugin.config.engine_app_state_key, engine)
-    monkeypatch.setitem(app.state, lib.sqlalchemy_plugin.config.session_maker_app_state_key, async_sessionmaker(engine))
+    monkeypatch.setattr(sqlalchemy_plugin, "engine", engine)
 
 
 @pytest.fixture(autouse=True)
 def _patch_redis(redis: Redis, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(lib.redis, "redis", redis)
-    monkeypatch.setattr(app.cache, "backend", redis)
-    monkeypatch.setattr(worker_instance.queue, "redis", redis)
+    monkeypatch.setattr(lib_redis_module, "redis", redis)

@@ -1,3 +1,3 @@
-from collections.abc import Coroutine
+from app.lib.worker import WorkerFunction
 
-functions: list[Coroutine] = []
+functions: list[WorkerFunction] = []

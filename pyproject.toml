@@ -56,9 +56,10 @@ exclude_lines = [
 omit = ["tests/*"]
 
 [tool.pytest.ini_options]
-addopts = "--cov=app -v --doctest-modules --doctest-glob=*.md --ignore=alembic --ignore=tests/integration"
+addopts = "--cov=app -v"
 asyncio_mode = "auto"
 env_files = [".env.example"]
+testpaths = ["tests/unit"]
 
 [tool.pylint.MESSAGE_CONTROL]
 disable = [

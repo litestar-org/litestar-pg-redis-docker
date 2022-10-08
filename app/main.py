@@ -1,5 +1,14 @@
-import asyncio
+"""This is the top-level of the application and should only ever import from
+other sub-packages of the application, and never be imported from. I.e., never
+do `from app.main import whatever` from within any other module of any other
+sub-package of the application.
 
+The main point of this restriction is to support unit-testing. We need to ensure that we can load
+any other component of the application for mocking things out in the unittests, without this module
+being loaded before that mocking has been completed.
+
+When writing tests, always use the `app` fixture, never import the app directly from this module.
+"""
 import uvicorn  # type:ignore[import]
 from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 from starlite import Provide, Starlite
@@ -21,21 +30,13 @@ from app.lib import (
 from app.lib.dependencies import create_collection_dependencies, provide_user
 from app.lib.health import health_check
 from app.lib.redis import redis
-from app.lib.worker import Worker, queue
+from app.lib.worker import create_worker_instance
 
 from .controllers import router
 
 dependencies = {settings.api.USER_DEPENDENCY_KEY: Provide(provide_user)}
 dependencies.update(create_collection_dependencies())
-
-worker_instance = Worker(queue, worker.functions)
-
-
-async def worker_on_app_startup() -> None:
-    """Attach the worker to the running event loop."""
-    loop = asyncio.get_running_loop()
-    loop.create_task(worker_instance.start())
-
+worker_instance = create_worker_instance(worker.functions)
 
 app = Starlite(
     cache_config=cache.config,
@@ -48,7 +49,7 @@ app = Starlite(
     route_handlers=[health_check, router],
     plugins=[SQLAlchemyPlugin(config=sqlalchemy_plugin.config)],
     on_shutdown=[worker_instance.stop, redis.close],
-    on_startup=[sentry.configure, worker_on_app_startup],
+    on_startup=[sentry.configure, worker_instance.on_app_startup],
     static_files_config=static_files.config,
 )
 

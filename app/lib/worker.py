@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from collections import abc
 from functools import partial
@@ -12,6 +13,7 @@ __all__ = [
     "Queue",
     "Worker",
     "WorkerFunction",
+    "create_worker_instance",
     "queue",
 ]
 
@@ -44,9 +46,26 @@ class Worker(saq.Worker):  # type:ignore[misc]
     # same issue: https://github.com/samuelcolvin/arq/issues/182
     SIGNALS: list[str] = []
 
+    def on_app_startup(self) -> None:
+        """Attach the worker to the running event loop."""
+        loop = asyncio.get_running_loop()
+        loop.create_task(self.start())
+
 
 queue = Queue(redis)
 """
 [Queue][app.lib.worker.Queue] instance instantiated with [redis][app.lib.redis.redis]
 instance.
 """
+
+
+def create_worker_instance(functions: abc.Iterable[WorkerFunction]) -> Worker:
+    """
+
+    Args:
+        functions: Functions to be called via the async workers.
+
+    Returns:
+        The worker instance, instantiated with `functions`.
+    """
+    return Worker(queue, functions)

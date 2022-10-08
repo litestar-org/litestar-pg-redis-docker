@@ -115,7 +115,8 @@ class AbstractRepository(Generic[T], metaclass=ABCMeta):
             raise RepositoryNotFoundException("No item found when one was expected")
         return item_or_none
 
-    async def get_id_attribute_value(self, item: T) -> Any:
+    @classmethod
+    async def get_id_attribute_value(cls, item: T) -> Any:
         """Return the value of attribute named as `self.id_attribute` on
         `item`.
 
@@ -125,4 +126,4 @@ class AbstractRepository(Generic[T], metaclass=ABCMeta):
         Returns:
             The value of attribute on `item` named as `self.id_attribute`.
         """
-        return getattr(item, self.id_attribute)
+        return getattr(item, cls.id_attribute)
