@@ -48,18 +48,47 @@ Starlite is a light and flexible ASGI API framework.
 
 ### Test
 
-`$ poetry run pytest`
+To run the tests, have `tox` installed and on your path. I recommend `pipx` which is a tool for
+installing python applications in isolated environments.
 
-### Linting
+#### Install `pipx`
 
-`$ pre-commit run --all-files`
+```shell
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+```
 
-### Add Dependencies
+#### Install `tox`
 
-#### Production
+```shell
+pipx install tox
+```
 
-`$ poetry add starlite`
+You'll now be able to run `$ pipx run tox`, but that's still a little verbose. I choose to add an
+alias for this, e.g.,:
 
-#### Dev
+```bash
+# ~/.bashrc
+# ...
+alias tox="pipx run tox"
+```
 
-`$ poetry add starlite --extras=testing --dev`
+Close and reopen your shell, or `$ source ~/.bashrc` to get the alias working in your current shell.
+
+#### Linting
+
+```bash
+tox -e lint
+```
+
+#### Unit tests
+
+```bash
+tox -e test
+```
+
+#### Integration
+
+```bash
+tox -e integration
+```
