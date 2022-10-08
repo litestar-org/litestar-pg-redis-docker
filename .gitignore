@@ -1,7 +1,8 @@
 __pycache__/
-.pytest_cache/
-.mypy_cache/
 .idea/
+.mypy_cache/
+.pytest_cache/
+.tox/
 .vscode/
 
 *.env*

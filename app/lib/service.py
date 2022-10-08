@@ -131,7 +131,7 @@ class Service(Generic[T_model]):
         data = await self.authorize_upsert(id_, data)
         return await self.repository.upsert(data)
 
-    async def authorize_get(self, id_: Any) -> None:  # pylint: disable=[unused-argument]
+    async def authorize_get(self, id_: Any) -> None:
         """Authorize get of item.
 
         Args:
@@ -150,7 +150,7 @@ class Service(Generic[T_model]):
         await self.authorize_get(id_)
         return await self.repository.get(id_)
 
-    async def authorize_delete(self, id_: Any) -> None:  # pylint: disable=[unused-argument]
+    async def authorize_delete(self, id_: Any) -> None:
         """Authorize delete of item.
 
         Args:

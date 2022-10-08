@@ -3,7 +3,7 @@ import asyncio
 import timeit
 from collections import abc
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import asyncpg
 import pytest
@@ -11,12 +11,14 @@ from pytest_docker.plugin import Services  # type:ignore[import]
 from redis.asyncio import Redis
 from redis.exceptions import ConnectionError as RedisConnectionError
 from sqlalchemy.engine import URL
-from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
 
-from app.lib import orm
-from app.lib import redis as lib_redis_module
-from app.lib import sqlalchemy_plugin
+from app.lib import orm, sqlalchemy_plugin, worker
+
+if TYPE_CHECKING:
+    from starlite import Starlite
+
 
 here = Path(__file__).parent
 
@@ -132,7 +134,6 @@ async def engine(docker_ip: str) -> AsyncEngine:
 
     Args:
         docker_ip: IP address for TCP connection to Docker containers.
-        docker_services: Fixture that starts and stops services.
 
     Returns:
         Async SQLAlchemy engine instance.
@@ -160,6 +161,11 @@ async def _seed_db(engine: AsyncEngine, raw_authors: list[dict[str, Any]]) -> ab
     Args:
         engine: The SQLAlchemy engine instance.
     """
+    # get models into metadata
+    from app import (  # pylint: disable=[import-outside-toplevel,unused-import]  # noqa:F401
+        domain,
+    )
+
     metadata = orm.Base.registry.metadata
     author_table = metadata.tables["author"]
     async with engine.begin() as conn:
@@ -172,10 +178,14 @@ async def _seed_db(engine: AsyncEngine, raw_authors: list[dict[str, Any]]) -> ab
 
 
 @pytest.fixture(autouse=True)
-def _patch_db(engine: AsyncEngine, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sqlalchemy_plugin, "engine", engine)
+def _patch_db(app: "Starlite", engine: AsyncEngine, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setitem(app.state, sqlalchemy_plugin.config.engine_app_state_key, engine)
+    monkeypatch.setitem(
+        app.state, sqlalchemy_plugin.config.session_maker_app_state_key, async_sessionmaker(bind=engine)
+    )
 
 
 @pytest.fixture(autouse=True)
-def _patch_redis(redis: Redis, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(lib_redis_module, "redis", redis)
+def _patch_redis(app: "Starlite", redis: Redis, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(app.cache, "backend", redis)
+    monkeypatch.setattr(worker.queue, "redis", redis)
