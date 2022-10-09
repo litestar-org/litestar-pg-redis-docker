@@ -1,5 +1,4 @@
 import asyncio
-import logging
 from collections import abc
 from functools import partial
 from typing import Any
@@ -16,9 +15,6 @@ __all__ = [
     "create_worker_instance",
     "queue",
 ]
-
-logger = logging.getLogger(__name__)
-
 
 WorkerFunction = abc.Callable[..., abc.Awaitable[Any]]
 

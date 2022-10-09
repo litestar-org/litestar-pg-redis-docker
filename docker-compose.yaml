@@ -17,6 +17,12 @@ services:
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_DB: example-pg-docker
 
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
   app:
     build:
       context: .
@@ -26,6 +32,7 @@ services:
     command: scripts/entry
     depends_on:
       - db
+      - mailhog
       - redis
     ports:
       - "8000:8000"

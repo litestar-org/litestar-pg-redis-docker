@@ -77,6 +77,7 @@ repos:
         args: ["--unsafe-load-any-extension=y"]
         additional_dependencies:
           [
+            "aiosmtplib",
             "alembic",
             "asyncpg",
             "asyncpg-stubs",
@@ -99,6 +100,7 @@ repos:
         args: ["--show-traceback"]
         additional_dependencies:
           [
+            "aiosmtplib",
             "alembic",
             "asyncpg",
             "asyncpg-stubs",
@@ -108,7 +110,6 @@ repos:
             "pytest-docker",
             "saq",
             "sentry-sdk",
-            "git+https://github.com/starlite-api/starlite",
             "starlite",
             "starlite_jwt",
             "types-redis",

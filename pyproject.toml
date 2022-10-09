@@ -8,7 +8,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-# starlite = "*"
+aiosmtplib = "*"
 alembic = "*"
 asyncpg = "*"
 httpx = "*"
@@ -18,7 +18,7 @@ redis = "*"
 saq = "*"
 sentry-sdk = "*"
 sqlalchemy = { git = "https://github.com/sqlalchemy/sqlalchemy.git", branch = "main" }
-starlite = { git = "https://github.com/starlite-api/starlite.git", branch = "main" }
+starlite = "*"
 starlite-jwt = "*"
 uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
@@ -30,8 +30,7 @@ optional = true
 pytest = "*"
 pytest-asyncio = "*"
 pytest-dotenv = "*"
-# starlite = { extras = ["testing"], version = "*" }
-starlite = { extras = ["testing"], git = "https://github.com/starlite-api/starlite.git", branch = "main" }
+starlite = { extras = ["testing"], version = "*" }
 
 [tool.poetry.group.coverage]
 optional = true

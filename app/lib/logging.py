@@ -46,26 +46,18 @@ config = LoggingConfig(
     },
     formatters={"standard": {"format": "%(levelname)s - %(asctime)s - %(name)s - %(funcName)s - %(message)s"}},
     loggers={
-        "starlite_saqpg": {
+        "app": {
             "propagate": True,
         },
         "uvicorn.access": {
-            "propagate": False,
+            "propagate": True,
             "filters": ["health_filter"],
-            "handlers": ["queue_listener"],
         },
         "uvicorn.error": {
-            "propagate": False,
-            "handlers": ["queue_listener"],
+            "propagate": True,
         },
         "sqlalchemy.engine": {
-            "propagate": False,
-            "handlers": ["queue_listener"],
-        },
-        "starlite": {
-            "level": "WARNING",
-            "propagate": False,
-            "handlers": ["queue_listener"],
+            "propagate": True,
         },
     },
 )

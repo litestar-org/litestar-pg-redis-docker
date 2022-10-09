@@ -38,6 +38,7 @@ dependencies = {settings.api.USER_DEPENDENCY_KEY: Provide(provide_user)}
 dependencies.update(create_collection_dependencies())
 worker_instance = create_worker_instance(worker.functions)
 
+
 app = Starlite(
     after_exception=[exceptions.after_exception_hook_handler],
     cache_config=cache.config,
@@ -52,7 +53,7 @@ app = Starlite(
     route_handlers=[health_check, router],
     plugins=[SQLAlchemyPlugin(config=sqlalchemy_plugin.config)],
     on_shutdown=[worker_instance.stop, redis.close],
-    on_startup=[sentry.configure, worker_instance.on_app_startup],
+    on_startup=[worker_instance.on_app_startup, sentry.configure],
     static_files_config=static_files.config,
 )
 
