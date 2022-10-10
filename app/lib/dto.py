@@ -8,9 +8,7 @@ from sqlalchemy.orm import Mapped
 
 if TYPE_CHECKING:
     from sqlalchemy import Column
-    from sqlalchemy.orm import Mapper
-
-    from .orm import Base
+    from sqlalchemy.orm import DeclarativeBase, Mapper
 
 DTO_INFO_KEY = "dto"
 
@@ -36,7 +34,9 @@ def _construct_field_info(column: "Column", purpose: Purpose) -> FieldInfo:
     raise ValueError("Unexpected default type")
 
 
-def _should_exclude_field(purpose: Purpose, column: "Column") -> bool:
+def _should_exclude_field(purpose: Purpose, column: "Column", exclude: set[str]) -> bool:
+    if column.key in exclude:
+        return True
     mode = column.info.get(DTO_INFO_KEY)
     if mode is Mode.private:
         return True
@@ -49,7 +49,9 @@ class Config:
     orm_mode = True
 
 
-def factory(name: str, model: type["Base"], purpose: Purpose) -> type[BaseModel]:
+def factory(
+    name: str, model: type["DeclarativeBase"], purpose: Purpose, exclude: set[str] | None = None
+) -> type[BaseModel]:
     """Create a pydantic model class from a SQLAlchemy declarative ORM class.
 
     The fields that are included in the model can be controlled on the SQLAlchemy class
@@ -72,18 +74,21 @@ def factory(name: str, model: type["Base"], purpose: Purpose) -> type[BaseModel]
         name: Name given to the DTO class.
         model: The SQLAlchemy model class.
         purpose: Is the DTO for write or read operations?
+        exclude: Explicitly exclude attributes from the DTO.
 
     Returns:
-        A Pydantic model that includes only fields that are appropriate to `purpose`.
+        A Pydantic model that includes only fields that are appropriate to `purpose` and not in
+        `exclude`.
     """
+    exclude = exclude or set[str]()
     mapper = cast("Mapper", inspect(model))
     columns = mapper.columns
     dto_fields: dict[str, tuple[Any, FieldInfo]] = {}
     for key, type_hint in get_type_hints(model).items():
-        column = columns[key]
-        if _should_exclude_field(purpose, column):
-            continue
         if get_origin(type_hint) is not Mapped:
+            continue
+        column = columns[key]
+        if _should_exclude_field(purpose, column, exclude):
             continue
         (type_,) = get_args(type_hint)
         dto_fields[key] = (type_, _construct_field_info(column, purpose))

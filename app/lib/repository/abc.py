@@ -116,7 +116,7 @@ class AbstractRepository(Generic[T], metaclass=ABCMeta):
         return item_or_none
 
     @classmethod
-    async def get_id_attribute_value(cls, item: T) -> Any:
+    def get_id_attribute_value(cls, item: T) -> Any:
         """Return the value of attribute named as `self.id_attribute` on
         `item`.
 
@@ -127,3 +127,17 @@ class AbstractRepository(Generic[T], metaclass=ABCMeta):
             The value of attribute on `item` named as `self.id_attribute`.
         """
         return getattr(item, cls.id_attribute)
+
+    @classmethod
+    def set_id_attribute_value(cls, id_: Any, item: T) -> Any:
+        """Return the `item` after the ID is set to the appropriate attribute.
+
+        Args:
+            id_: Value of ID to be set on instance
+            item: Anything that should have an attribute named as `self.id_attribute` value.
+
+        Returns:
+            Item with `id_` set to `cls.id_attribute`
+        """
+        setattr(item, cls.id_attribute, id_)
+        return item

@@ -16,6 +16,7 @@ from .repository.exceptions import (
     RepositoryException,
     RepositoryNotFoundException,
 )
+from .service import UnauthorizedException
 
 if TYPE_CHECKING:
     from starlite.datastructures import State
@@ -28,6 +29,10 @@ logger = logging.getLogger(__name__)
 
 class ConflictException(HTTPException):
     status_code = 409
+
+
+class ForbiddenException(HTTPException):
+    status_code = 403
 
 
 def after_exception_hook_handler(exc: Exception, scope: "Scope", state: "State") -> None:
@@ -44,6 +49,11 @@ def after_exception_hook_handler(exc: Exception, scope: "Scope", state: "State")
         state.dict(),
         exc_info=exc,
     )
+
+
+def _create_error_response_from_starlite_middleware(request: Request, exc: Exception) -> Response:
+    server_middleware = ServerErrorMiddleware(app=request.app)  # type: ignore[arg-type]
+    return server_middleware.debug_response(request=request, exc=exc)  # type: ignore[arg-type]
 
 
 def repository_exception_to_http_response(request: Request, exc: RepositoryException) -> Response:
@@ -63,9 +73,26 @@ def repository_exception_to_http_response(request: Request, exc: RepositoryExcep
         http_exc = ConflictException
     else:
         http_exc = InternalServerException
-
     if http_exc is InternalServerException and request.app.debug:
-        # use the server error middleware to create an HTML formatted response for us
-        server_middleware = ServerErrorMiddleware(app=request.app)  # type: ignore[arg-type]
-        return server_middleware.debug_response(request=request, exc=exc)  # type: ignore[arg-type]
+        return _create_error_response_from_starlite_middleware(request, exc)
+    return create_exception_response(http_exc())
+
+
+def service_exception_to_http_response(request: Request, exc: RepositoryException) -> Response:
+    """Transform service exceptions to HTTP exceptions.
+
+    Args:
+        request: The request that experienced the exception.
+        exc: Exception raised during handling of the request.
+
+    Returns:
+        Exception response appropriate to the type of original exception.
+    """
+    http_exc: type[HTTPException]
+    if isinstance(exc, UnauthorizedException):
+        http_exc = ForbiddenException
+    else:
+        http_exc = InternalServerException
+    if http_exc is InternalServerException and request.app.debug:
+        return _create_error_response_from_starlite_middleware(request, exc)
     return create_exception_response(http_exc())

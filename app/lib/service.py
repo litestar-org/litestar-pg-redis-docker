@@ -24,17 +24,6 @@ class Service(Generic[T_model]):
         """
         self.repository = repository
 
-    async def authorize_item_id(self, id_: Any, data: T_model) -> None:
-        """Check that the identifier `id_` matches the identifier attribute in
-        `data`.
-
-        Args:
-            id_: Identifier, ideally sourced independently of `data`.
-            data: The data for update/upsert.
-        """
-        if self.repository.get_id_attribute_value(data) != id_:
-            raise UnauthorizedException("Identifier in data must match `id_`")
-
     # noinspection PyMethodMayBeStatic
     async def authorize_create(self, data: T_model) -> T_model:
         """Control resource creation.
@@ -88,7 +77,7 @@ class Service(Generic[T_model]):
         Returns:
             T_model
         """
-        await self.authorize_item_id(id_, data)
+        self.repository.set_id_attribute_value(id_, data)
         return data
 
     async def update(self, id_: Any, data: T_model) -> T_model:
@@ -114,7 +103,7 @@ class Service(Generic[T_model]):
         Returns:
             T_model
         """
-        await self.authorize_item_id(id_, data)
+        self.repository.set_id_attribute_value(id_, data)
         return data
 
     async def upsert(self, id_: Any, data: T_model) -> T_model:

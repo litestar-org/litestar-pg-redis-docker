@@ -23,5 +23,6 @@ class Service(service.Service[Author]):
         return data
 
 
+CreateDTO = dto.factory("AuthorCreateDTO", Author, purpose=dto.Purpose.write, exclude={"id"})
 ReadDTO = dto.factory("AuthorReadDTO", Author, purpose=dto.Purpose.read)
 WriteDTO = dto.factory("AuthorWriteDTO", Author, purpose=dto.Purpose.write)

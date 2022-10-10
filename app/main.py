@@ -30,6 +30,7 @@ from app.lib.dependencies import create_collection_dependencies, provide_user
 from app.lib.health import health_check
 from app.lib.redis import redis
 from app.lib.repository.exceptions import RepositoryException
+from app.lib.service import ServiceException
 from app.lib.worker import create_worker_instance
 
 from .controllers import router
@@ -46,6 +47,7 @@ app = Starlite(
     dependencies=dependencies,
     exception_handlers={
         RepositoryException: exceptions.repository_exception_to_http_response,  # type:ignore[dict-item]
+        ServiceException: exceptions.service_exception_to_http_response,  # type:ignore[dict-item]
     },
     logging_config=logging.config,
     openapi_config=openapi.config,

@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_200_OK
 from starlite import Provide, Router, delete, get, post, put
 
-from app.domain.authors import Author, ReadDTO, Repository, Service, WriteDTO
+from app.domain.authors import Author, CreateDTO, ReadDTO, Repository, Service, WriteDTO
 
 DETAIL_ROUTE = "/{author_id:uuid}"
 
@@ -21,7 +21,7 @@ async def get_authors(service: Service) -> list[ReadDTO]:
 
 
 @post()
-async def create_author(data: WriteDTO, service: Service) -> ReadDTO:
+async def create_author(data: CreateDTO, service: Service) -> ReadDTO:
     """Create an `Author`."""
     return ReadDTO.from_orm(await service.create(Author.from_dto(data)))
 
