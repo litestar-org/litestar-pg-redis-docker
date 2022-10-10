@@ -162,7 +162,7 @@ async def _seed_db(engine: AsyncEngine, raw_authors: list[dict[str, Any]]) -> ab
         engine: The SQLAlchemy engine instance.
     """
     # get models into metadata
-    from app import (  # pylint: disable=[import-outside-toplevel,unused-import]  # noqa:F401
+    from app import (  # pylint: disable=[import-outside-toplevel,unused-import] # noqa:F401
         domain,
     )
 

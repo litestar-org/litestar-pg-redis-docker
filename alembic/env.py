@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 # ensure domain in scope
-from app import domain
+from app import domain  # noqa: F401 # pylint: disable=unused-import
 from app.lib import orm, settings
 
 # this is the Alembic Config object, which provides
