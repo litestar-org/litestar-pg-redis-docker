@@ -378,7 +378,7 @@ pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
 name = "picologging"
 version = "0.8.1"
 description = "A fast and lightweight logging library for Python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -716,7 +716,7 @@ sqlcipher = ["sqlcipher3_binary"]
 type = "git"
 url = "https://github.com/sqlalchemy/sqlalchemy.git"
 reference = "main"
-resolved_reference = "befa8e92675dea992423011b929dfc7ca45de6b6"
+resolved_reference = "add6be2aac3ea39721d7464c61326f6b8f82bba2"
 
 [[package]]
 name = "starlette"
@@ -734,7 +734,7 @@ full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart", "pyyam
 
 [[package]]
 name = "starlite"
-version = "1.23.1"
+version = "1.26.0"
 description = "Light-weight and flexible ASGI API Framework"
 category = "main"
 optional = false
@@ -742,27 +742,30 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 brotli = {version = "*", optional = true, markers = "extra == \"brotli\" or extra == \"full\""}
-cryptography = {version = "*", optional = true, markers = "extra == \"cryptography\" or extra == \"full\""}
+cryptography = {version = "*", optional = true, markers = "extra == \"testing\" or extra == \"cryptography\" or extra == \"full\""}
 httpx = {version = ">=0.22", optional = true, markers = "extra == \"testing\" or extra == \"full\""}
 orjson = "*"
-picologging = "*"
+picologging = {version = "*", optional = true, markers = "extra == \"full\" or extra == \"picologging\""}
 pydantic = "*"
 pydantic-factories = "*"
 pydantic-openapi-schema = "*"
 pyyaml = "*"
 starlette = ">=0.21"
-starlite-multipart = "*"
+starlite-multipart = ">=1.2.0"
+structlog = {version = "*", optional = true, markers = "extra == \"full\" or extra == \"structlog\""}
 typing-extensions = "*"
 
 [package.extras]
 brotli = ["brotli"]
 cryptography = ["cryptography"]
-full = ["brotli", "cryptography", "httpx (>=0.22)"]
-testing = ["httpx (>=0.22)"]
+full = ["brotli", "cryptography", "httpx (>=0.22)", "picologging", "structlog"]
+picologging = ["picologging"]
+structlog = ["structlog"]
+testing = ["cryptography", "httpx (>=0.22)"]
 
 [[package]]
 name = "starlite-multipart"
-version = "1.1.0"
+version = "1.2.0"
 description = "Toolkit for working with multipart/formdata messages."
 category = "main"
 optional = false
@@ -770,6 +773,19 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 anyio = "*"
+
+[[package]]
+name = "structlog"
+version = "22.1.0"
+description = "Structured Logging for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+dev = ["cogapp", "coverage[toml]", "freezegun (>=0.2.8)", "furo", "myst-parser", "pre-commit", "pretend", "pytest (>=6.0)", "pytest-asyncio (>=0.17)", "rich", "simplejson", "sphinx", "sphinx-notfound-page", "sphinxcontrib-mermaid", "tomli", "twisted"]
+docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-mermaid", "twisted"]
+tests = ["coverage[toml]", "freezegun (>=0.2.8)", "pretend", "pytest (>=6.0)", "pytest-asyncio (>=0.17)", "simplejson"]
 
 [[package]]
 name = "toml"
@@ -1641,12 +1657,16 @@ starlette = [
     {file = "starlette-0.21.0.tar.gz", hash = "sha256:b1b52305ee8f7cfc48cde383496f7c11ab897cd7112b33d998b1317dc8ef9027"},
 ]
 starlite = [
-    {file = "starlite-1.23.1-py3-none-any.whl", hash = "sha256:d655a8e01103d0f207fc9018afe0934fdb9d3fc8947eb15dc37176e10d6e4593"},
-    {file = "starlite-1.23.1.tar.gz", hash = "sha256:e5e505be7d17b58999cb74c77837b44b205aad84b9e6eaa1e9dcff44ab665e63"},
+    {file = "starlite-1.26.0-py3-none-any.whl", hash = "sha256:8a9831154bc51063846f290bcab74e8192d3f26442c26a4f1f02fe4135c81937"},
+    {file = "starlite-1.26.0.tar.gz", hash = "sha256:3c3c5e99bb58d38386711c232746e448b9a856b4ee8fcc8b083928ad37c84200"},
 ]
 starlite-multipart = [
-    {file = "starlite-multipart-1.1.0.tar.gz", hash = "sha256:bd5b25a614fadc237fe4da60f0c43c5e7d045a523d4e3685237047e1e228da87"},
-    {file = "starlite_multipart-1.1.0-py3-none-any.whl", hash = "sha256:c7b45545e70504b115f46a5046006a5bd41b1399cf829b9dede04af7a84b3981"},
+    {file = "starlite-multipart-1.2.0.tar.gz", hash = "sha256:9ba2108cfd47de07240dc90e55397080ec9ca0c6992ec1097a02dd32ba4ca593"},
+    {file = "starlite_multipart-1.2.0-py3-none-any.whl", hash = "sha256:ceb5667d6c58bcbc305d5922ead791f0b50f0b9f658747144577a3dccffc5335"},
+]
+structlog = [
+    {file = "structlog-22.1.0-py3-none-any.whl", hash = "sha256:760d37b8839bd4fe1747bed7b80f7f4de160078405f4b6a1db9270ccbfce6c30"},
+    {file = "structlog-22.1.0.tar.gz", hash = "sha256:94b29b1d62b2659db154f67a9379ec1770183933d6115d21f21aa25cfc9a7393"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
