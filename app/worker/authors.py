@@ -1,10 +1,9 @@
 import json
-from email.message import EmailMessage
 
-import aiosmtplib
+from app.domain import authors
 
 
-async def author_created(_: dict, *, data: dict) -> dict:
+async def author_created(_: dict, *, data: dict) -> None:
     """Send an email when a new Author is created.
 
     Args:
@@ -14,10 +13,4 @@ async def author_created(_: dict, *, data: dict) -> dict:
     Returns:
         The author object.
     """
-    message = EmailMessage()
-    message["From"] = "root@localhost"
-    message["To"] = "somebody@example.com"
-    message["Subject"] = "New Author Added"
-    message.set_content(json.dumps(data))
-    await aiosmtplib.send(message, hostname="mailhog", port=1025)
-    return data
+    await authors.Service.send_author_created_email(json.dumps(data))

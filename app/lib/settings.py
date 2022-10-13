@@ -1,7 +1,7 @@
-"""All configuration is via environment variables.
+"""All configuration via environment.
 
-Take not of the environment variable prefixes required for each settings class, except
-[`AppSettings`][starlite_saqpg.config.AppSettings].
+Take note of the environment variable prefixes required for each
+settings class, except `AppSettings`.
 """
 from typing import Literal
 
@@ -187,10 +187,23 @@ class ServerSettings(BaseSettings):
     KEEPALIVE: int
 
 
+class EmailSettings(BaseSettings):
+    class Config:
+        env_prefix = "EMAIL_"
+        case_sensitive = True
+
+    HOST: str
+    NEW_AUTHOR_SUBJECT: str
+    PORT: int
+    RECIPIENT: str
+    SENDER: str
+
+
 api = APISettings()
 app = AppSettings()
-redis = RedisSettings()
 db = DatabaseSettings()
+email = EmailSettings()
 openapi = OpenAPISettings()
+redis = RedisSettings()
 sentry = SentrySettings()
 server = ServerSettings()
