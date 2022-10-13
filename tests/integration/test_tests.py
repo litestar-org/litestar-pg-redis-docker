@@ -1,3 +1,9 @@
+"""This module is a stub for the integration testing pattern using `pytest-
+docker`.
+
+I wanted to get the pattern working and will evolve more meaningful
+tests in due course.
+"""
 from typing import TYPE_CHECKING
 
 from httpx import AsyncClient
