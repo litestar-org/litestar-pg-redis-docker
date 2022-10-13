@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 def test_list_authors(client: "TestClient") -> None:
-    response = client.get("/authors")
+    response = client.get("/v1/authors")
     assert response.status_code == HTTP_200_OK
     assert response.json() == [
         {
@@ -35,7 +35,7 @@ def test_list_authors(client: "TestClient") -> None:
 def test_create_author(client: "TestClient", monkeypatch: pytest.MonkeyPatch) -> None:
     enqueue_mock = AsyncMock()
     monkeypatch.setattr(authors.queue, "enqueue", enqueue_mock)  # type:ignore[attr-defined]
-    response = client.post("/authors", json={"name": "James Patterson", "dob": "1974-3-22"})
+    response = client.post("/v1/authors", json={"name": "James Patterson", "dob": "1974-3-22"})
     response_json = response.json()
     assert response_json == {
         "id": ANY,
@@ -57,7 +57,7 @@ def test_create_author(client: "TestClient", monkeypatch: pytest.MonkeyPatch) ->
 
 
 def test_get_author(client: "TestClient") -> None:
-    response = client.get("/authors/97108ac1-ffcb-411d-8b1e-d9183399f63b")
+    response = client.get("/v1/authors/97108ac1-ffcb-411d-8b1e-d9183399f63b")
     assert response.json() == {
         "id": "97108ac1-ffcb-411d-8b1e-d9183399f63b",
         "created": "0001-01-01T00:00:00",
@@ -69,7 +69,7 @@ def test_get_author(client: "TestClient") -> None:
 
 def test_update_author(client: "TestClient") -> None:
     response = client.put(
-        "/authors/97108ac1-ffcb-411d-8b1e-d9183399f63b",
+        "/v1/authors/97108ac1-ffcb-411d-8b1e-d9183399f63b",
         json={
             "id": "97108ac1-ffcb-411d-8b1e-d9183399f63b",
             # tests that this attribute cannot be changed
@@ -89,7 +89,7 @@ def test_update_author(client: "TestClient") -> None:
 
 
 def test_delete_author(client: "TestClient") -> None:
-    response = client.delete("/authors/97108ac1-ffcb-411d-8b1e-d9183399f63b")
+    response = client.delete("/v1/authors/97108ac1-ffcb-411d-8b1e-d9183399f63b")
     assert response.status_code == HTTP_200_OK
     assert response.json() == {
         "id": "97108ac1-ffcb-411d-8b1e-d9183399f63b",
