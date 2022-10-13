@@ -17,7 +17,7 @@
 # starlite-pg-redis-docker
 
 This is an example [Starlite](https://github.com/starlite-api/starlite) project using SQLAlchemy + Alembic + postgresql,
-Redis and Docker.
+Redis, SAQ and Docker.
 
 ## Starlite
 
@@ -113,7 +113,7 @@ tox -e lint mypy
 tox -e test
 ```
 
-#### Integration
+#### Integration tests
 
 ```bash
 tox -e integration
