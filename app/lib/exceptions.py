@@ -16,7 +16,7 @@ from .repository.exceptions import (
     RepositoryException,
     RepositoryNotFoundException,
 )
-from .service import UnauthorizedException
+from .service import ServiceException, UnauthorizedException
 
 if TYPE_CHECKING:
     from starlite.datastructures import State
@@ -78,7 +78,7 @@ def repository_exception_to_http_response(request: Request, exc: RepositoryExcep
     return create_exception_response(http_exc())
 
 
-def service_exception_to_http_response(request: Request, exc: RepositoryException) -> Response:
+def service_exception_to_http_response(request: Request, exc: ServiceException) -> Response:
     """Transform service exceptions to HTTP exceptions.
 
     Args:
