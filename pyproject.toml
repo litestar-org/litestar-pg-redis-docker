@@ -17,7 +17,7 @@ redis = "*"
 saq = "*"
 sentry-sdk = "*"
 sqlalchemy = { git = "https://github.com/sqlalchemy/sqlalchemy.git", branch = "main" }
-starlite = "~=1.32"
+starlite = "~=1.33"
 starlite-jwt = "*"
 uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
