@@ -1,14 +1,14 @@
 [[package]]
 name = "aiosmtplib"
-version = "1.1.7"
+version = "2.0.0"
 description = "asyncio SMTP client"
 category = "main"
 optional = false
-python-versions = ">=3.5.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 
 [package.extras]
-docs = ["jinja2 (>=2.0,<3.1)", "sphinx (>=2,<4)", "sphinx_autodoc_typehints (>=1.7.0,<2.0.0)"]
-uvloop = ["uvloop (>=0.13,<0.15)"]
+docs = ["sphinx (>=4,<5)", "sphinx_autodoc_typehints (>=1.7.0,<2.0.0)"]
+uvloop = ["uvloop (>=0.14,<0.15)"]
 
 [[package]]
 name = "alembic"
@@ -986,7 +986,7 @@ sqlcipher = ["sqlcipher3-binary"]
 type = "git"
 url = "https://github.com/sqlalchemy/sqlalchemy.git"
 reference = "main"
-resolved_reference = "811979150cd9f1aed3d6de6938b84179b2092b89"
+resolved_reference = "2833aa2afbd6b1529913e6ceaa565cff6e29ba95"
 
 [[package]]
 name = "starlette"
@@ -1207,8 +1207,8 @@ content-hash = "c0ed98f1b45a44a0811d6ff96f7029b171ab17c436b01842e63c107a3fb04bf2
 
 [metadata.files]
 aiosmtplib = [
-    {file = "aiosmtplib-1.1.7-py3-none-any.whl", hash = "sha256:c1403e70fce769643820cb2c5bf0bd4f7ea83a01c60e854c81a6f5d7ccff2656"},
-    {file = "aiosmtplib-1.1.7.tar.gz", hash = "sha256:5810657a86b19476c93fa280c499ca3ef88ce26f2b74dae202989ae06377d107"},
+    {file = "aiosmtplib-2.0.0-py3-none-any.whl", hash = "sha256:514defa668b13b5c00a98c21c49fd87816e046fb3692e7ac8bbdda2310287fde"},
+    {file = "aiosmtplib-2.0.0.tar.gz", hash = "sha256:188230c5baee6851244a87ebc3390b714815d7c15360953c672caf170acb5474"},
 ]
 alembic = [
     {file = "alembic-1.8.1-py3-none-any.whl", hash = "sha256:0a024d7f2de88d738d7395ff866997314c837be6104e90c5724350313dee4da4"},
