@@ -948,7 +948,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "SQLAlchemy"
-version = "2.0.0b3.dev0"
+version = "2.0.0b4.dev0"
 description = "Database Abstraction Library"
 category = "main"
 optional = false
@@ -957,14 +957,14 @@ develop = false
 
 [package.dependencies]
 greenlet = {version = "!=0.4.17", markers = "platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\""}
-typing-extensions = ">=4.1.0"
+typing-extensions = ">=4.2.0"
 
 [package.extras]
 aiomysql = ["aiomysql", "greenlet (!=0.4.17)"]
 aiosqlite = ["aiosqlite", "greenlet (!=0.4.17)", "typing-extensions (!=3.10.0.1)"]
 asyncio = ["greenlet (!=0.4.17)"]
 asyncmy = ["asyncmy (>=0.2.3,!=0.2.4)", "greenlet (!=0.4.17)"]
-mariadb-connector = ["mariadb (>=1.0.1,!=1.1.2)"]
+mariadb-connector = ["mariadb (>=1.0.1,!=1.1.2,!=1.1.5)"]
 mssql = ["pyodbc"]
 mssql-pymssql = ["pymssql"]
 mssql-pyodbc = ["pyodbc"]
@@ -986,7 +986,7 @@ sqlcipher = ["sqlcipher3-binary"]
 type = "git"
 url = "https://github.com/sqlalchemy/sqlalchemy.git"
 reference = "main"
-resolved_reference = "af9d3ab9b8a0aaa43e9347fd251a087eebd71e1d"
+resolved_reference = "9056dc02178905fb901da5c182618fb593331592"
 
 [[package]]
 name = "starlette"
@@ -1033,7 +1033,7 @@ structlog = ["structlog"]
 
 [[package]]
 name = "starlite-jwt"
-version = "1.4.0"
+version = "1.4.1"
 description = "A JWT auth toolkit for Starlite"
 category = "main"
 optional = false
@@ -1979,8 +1979,8 @@ starlite = [
     {file = "starlite-1.35.1.tar.gz", hash = "sha256:6f43ffc5eef3f41575958c746efd8eb99241bff048b2e4dd9eaee74ab81152e4"},
 ]
 starlite-jwt = [
-    {file = "starlite-jwt-1.4.0.tar.gz", hash = "sha256:3756c194d98bd19bf1f7d9fa050b8046b0e6338a1d8fc6e075f60b5a30475925"},
-    {file = "starlite_jwt-1.4.0-py3-none-any.whl", hash = "sha256:a5d035411935c1030c4e373d4a7eda52920ab00f8a39909841fc6cc5a2f722ff"},
+    {file = "starlite_jwt-1.4.1-py3-none-any.whl", hash = "sha256:dee99a5f6553f882ac9904a146b913796527d6f3fd0e92377583bdd85ca645f6"},
+    {file = "starlite_jwt-1.4.1.tar.gz", hash = "sha256:3df72bd6ba012a241f2fefef959b52a6f4c890ebe48805a713040de02a9ad4be"},
 ]
 starlite-multipart = [
     {file = "starlite-multipart-1.2.0.tar.gz", hash = "sha256:9ba2108cfd47de07240dc90e55397080ec9ca0c6992ec1097a02dd32ba4ca593"},
