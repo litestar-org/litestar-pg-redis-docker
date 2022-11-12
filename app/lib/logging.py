@@ -2,8 +2,8 @@ import logging
 import re
 from typing import Any
 
-from starlite.status_codes import HTTP_200_OK
 from starlite import LoggingConfig
+from starlite.status_codes import HTTP_200_OK
 
 from . import settings
 

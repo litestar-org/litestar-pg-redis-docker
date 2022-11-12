@@ -2,13 +2,13 @@ from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
+from starlite import Starlite, get
 from starlite.status_codes import (
     HTTP_403_FORBIDDEN,
     HTTP_404_NOT_FOUND,
     HTTP_409_CONFLICT,
     HTTP_500_INTERNAL_SERVER_ERROR,
 )
-from starlite import Starlite, get
 from starlite.testing import RequestFactory, create_test_client
 
 from app.lib import exceptions

@@ -1,7 +1,6 @@
 import logging
 from typing import TYPE_CHECKING
 
-from starlite.middleware import ExceptionHandlerMiddleware
 from starlite.exceptions import (
     HTTPException,
     InternalServerException,
@@ -50,7 +49,6 @@ def after_exception_hook_handler(exc: Exception, scope: "Scope", state: "State")
         exc_info=exc,
     )
 
- 
 
 def repository_exception_to_http_response(_: "Request", exc: RepositoryException) -> "Response":
     """Transform repository exceptions to HTTP exceptions.
