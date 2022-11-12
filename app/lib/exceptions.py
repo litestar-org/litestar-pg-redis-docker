@@ -6,6 +6,7 @@ from starlite.exceptions import (
     InternalServerException,
     NotFoundException,
 )
+from starlite.middleware.exceptions.debug_response import create_debug_response
 from starlite.utils.exception import create_exception_response
 
 from .repository.exceptions import (
@@ -50,7 +51,7 @@ def after_exception_hook_handler(exc: Exception, scope: "Scope", state: "State")
     )
 
 
-def repository_exception_to_http_response(_: "Request", exc: RepositoryException) -> "Response":
+def repository_exception_to_http_response(request: "Request", exc: RepositoryException) -> "Response":
     """Transform repository exceptions to HTTP exceptions.
 
     Args:
@@ -67,10 +68,12 @@ def repository_exception_to_http_response(_: "Request", exc: RepositoryException
         http_exc = ConflictException
     else:
         http_exc = InternalServerException
+    if http_exc is InternalServerException and request.app.debug:
+        return create_debug_response(request, exc)
     return create_exception_response(http_exc())
 
 
-def service_exception_to_http_response(_: "Request", exc: ServiceException) -> "Response":
+def service_exception_to_http_response(request: "Request", exc: ServiceException) -> "Response":
     """Transform service exceptions to HTTP exceptions.
 
     Args:
@@ -85,4 +88,6 @@ def service_exception_to_http_response(_: "Request", exc: ServiceException) -> "
         http_exc = ForbiddenException
     else:
         http_exc = InternalServerException
+    if http_exc is InternalServerException and request.app.debug:
+        return create_debug_response(request, exc)
     return create_exception_response(http_exc())
