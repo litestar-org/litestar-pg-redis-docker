@@ -2,7 +2,7 @@ from datetime import date
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock
 
-from starlette.status import HTTP_200_OK
+from starlite.status_codes import HTTP_200_OK
 
 from app.domain import authors
 

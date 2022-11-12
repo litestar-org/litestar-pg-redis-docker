@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING
 
-from starlette.middleware.errors import ServerErrorMiddleware
+from starlite.middleware import ExceptionHandlerMiddleware
 from starlite.exceptions import (
     HTTPException,
     InternalServerException,
@@ -50,15 +50,9 @@ def after_exception_hook_handler(exc: Exception, scope: "Scope", state: "State")
         exc_info=exc,
     )
 
+ 
 
-def _create_error_response_from_starlite_middleware(request: "Request", exc: Exception) -> "Response":
-    server_middleware = ServerErrorMiddleware(app=request.app)  # type: ignore[arg-type]
-    return server_middleware.debug_response(  # type:ignore[return-value]
-        request=request, exc=exc  # type: ignore[arg-type]
-    )
-
-
-def repository_exception_to_http_response(request: "Request", exc: RepositoryException) -> "Response":
+def repository_exception_to_http_response(_: "Request", exc: RepositoryException) -> "Response":
     """Transform repository exceptions to HTTP exceptions.
 
     Args:
@@ -75,12 +69,10 @@ def repository_exception_to_http_response(request: "Request", exc: RepositoryExc
         http_exc = ConflictException
     else:
         http_exc = InternalServerException
-    if http_exc is InternalServerException and request.app.debug:
-        return _create_error_response_from_starlite_middleware(request, exc)
     return create_exception_response(http_exc())
 
 
-def service_exception_to_http_response(request: "Request", exc: ServiceException) -> "Response":
+def service_exception_to_http_response(_: "Request", exc: ServiceException) -> "Response":
     """Transform service exceptions to HTTP exceptions.
 
     Args:
@@ -95,6 +87,4 @@ def service_exception_to_http_response(request: "Request", exc: ServiceException
         http_exc = ForbiddenException
     else:
         http_exc = InternalServerException
-    if http_exc is InternalServerException and request.app.debug:
-        return _create_error_response_from_starlite_middleware(request, exc)
     return create_exception_response(http_exc())

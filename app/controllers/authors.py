@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.status import HTTP_200_OK
+from starlite.status_codes import HTTP_200_OK
 from starlite import Dependency, Provide, Router, delete, get, post, put
 
 from app.domain.authors import Author, CreateDTO, ReadDTO, Repository, Service, WriteDTO
