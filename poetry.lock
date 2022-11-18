@@ -881,7 +881,7 @@ pyasn1 = ">=0.1.3"
 
 [[package]]
 name = "saq"
-version = "0.9.0"
+version = "0.9.1"
 description = "Distributed Python job queue with asyncio and redis"
 category = "main"
 optional = false
@@ -892,7 +892,7 @@ croniter = ">=0.3.18"
 redis = ">=4.2.0"
 
 [package.extras]
-dev = ["black (==22.3.0)", "pylint"]
+dev = ["black", "mypy", "pylint", "types-croniter", "types-redis", "types-setuptools"]
 hiredis = ["redis[hiredis] (>=4.2.0)"]
 web = ["aiohttp", "aiohttp-basicauth"]
 
@@ -1993,8 +1993,8 @@ rsa = [
     {file = "rsa-4.9.tar.gz", hash = "sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21"},
 ]
 saq = [
-    {file = "saq-0.9.0-py3-none-any.whl", hash = "sha256:0056ad4d42f639eb5c2d575326ae8ce7ffdec05b8ceeafb83de6e73ccff6fec5"},
-    {file = "saq-0.9.0.tar.gz", hash = "sha256:73c316c3e7b90e6e4546dec3c4d15926d85b70a71b2fd23df78723ae6a2803e8"},
+    {file = "saq-0.9.1-py3-none-any.whl", hash = "sha256:f8f2bff790de6b128a767f5a23cbaa36014c164128beae2910e6e3d5d1c3689c"},
+    {file = "saq-0.9.1.tar.gz", hash = "sha256:071348f2132d997f7bbbcfe0628554936a7080b4ae284c0220f9e2e3c945d84b"},
 ]
 sentry-sdk = [
     {file = "sentry-sdk-1.11.0.tar.gz", hash = "sha256:e7b78a1ddf97a5f715a50ab8c3f7a93f78b114c67307785ee828ef67a5d6f117"},
