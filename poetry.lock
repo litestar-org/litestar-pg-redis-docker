@@ -995,8 +995,8 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.39.0"
-description = "Light-weight and flexible ASGI API Framework"
+version = "1.40.1"
+description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
@@ -1018,6 +1018,7 @@ brotli = ["brotli"]
 cryptography = ["cryptography"]
 full = ["brotli", "cryptography", "picologging", "structlog"]
 memcached = ["aiomcache"]
+opentelemetry = ["opentelemetry-instrumentation-asgi"]
 picologging = ["picologging"]
 redis = ["redis[hiredis]"]
 structlog = ["structlog"]
@@ -1184,7 +1185,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "96543ce2a2d1082fde7e5935f617671830134ef1879f65c2abac4a9740f3e62a"
+content-hash = "ee68005c5baba9ab387ece5f0377523d9a3baadff3ca79b71f6ce1b17c640daa"
 
 [metadata.files]
 aiosmtplib = [
@@ -2056,8 +2057,8 @@ SQLAlchemy = [
     {file = "SQLAlchemy-2.0.0b3.tar.gz", hash = "sha256:8325a4648e639cb2010199f64fad679d2f4ec8ce7e6f424ee1a41b07940cadb6"},
 ]
 starlite = [
-    {file = "starlite-1.39.0-py3-none-any.whl", hash = "sha256:ad37842ebe4ff72284a172ee2335245d39fde8354e98b6e7988522572a0e96db"},
-    {file = "starlite-1.39.0.tar.gz", hash = "sha256:927706916151629661c4e9242b1385fec3ee64e1216f07709092f5f1fe7825e2"},
+    {file = "starlite-1.40.1-py3-none-any.whl", hash = "sha256:d9e73bdd9d63cb981ba53ebb89af4565d01ef715081bbbf8a43599d120e684a9"},
+    {file = "starlite-1.40.1.tar.gz", hash = "sha256:c4d47a0a72f3e0a86e0135cfb939d0906cce0ff7c7f2d953bd426df4067bb106"},
 ]
 starlite-jwt = [
     {file = "starlite_jwt-1.5.0-py3-none-any.whl", hash = "sha256:cdecacec7e9545a5b349f4d68bd629209c4b1191d6777d786b0043d0a177cbaa"},
