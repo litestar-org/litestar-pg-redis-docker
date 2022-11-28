@@ -154,9 +154,6 @@ category = "dev"
 optional = false
 python-versions = ">=3.7"
 
-[package.dependencies]
-tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.11.0a6\" and extra == \"toml\""}
-
 [package.extras]
 toml = ["tomli"]
 
@@ -325,17 +322,6 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [package.dependencies]
 dnspython = ">=1.15.0"
 idna = ">=2.0.0"
-
-[[package]]
-name = "exceptiongroup"
-version = "1.0.1"
-description = "Backport of PEP 654 (exception groups)"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-test = ["pytest (>=6)"]
 
 [[package]]
 name = "Faker"
@@ -697,11 +683,9 @@ python-versions = ">=3.7"
 [package.dependencies]
 attrs = ">=19.2.0"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
-exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
 iniconfig = "*"
 packaging = "*"
 pluggy = ">=0.12,<2.0"
-tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
@@ -995,8 +979,8 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.39.0"
-description = "Light-weight and flexible ASGI API Framework"
+version = "1.42.0"
+description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
@@ -1018,6 +1002,7 @@ brotli = ["brotli"]
 cryptography = ["cryptography"]
 full = ["brotli", "cryptography", "picologging", "structlog"]
 memcached = ["aiomcache"]
+opentelemetry = ["opentelemetry-instrumentation-asgi"]
 picologging = ["picologging"]
 redis = ["redis[hiredis]"]
 structlog = ["structlog"]
@@ -1061,14 +1046,6 @@ description = "Python Library for Tom's Obvious, Minimal Language"
 category = "dev"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-
-[[package]]
-name = "tomli"
-version = "2.0.1"
-description = "A lil' TOML parser"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
 
 [[package]]
 name = "typing-extensions"
@@ -1183,8 +1160,8 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.10,<4.0"
-content-hash = "96543ce2a2d1082fde7e5935f617671830134ef1879f65c2abac4a9740f3e62a"
+python-versions = "~3.11"
+content-hash = "f30792c035e012e265ba57f97c2d15b89441a4dd163c278ff6997242ee0f5ec3"
 
 [metadata.files]
 aiosmtplib = [
@@ -1413,6 +1390,7 @@ croniter = [
 cryptography = [
     {file = "cryptography-38.0.3-cp36-abi3-macosx_10_10_universal2.whl", hash = "sha256:984fe150f350a3c91e84de405fe49e688aa6092b3525f407a18b9646f6612320"},
     {file = "cryptography-38.0.3-cp36-abi3-macosx_10_10_x86_64.whl", hash = "sha256:ed7b00096790213e09eb11c97cc6e2b757f15f3d2f85833cd2d3ec3fe37c1722"},
+    {file = "cryptography-38.0.3-cp36-abi3-macosx_10_12_universal2.whl", hash = "sha256:726e3a1bfee0e919b278c8f766fdcf1fe30f8e6feea590e3f248d3636b58ffb3"},
     {file = "cryptography-38.0.3-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:bbf203f1a814007ce24bd4d51362991d5cb90ba0c177a9c08825f2cc304d871f"},
     {file = "cryptography-38.0.3-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:554bec92ee7d1e9d10ded2f7e92a5d70c1f74ba9524947c0ba0c850c7b011828"},
     {file = "cryptography-38.0.3-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b1b52c9e5f8aa2b802d48bd693190341fae201ea51c7a167d69fc48b60e8a959"},
@@ -1475,10 +1453,6 @@ ecdsa = [
 email-validator = [
     {file = "email_validator-1.3.0-py2.py3-none-any.whl", hash = "sha256:816073f2a7cffef786b29928f58ec16cdac42710a53bb18aa94317e3e145ec5c"},
     {file = "email_validator-1.3.0.tar.gz", hash = "sha256:553a66f8be2ec2dea641ae1d3f29017ab89e9d603d4a25cdaac39eefa283d769"},
-]
-exceptiongroup = [
-    {file = "exceptiongroup-1.0.1-py3-none-any.whl", hash = "sha256:4d6c0aa6dd825810941c792f53d7b8d71da26f5e5f84f20f9508e8f2d33b140a"},
-    {file = "exceptiongroup-1.0.1.tar.gz", hash = "sha256:73866f7f842ede6cb1daa42c4af078e2035e5f7607f0e2c762cc51bb31bbe7b2"},
 ]
 Faker = [
     {file = "Faker-15.3.1-py3-none-any.whl", hash = "sha256:4a3465624515a6807e8aa7e8eeb85bdd86a2fa53de4e258892dd6be95362462e"},
@@ -2056,8 +2030,8 @@ SQLAlchemy = [
     {file = "SQLAlchemy-2.0.0b3.tar.gz", hash = "sha256:8325a4648e639cb2010199f64fad679d2f4ec8ce7e6f424ee1a41b07940cadb6"},
 ]
 starlite = [
-    {file = "starlite-1.39.0-py3-none-any.whl", hash = "sha256:ad37842ebe4ff72284a172ee2335245d39fde8354e98b6e7988522572a0e96db"},
-    {file = "starlite-1.39.0.tar.gz", hash = "sha256:927706916151629661c4e9242b1385fec3ee64e1216f07709092f5f1fe7825e2"},
+    {file = "starlite-1.42.0-py3-none-any.whl", hash = "sha256:7d1c41e6763b852a38c1af5b9d5babd75a99b14015682b696d5768e0ad05d143"},
+    {file = "starlite-1.42.0.tar.gz", hash = "sha256:be9b7054d7251d094d031f4dbf8afdb46a993600f64375cd380c3e73ce01a9ad"},
 ]
 starlite-jwt = [
     {file = "starlite_jwt-1.5.0-py3-none-any.whl", hash = "sha256:cdecacec7e9545a5b349f4d68bd629209c4b1191d6777d786b0043d0a177cbaa"},
@@ -2074,10 +2048,6 @@ texttable = [
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
     {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
-]
-tomli = [
-    {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
-    {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
