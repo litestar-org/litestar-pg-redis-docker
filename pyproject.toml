@@ -16,7 +16,7 @@ pydantic = "*"
 redis = "*"
 saq = "*"
 sentry-sdk = "*"
-sqlalchemy = "==2.0.0b3"
+sqlalchemy = "==2.0.0b4"
 starlite = "~=1.44"
 starlite-jwt = "*"
 uvicorn = { extras = ["standard"], version = "*" }
