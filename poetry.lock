@@ -995,7 +995,7 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.43.1"
+version = "1.44.0"
 description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
@@ -1010,7 +1010,6 @@ pydantic = "*"
 pydantic-factories = "*"
 pydantic-openapi-schema = "*"
 pyyaml = "*"
-starlite-multipart = ">=1.2.0"
 typing-extensions = "*"
 
 [package.extras]
@@ -1036,17 +1035,6 @@ python-versions = ">=3.8,<4.0"
 cryptography = "*"
 python-jose = "*"
 starlite = ">=1.24.0"
-
-[[package]]
-name = "starlite-multipart"
-version = "1.2.0"
-description = "Toolkit for working with multipart/formdata messages."
-category = "main"
-optional = false
-python-versions = ">=3.7,<4.0"
-
-[package.dependencies]
-anyio = "*"
 
 [[package]]
 name = "texttable"
@@ -1186,7 +1174,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "b06d83732ac2c93fba9ce5a8d5804e28f14f667c807b7eba53d90be9cf380bce"
+content-hash = "53154dbd4b3df468853b9699e34a11fb7c31384b0353f837fa8d24f2e98f6e34"
 
 [metadata.files]
 aiosmtplib = [
@@ -2058,16 +2046,12 @@ SQLAlchemy = [
     {file = "SQLAlchemy-2.0.0b3.tar.gz", hash = "sha256:8325a4648e639cb2010199f64fad679d2f4ec8ce7e6f424ee1a41b07940cadb6"},
 ]
 starlite = [
-    {file = "starlite-1.43.1-py3-none-any.whl", hash = "sha256:55af0ac6cd6cfaa3e4a5360f184c99dc3bf72d67cf148bf3f1597857966af7c7"},
-    {file = "starlite-1.43.1.tar.gz", hash = "sha256:a67712db59113c3a043c1f25a65fd42e5f3c8f09974e6ea0e3c18085f6e909ac"},
+    {file = "starlite-1.44.0-py3-none-any.whl", hash = "sha256:2a9a32733e38382942709e84955a137841ecd339953a4224928d7da4cbb8297a"},
+    {file = "starlite-1.44.0.tar.gz", hash = "sha256:eee794f06024255843ef7a589081da3e184843c5569781fac7c1c5e20a3c33a1"},
 ]
 starlite-jwt = [
     {file = "starlite_jwt-1.5.0-py3-none-any.whl", hash = "sha256:cdecacec7e9545a5b349f4d68bd629209c4b1191d6777d786b0043d0a177cbaa"},
     {file = "starlite_jwt-1.5.0.tar.gz", hash = "sha256:53b8bf35db63249dcc26275412f8aa5deb43365a14a7e1a31cc15b2e951cacdf"},
-]
-starlite-multipart = [
-    {file = "starlite-multipart-1.2.0.tar.gz", hash = "sha256:9ba2108cfd47de07240dc90e55397080ec9ca0c6992ec1097a02dd32ba4ca593"},
-    {file = "starlite_multipart-1.2.0-py3-none-any.whl", hash = "sha256:ceb5667d6c58bcbc305d5922ead791f0b50f0b9f658747144577a3dccffc5335"},
 ]
 texttable = [
     {file = "texttable-1.6.4-py2.py3-none-any.whl", hash = "sha256:dd2b0eaebb2a9e167d1cefedab4700e5dcbdb076114eed30b58b97ed6b37d6f2"},
