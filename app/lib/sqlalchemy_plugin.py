@@ -1,8 +1,7 @@
-from functools import partial
 from typing import TYPE_CHECKING, Any, cast
 from uuid import UUID
 
-from orjson import dumps, loads
+import msgspec
 from sqlalchemy import event
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import NullPool
@@ -36,7 +35,7 @@ engine = create_async_engine(
     settings.db.URL,
     echo=settings.db.ECHO,
     echo_pool=settings.db.ECHO_POOL,
-    json_serializer=partial(dumps, default=_default),
+    json_serializer=msgspec.json.Encoder(enc_hook=_default),
     max_overflow=settings.db.POOL_MAX_OVERFLOW,
     pool_size=settings.db.POOL_SIZE,
     pool_timeout=settings.db.POOL_TIMEOUT,
@@ -73,7 +72,7 @@ def _sqla_on_connect(dbapi_connection: Any, _: Any) -> Any:
     def decoder(bin_value: bytes) -> Any:
         # the byte is the \x01 prefix for jsonb used by PostgreSQL.
         # asyncpg returns it when format='binary'
-        return loads(bin_value[1:])
+        return msgspec.json.decode(bin_value[1:])
 
     dbapi_connection.await_(
         dbapi_connection.driver_connection.set_type_codec(

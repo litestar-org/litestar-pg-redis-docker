@@ -1,11 +1,10 @@
 import asyncio
 from collections import abc
 from collections.abc import Collection  # noqa: TC003
-from functools import partial
 from signal import Signals  # noqa: TC003
 from typing import Any
 
-import orjson
+import msgspec
 import saq
 
 from .redis import redis
@@ -35,8 +34,8 @@ class Queue(saq.Queue):
     """
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        kwargs.setdefault("dump", partial(orjson.dumps, default=str))
-        kwargs.setdefault("load", orjson.loads)
+        kwargs.setdefault("dump", msgspec.json.encode)
+        kwargs.setdefault("load", msgspec.json.decode)
         super().__init__(*args, **kwargs)
 
 
