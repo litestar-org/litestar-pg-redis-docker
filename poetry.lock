@@ -75,7 +75,7 @@ python-versions = ">=3.5"
 dev = ["cloudpickle", "coverage[toml] (>=5.0.2)", "furo", "hypothesis", "mypy (>=0.900,!=0.940)", "pre-commit", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "sphinx", "sphinx-notfound-page", "zope.interface"]
 docs = ["furo", "sphinx", "sphinx-notfound-page", "zope.interface"]
 tests = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "zope.interface"]
-tests_no_zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
+tests-no-zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
 
 [[package]]
 name = "bcrypt"
@@ -125,7 +125,7 @@ optional = false
 python-versions = ">=3.6.0"
 
 [package.extras]
-unicode_backport = ["unicodedata2"]
+unicode-backport = ["unicodedata2"]
 
 [[package]]
 name = "click"
@@ -444,7 +444,7 @@ six = ">=1.11.0"
 
 [package.extras]
 format = ["idna", "jsonpointer (>1.13)", "rfc3987", "strict-rfc3339", "webcolors"]
-format_nongpl = ["idna", "jsonpointer (>1.13)", "rfc3339-validator", "rfc3986-validator (>0.1.0)", "webcolors"]
+format-nongpl = ["idna", "jsonpointer (>1.13)", "rfc3339-validator", "rfc3986-validator (>0.1.0)", "webcolors"]
 
 [[package]]
 name = "Mako"
@@ -808,7 +808,7 @@ urllib3 = ">=1.21.1,<1.27"
 
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
-use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
+use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "rfc3986"
@@ -854,7 +854,7 @@ web = ["aiohttp", "aiohttp-basicauth"]
 
 [[package]]
 name = "sentry-sdk"
-version = "1.12.0"
+version = "1.12.1"
 description = "Python client for Sentry (https://sentry.io)"
 category = "main"
 optional = false
@@ -876,7 +876,7 @@ fastapi = ["fastapi (>=0.79.0)"]
 flask = ["blinker (>=1.1)", "flask (>=0.11)"]
 httpx = ["httpx (>=0.16.0)"]
 opentelemetry = ["opentelemetry-distro (>=0.350b0)"]
-pure_eval = ["asttokens", "executing", "pure-eval"]
+pure-eval = ["asttokens", "executing", "pure-eval"]
 pymongo = ["pymongo (>=3.1)"]
 pyspark = ["pyspark (>=2.4.4)"]
 quart = ["blinker (>=1.1)", "quart (>=0.16.1)"]
@@ -932,21 +932,21 @@ aiomysql = ["aiomysql", "greenlet (!=0.4.17)"]
 aiosqlite = ["aiosqlite", "greenlet (!=0.4.17)", "typing-extensions (!=3.10.0.1)"]
 asyncio = ["greenlet (!=0.4.17)"]
 asyncmy = ["asyncmy (>=0.2.3,!=0.2.4)", "greenlet (!=0.4.17)"]
-mariadb_connector = ["mariadb (>=1.0.1,!=1.1.2,!=1.1.5)"]
+mariadb-connector = ["mariadb (>=1.0.1,!=1.1.2,!=1.1.5)"]
 mssql = ["pyodbc"]
-mssql_pymssql = ["pymssql"]
-mssql_pyodbc = ["pyodbc"]
+mssql-pymssql = ["pymssql"]
+mssql-pyodbc = ["pyodbc"]
 mypy = ["mypy (>=0.910)"]
 mysql = ["mysqlclient (>=1.4.0)"]
-mysql_connector = ["mysql-connector-python"]
+mysql-connector = ["mysql-connector-python"]
 oracle = ["cx-oracle (>=7)"]
-oracle_oracledb = ["oracledb (>=1.0.1)"]
+oracle-oracledb = ["oracledb (>=1.0.1)"]
 postgresql = ["psycopg2 (>=2.7)"]
-postgresql_asyncpg = ["asyncpg", "greenlet (!=0.4.17)"]
-postgresql_pg8000 = ["pg8000 (>=1.29.1)"]
-postgresql_psycopg = ["psycopg (>=3.0.7)"]
-postgresql_psycopg2binary = ["psycopg2-binary"]
-postgresql_psycopg2cffi = ["psycopg2cffi"]
+postgresql-asyncpg = ["asyncpg", "greenlet (!=0.4.17)"]
+postgresql-pg8000 = ["pg8000 (>=1.29.1)"]
+postgresql-psycopg = ["psycopg (>=3.0.7)"]
+postgresql-psycopg2binary = ["psycopg2-binary"]
+postgresql-psycopg2cffi = ["psycopg2cffi"]
 pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
@@ -1911,8 +1911,8 @@ saq = [
     {file = "saq-0.9.2.tar.gz", hash = "sha256:d0ad2994e7ae11337dc6481e7065399aa02f3d8923b1d9fdde1e02697de8d976"},
 ]
 sentry-sdk = [
-    {file = "sentry-sdk-1.12.0.tar.gz", hash = "sha256:dc0fe6ef2f77a3853b399c75c97d87be7666098817c1c314f8fcdf68a6865914"},
-    {file = "sentry_sdk-1.12.0-py2.py3-none-any.whl", hash = "sha256:3c9bc64025976842c1103cd75d45cff94a7c0cc48fa07770d07a09d2ab8dac30"},
+    {file = "sentry-sdk-1.12.1.tar.gz", hash = "sha256:5bbe4b72de22f9ac1e67f2a4e6efe8fbd595bb59b7b223443f50fe5802a5551c"},
+    {file = "sentry_sdk-1.12.1-py2.py3-none-any.whl", hash = "sha256:9f0b960694e2d8bb04db4ba6ac2a645040caef4e762c65937998ff06064f10d6"},
 ]
 setuptools = [
     {file = "setuptools-65.6.3-py3-none-any.whl", hash = "sha256:57f6f22bde4e042978bcd50176fdb381d7c21a9efa4041202288d3737a0c6a54"},
