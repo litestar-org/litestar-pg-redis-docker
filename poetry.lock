@@ -989,7 +989,7 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.47.0"
+version = "1.48.0"
 description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
@@ -2049,8 +2049,8 @@ SQLAlchemy = [
     {file = "SQLAlchemy-2.0.0b4.tar.gz", hash = "sha256:3192d9af656d0fc1b07351f0ac13a84bb679f40f918234e54cbcc36af11766fe"},
 ]
 starlite = [
-    {file = "starlite-1.47.0-py3-none-any.whl", hash = "sha256:6ca09a22a25372976d3180f8891603773e409ec880fc02e1a33d3d4f3c42a88c"},
-    {file = "starlite-1.47.0.tar.gz", hash = "sha256:49c2f84a29672ed49520430f0861fc4c25546490912334cb24d7a0931c505a4d"},
+    {file = "starlite-1.48.0-py3-none-any.whl", hash = "sha256:8848fb9e941de852e74fb2e84afa9487621848b1288ee2e46ca51c5a13c313b5"},
+    {file = "starlite-1.48.0.tar.gz", hash = "sha256:2a860324b2e1ddf736ea4d7f8eb6b8edca39422f29a50f7771aaf0048c45cd65"},
 ]
 starlite-jwt = [
     {file = "starlite_jwt-1.5.0-py3-none-any.whl", hash = "sha256:cdecacec7e9545a5b349f4d68bd629209c4b1191d6777d786b0043d0a177cbaa"},
