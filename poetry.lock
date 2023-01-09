@@ -1,14 +1,14 @@
 [[package]]
 name = "aiosmtplib"
-version = "2.0.0"
+version = "2.0.1"
 description = "asyncio SMTP client"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.extras]
-docs = ["sphinx (>=4,<5)", "sphinx_autodoc_typehints (>=1.7.0,<2.0.0)"]
-uvloop = ["uvloop (>=0.14,<0.15)"]
+docs = ["sphinx (>=5.3.0,<6.0.0)", "sphinx_autodoc_typehints (>=1.7.0,<2.0.0)"]
+uvloop = ["uvloop (>=0.14,<0.15)", "uvloop (>=0.14,<0.15)", "uvloop (>=0.17,<0.18)"]
 
 [[package]]
 name = "alembic"
@@ -1153,8 +1153,8 @@ content-hash = "10b17cede3d3ff0e7a6bc92195d468e9f0eef2367efd7b56b675c631853e1b18
 
 [metadata.files]
 aiosmtplib = [
-    {file = "aiosmtplib-2.0.0-py3-none-any.whl", hash = "sha256:514defa668b13b5c00a98c21c49fd87816e046fb3692e7ac8bbdda2310287fde"},
-    {file = "aiosmtplib-2.0.0.tar.gz", hash = "sha256:188230c5baee6851244a87ebc3390b714815d7c15360953c672caf170acb5474"},
+    {file = "aiosmtplib-2.0.1-py3-none-any.whl", hash = "sha256:2f619f900d1bfe25a8f453005958ba78870abbfeeffb2fdef11265be0df26913"},
+    {file = "aiosmtplib-2.0.1.tar.gz", hash = "sha256:a20aae28f67169dd761beef4c62e4bb3073d035f9ee20c2e4f18baa1a73e7c88"},
 ]
 alembic = [
     {file = "alembic-1.9.1-py3-none-any.whl", hash = "sha256:a9781ed0979a20341c2cbb56bd22bd8db4fc1913f955e705444bd3a97c59fa32"},
