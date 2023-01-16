@@ -1856,14 +1856,14 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.48.1"
+version = "1.49.0"
 description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "starlite-1.48.1-py3-none-any.whl", hash = "sha256:d2a37240b54199f1fa7ba2d3d2079124ee494f9f81722eec2cf04cccf4abfb8b"},
-    {file = "starlite-1.48.1.tar.gz", hash = "sha256:2a79e219d8f6498f2b9cad284615b58186c2043010dee70cefb62b930528efed"},
+    {file = "starlite-1.49.0-py3-none-any.whl", hash = "sha256:97748c7915706f5888f6eb245a4305f7c50f3fdb5bc09785421ee5677513cee9"},
+    {file = "starlite-1.49.0.tar.gz", hash = "sha256:216c84745617070b766d0e759016a13fcfb467f75b54c8735a0b1e78625363bf"},
 ]
 
 [package.dependencies]
@@ -1882,15 +1882,15 @@ typing-extensions = "*"
 
 [package.extras]
 brotli = ["brotli"]
-cli = ["click (>=8.1.3)", "rich (>=12.6.0)"]
+cli = ["click", "jsbeautifier", "rich (>=13.0.0)"]
 cryptography = ["cryptography"]
-full = ["aiomcache", "brotli", "click (>=8.1.3)", "cryptography", "opentelemetry-instrumentation-asgi", "picologging", "python-jose", "redis[hiredis]", "rich (>=12.6.0)", "structlog"]
+full = ["aiomcache", "brotli", "click", "cryptography", "opentelemetry-instrumentation-asgi", "picologging", "python-jose", "redis[hiredis]", "rich (>=13.0.0)", "structlog"]
 jwt = ["cryptography", "python-jose"]
 memcached = ["aiomcache"]
 opentelemetry = ["opentelemetry-instrumentation-asgi"]
 picologging = ["picologging"]
 redis = ["redis[hiredis]"]
-standard = ["click (>=8.1.3)", "picologging", "rich (>=12.6.0)"]
+standard = ["click", "jsbeautifier", "picologging", "rich (>=13.0.0)"]
 structlog = ["structlog"]
 
 [[package]]
