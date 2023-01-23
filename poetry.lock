@@ -881,24 +881,6 @@ files = [
 ]
 
 [[package]]
-name = "Jinja2"
-version = "3.1.2"
-description = "A very fast and expressive template engine."
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "Jinja2-3.1.2-py3-none-any.whl", hash = "sha256:6088930bfe239f0e6710546ab9c19c9ef35e29792895fed6e6e31a023a182a61"},
-    {file = "Jinja2-3.1.2.tar.gz", hash = "sha256:31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"},
-]
-
-[package.dependencies]
-MarkupSafe = ">=2.0"
-
-[package.extras]
-i18n = ["Babel (>=2.7)"]
-
-[[package]]
 name = "jsonschema"
 version = "3.2.0"
 description = "An implementation of JSON Schema validation for Python"
@@ -1856,21 +1838,20 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.49.0"
+version = "1.50.1"
 description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "starlite-1.49.0-py3-none-any.whl", hash = "sha256:97748c7915706f5888f6eb245a4305f7c50f3fdb5bc09785421ee5677513cee9"},
-    {file = "starlite-1.49.0.tar.gz", hash = "sha256:216c84745617070b766d0e759016a13fcfb467f75b54c8735a0b1e78625363bf"},
+    {file = "starlite-1.50.1-py3-none-any.whl", hash = "sha256:31d45efc805b895b9733b58825942129e55ebbbf8ddaeaf931b1237af5daae37"},
+    {file = "starlite-1.50.1.tar.gz", hash = "sha256:7cc30ace31c47c406666baff839e4dfa24e205855ef0fada011b9e1bbadda852"},
 ]
 
 [package.dependencies]
 anyio = ">=3"
 fast-query-parsers = "*"
 httpx = ">=0.22"
-jinja2 = ">=3.1.2"
 mako = ">=1.2.4"
 msgspec = ">=0.11.0"
 multidict = ">=6.0.2"
@@ -1884,13 +1865,14 @@ typing-extensions = "*"
 brotli = ["brotli"]
 cli = ["click", "jsbeautifier", "rich (>=13.0.0)"]
 cryptography = ["cryptography"]
-full = ["aiomcache", "brotli", "click", "cryptography", "opentelemetry-instrumentation-asgi", "picologging", "python-jose", "redis[hiredis]", "rich (>=13.0.0)", "structlog"]
+full = ["aiomcache", "brotli", "click", "cryptography", "jinja2 (>=3.1.2)", "opentelemetry-instrumentation-asgi", "picologging", "python-jose", "redis[hiredis]", "rich (>=13.0.0)", "structlog"]
+jinja = ["jinja2 (>=3.1.2)"]
 jwt = ["cryptography", "python-jose"]
 memcached = ["aiomcache"]
 opentelemetry = ["opentelemetry-instrumentation-asgi"]
 picologging = ["picologging"]
 redis = ["redis[hiredis]"]
-standard = ["click", "jsbeautifier", "picologging", "rich (>=13.0.0)"]
+standard = ["click", "jinja2 (>=3.1.2)", "jsbeautifier", "picologging", "rich (>=13.0.0)"]
 structlog = ["structlog"]
 
 [[package]]
