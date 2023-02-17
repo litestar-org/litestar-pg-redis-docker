@@ -1,10 +1,13 @@
 from typing import TYPE_CHECKING
 
 from starlite import CacheConfig
+from starlite.cache.redis_cache_backend import (
+    RedisCacheBackendConfig,
+    RedisCacheBackend,
+)
 from starlite.config.cache import default_cache_key_builder
 
 from . import settings
-from .redis import redis
 
 if TYPE_CHECKING:
     from starlite.connection import Request
@@ -26,8 +29,10 @@ def cache_key_builder(request: "Request") -> str:
     return f"{settings.app.slug}:{default_cache_key_builder(request)}"
 
 
+config = RedisCacheBackendConfig(url=settings.redis.URL, port=6379, db=0)
+redis_backend = RedisCacheBackend(config=config)
 config = CacheConfig(
-    backend=redis,  # pyright:ignore[reportGeneralTypeIssues]
+    backend=redis_backend,  # pyright:ignore[reportGeneralTypeIssues]
     expiration=settings.api.CACHE_EXPIRATION,
     cache_key_builder=cache_key_builder,
 )
