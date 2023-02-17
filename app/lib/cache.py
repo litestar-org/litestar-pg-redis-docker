@@ -29,8 +29,7 @@ def cache_key_builder(request: "Request") -> str:
     return f"{settings.app.slug}:{default_cache_key_builder(request)}"
 
 
-config = RedisCacheBackendConfig(url=settings.redis.URL, port=6379, db=0)
-redis_backend = RedisCacheBackend(config=config)
+redis_backend = RedisCacheBackend(config=RedisCacheBackendConfig(url=settings.redis.URL, port=6379, db=0))
 config = CacheConfig(
     backend=redis_backend,  # pyright:ignore[reportGeneralTypeIssues]
     expiration=settings.api.CACHE_EXPIRATION,
