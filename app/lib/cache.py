@@ -2,8 +2,8 @@ from typing import TYPE_CHECKING
 
 from starlite import CacheConfig
 from starlite.cache.redis_cache_backend import (
-    RedisCacheBackendConfig,
     RedisCacheBackend,
+    RedisCacheBackendConfig,
 )
 from starlite.config.cache import default_cache_key_builder
 
