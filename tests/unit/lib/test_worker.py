@@ -1,9 +1,9 @@
 """Tests for the SAQ async worker functionality."""
 from __future__ import annotations
 
-
 from asyncpg.pgproto import pgproto
 from pydantic import BaseModel
+
 from app.lib import worker
 
 

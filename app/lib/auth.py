@@ -40,7 +40,7 @@ def login_handler() -> Response[User]:
     return jwt_auth.login(identifier=str(user.id), response_body=user)
 
 
-jwt_auth = JWTAuth(
+jwt_auth = JWTAuth[User](
     retrieve_user_handler=retrieve_user_handler,
     token_secret=settings.api.SECRET_KEY,
     exclude=["/schema", settings.api.HEALTH_PATH],
