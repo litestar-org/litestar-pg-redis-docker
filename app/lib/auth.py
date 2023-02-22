@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 from uuid import uuid4
 
 from starlite import Response, get
-from starlite_jwt import JWTAuth
+from starlite.contrib.jwt import JWTAuth
 
 from . import settings
 from .users import User
