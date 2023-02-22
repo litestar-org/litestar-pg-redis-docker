@@ -1,13 +1,20 @@
+from __future__ import annotations
+
 import asyncio
 from collections import abc
-from collections.abc import Collection  # noqa: TC003
-from signal import Signals  # noqa: TC003
-from typing import Any
+from functools import partial
+from typing import TYPE_CHECKING, Any
 
 import msgspec
 import saq
+from starlite.utils.serialization import default_serializer
 
+from . import settings, type_encoders
 from .redis import redis
+
+if TYPE_CHECKING:
+    from collections.abc import Collection
+    from signal import Signals
 
 __all__ = [
     "Queue",
@@ -18,6 +25,9 @@ __all__ = [
 ]
 
 WorkerFunction = abc.Callable[..., abc.Awaitable[Any]]
+
+encoder = msgspec.json.Encoder(enc_hook=partial(default_serializer, type_encoders=type_encoders.type_encoders_map))
+decoder = msgspec.json.Decoder()
 
 
 class Queue(saq.Queue):
@@ -34,9 +44,14 @@ class Queue(saq.Queue):
     """
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        kwargs.setdefault("dump", msgspec.json.encode)
-        kwargs.setdefault("load", msgspec.json.decode)
+        kwargs.setdefault("dump", encoder.encode)
+        kwargs.setdefault("load", decoder.decode)
+        kwargs.setdefault("name", "background-worker")
         super().__init__(*args, **kwargs)
+
+    def namespace(self, key: str) -> str:
+        """Make the namespace unique per app."""
+        return f"{settings.app.slug}:{self.name}:{key}"
 
 
 class Worker(saq.Worker):

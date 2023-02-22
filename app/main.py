@@ -9,6 +9,8 @@ being loaded before that mocking has been completed.
 
 When writing tests, always use the `app` fixture, never import the app directly from this module.
 """
+from __future__ import annotations
+
 import uvicorn
 from starlite import Provide, Starlite
 from starlite.plugins.sql_alchemy import SQLAlchemyPlugin
