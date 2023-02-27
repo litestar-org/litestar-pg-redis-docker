@@ -31,7 +31,9 @@ def test_after_exception_hook_handler_called(monkeypatch: pytest.MonkeyPatch) ->
     def raises() -> None:
         raise RuntimeError
 
-    with create_test_client(route_handlers=[raises], after_exception=exceptions.after_exception_hook_handler) as client:
+    with create_test_client(
+        route_handlers=[raises], after_exception=[exceptions.after_exception_hook_handler]
+    ) as client:
         resp = client.get("/error")
         assert resp.status_code == HTTP_500_INTERNAL_SERVER_ERROR
 

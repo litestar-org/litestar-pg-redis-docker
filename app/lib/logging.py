@@ -2,7 +2,7 @@ import logging
 import re
 from typing import Any
 
-from starlite import LoggingConfig
+from starlite.config.logging import LoggingConfig
 from starlite.status_codes import HTTP_200_OK
 
 from . import settings

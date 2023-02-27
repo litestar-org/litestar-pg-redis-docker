@@ -24,7 +24,7 @@ def test_cache_on_app(app: "Starlite", redis: "AsyncRedis") -> None:
     Args:
         redis: The test Redis client instance.
     """
-    assert app.cache.backend is redis
+    assert app.cache.backend._redis is redis  # type:ignore[attr-defined]  # pylint: disable=protected-access
 
 
 def test_engine_on_app(app: "Starlite", engine: "AsyncEngine") -> None:

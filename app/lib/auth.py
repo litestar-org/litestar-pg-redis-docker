@@ -8,7 +8,7 @@ from . import settings
 from .users import User
 
 if TYPE_CHECKING:
-    from starlite import ASGIConnection
+    from starlite.connection import ASGIConnection
 
 
 default_user = User(name=settings.api.DEFAULT_USER_NAME)

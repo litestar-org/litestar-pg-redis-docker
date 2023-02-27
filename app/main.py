@@ -14,7 +14,8 @@ directly from this module.
 from __future__ import annotations
 
 import uvicorn
-from starlite import Provide, Starlite
+from starlite import Starlite
+from starlite.di import Provide
 from starlite.plugins.sql_alchemy import SQLAlchemyPlugin
 
 from app import worker
@@ -61,7 +62,7 @@ app = Starlite(
     plugins=[SQLAlchemyPlugin(config=sqlalchemy_plugin.config)],
     on_shutdown=[worker_instance.stop, redis.close],
     on_startup=[worker_instance.on_app_startup, sentry.configure],
-    static_files_config=static_files.config,
+    static_files_config=[static_files.config],
     type_encoders=type_encoders_map,
 )
 

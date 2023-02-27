@@ -92,7 +92,7 @@ def test_read_dto_for_model_field_factory_default(base: type[DeclarativeBase]) -
 def test_read_dto_for_model_field_unsupported_default(base: type[DeclarativeBase]) -> None:
     class Model(base):
         __tablename__ = "smth"
-        field: Mapped[datetime] = mapped_column(default=func.now())
+        field: Mapped[datetime] = mapped_column(default=func.now())  # pylint: disable=not-callable
 
     with pytest.raises(ValueError):
         dto.factory("DTO", Model, purpose=dto.Purpose.write)

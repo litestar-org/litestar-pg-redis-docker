@@ -1,7 +1,8 @@
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlite import Provide, Router, delete, get, post, put
+from starlite import Router, delete, get, post, put
+from starlite.di import Provide
 
 from .users import Repository, Service, User
 

@@ -2,13 +2,16 @@ from datetime import datetime
 from typing import TYPE_CHECKING
 from uuid import UUID
 
-from starlite import Dependency, Parameter, Provide
+from starlite.di import Provide
+from starlite.params import Dependency, Parameter
 
 from . import settings
 from .repository.filters import BeforeAfter, CollectionFilter, LimitOffset
 from .repository.types import FilterTypes
 
 if TYPE_CHECKING:
+    from typing import Any
+
     from starlite import Request
     from starlite_jwt import Token
 
@@ -23,7 +26,7 @@ LIMIT_OFFSET_DEPENDENCY_KEY = "limit_offset"
 UPDATED_FILTER_DEPENDENCY_KEY = "updated_filter"
 
 
-async def provide_user(request: "Request[User, Token]") -> "User":
+async def provide_user(request: "Request[User, Token, Any]") -> "User":
     """Gets the user from the request.
 
     Args:
