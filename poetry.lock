@@ -2136,14 +2136,14 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.51.5"
+version = "1.51.6"
 description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "starlite-1.51.5-py3-none-any.whl", hash = "sha256:b84ba99d4ce276d04596a2ee34cd48dac2180524b204b2ab6c854800f9368f54"},
-    {file = "starlite-1.51.5.tar.gz", hash = "sha256:9d95f8a5605e618598489bcf78be59678e78b36680185ae25c14ca8913f60d10"},
+    {file = "starlite-1.51.6-py3-none-any.whl", hash = "sha256:b2a07e4ed5335513f46b2ec9d326a989f147a0969b7c188e20d16a44d80450ff"},
+    {file = "starlite-1.51.6.tar.gz", hash = "sha256:4b51fa07867108d363c8dd32622ef1daac615d30a7292ef24df914d15cc35097"},
 ]
 
 [package.dependencies]
@@ -2440,4 +2440,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "~=3.11.0"
-content-hash = "5009b6146efac648a0b3ce77896653eea3c2f0d0f69f20afaba86b32721aeed6"
+content-hash = "d6a10dc3488dc38d9992913675236551b32d1430d2592caeaf92fd383a0236d3"
