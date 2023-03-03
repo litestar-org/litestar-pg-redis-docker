@@ -26,10 +26,8 @@ services:
   app:
     build:
       context: .
-      target: install
       args:
-        INSTALL_ARGS: "--no-root"
-    command: scripts/entry
+        INSTALL_DEPENDENCIES: prod
     depends_on:
       - db
       - mailhog
