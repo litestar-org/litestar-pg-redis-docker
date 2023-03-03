@@ -27,7 +27,7 @@ services:
     build:
       context: .
       args:
-        INSTALL_DEPENDENCIES: prod
+        INSTALL_DEPENDENCIES: dev
     depends_on:
       - db
       - mailhog
