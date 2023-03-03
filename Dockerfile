@@ -26,14 +26,14 @@ COPY pyproject.toml poetry.lock ./
 
 # install only production dependencies
 RUN --mount=type=cache,target=/cache/poetry \
-    && poetry install --no-root --dev
+    poetry install --no-root --no-dev
 
 
 FROM base-prod AS base-dev
 
 # install the rest of the dependencies
 RUN --mount=type=cache,target=/cache/poetry \
-    && poetry install --no-root
+    poetry install --no-root
 
 
 FROM base-${INSTALL_DEPENDENCIES} AS final
