@@ -54,4 +54,3 @@ USER "app-user"
 
 ENTRYPOINT ["/bin/sh", "-c"]
 CMD ["./scripts/entry"]
-
