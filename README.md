@@ -35,12 +35,12 @@ Starlite is a light and flexible ASGI API framework.
 ### Setup
 
 - `$ cp .env.example .env`
-- `$ docker-compose build`
-- `$ docker-compose run --rm app alembic upgrade head`
+- `$ docker compose build`
+- `$ docker compose run --rm app alembic upgrade head`
 
 ### Run
 
-`$ docker-compose up --build`
+`$ docker compose up --build`
 
 ### Async Worker Emails
 
@@ -69,11 +69,11 @@ Then check the `mailhog` GUI to see the email that has been sent by the worker.
 
 #### Revision
 
-`$ docker-compose run --rm app alembic revision --autogenerate -m "revision description"`
+`$ docker compose run --rm app alembic revision --autogenerate -m "revision description"`
 
 #### Migration
 
-`$ docker-compose run --rm app alembic upgrade head`
+`$ docker compose run --rm app alembic upgrade head`
 
 ### Test
 
