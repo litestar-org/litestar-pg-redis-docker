@@ -23,6 +23,8 @@ RUN curl -sSL https://install.python-poetry.org | python3 - \
 
 FROM base AS base-prod
 
+WORKDIR /app
+
 COPY pyproject.toml poetry.lock ./
 
 # install only production dependencies
