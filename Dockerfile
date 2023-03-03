@@ -14,6 +14,7 @@ RUN apt-get update \
 
 
 ENV POETRY_HOME="/opt/poetry"
+ENV PATH="$POETRY_HOME/bin:$PATH"
 RUN curl -sSL https://install.python-poetry.org | python3 - \
     && poetry config virtualenvs.create false \
     && mkdir -p /cache/poetry \
@@ -21,9 +22,6 @@ RUN curl -sSL https://install.python-poetry.org | python3 - \
 
 FROM base AS base-prod
 
-# allow controlling the poetry installation of dependencies via external args
-ENV POETRY_HOME="/opt/poetry"
-ENV PATH="$POETRY_HOME/bin:$PATH"
 COPY pyproject.toml poetry.lock ./
 
 # install only production dependencies
