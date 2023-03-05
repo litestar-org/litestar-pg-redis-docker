@@ -38,7 +38,7 @@ FROM base-prod AS base-dev
 RUN --mount=type=cache,target=/cache/poetry \
     poetry install --no-root
 
-
+# hadolint ignore=DL3006
 FROM base-${INSTALL_DEPENDENCIES} AS final
 
 # copy all the application code and install our project
