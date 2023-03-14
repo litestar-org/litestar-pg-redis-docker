@@ -17,7 +17,7 @@ redis = "*"
 saq = "*"
 sentry-sdk = "*"
 sqlalchemy = ">=2.0.0"
-starlite = { version = "~=1.51.6", extras = ["redis","jwt","cli"] }
+starlite = { version = "~=1.51.7", extras = ["redis","jwt","cli"] }
 uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
 
@@ -28,7 +28,7 @@ optional = true
 pytest = "*"
 pytest-asyncio = "*"
 pytest-dotenv = "*"
-starlite = { extras = ["testing"], version = "~=1.51.6" }
+starlite = { extras = ["testing"], version = "~=1.51.7" }
 
 [tool.poetry.group.coverage]
 optional = true
