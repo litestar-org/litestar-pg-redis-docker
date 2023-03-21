@@ -1,6 +1,6 @@
 from logging import LogRecord
 
-from starlite.status_codes import HTTP_200_OK, HTTP_503_SERVICE_UNAVAILABLE
+from litestar.status_codes import HTTP_200_OK, HTTP_503_SERVICE_UNAVAILABLE
 
 from app.lib import logging, settings
 

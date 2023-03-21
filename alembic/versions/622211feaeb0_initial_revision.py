@@ -5,8 +5,10 @@ Revises:
 Create Date: 2022-10-09 09:14:35.591171
 """
 import sqlalchemy as sa
-
 from alembic import op
+
+__all__ = ["downgrade", "upgrade"]
+
 
 # revision identifiers, used by Alembic.
 revision = "622211feaeb0"

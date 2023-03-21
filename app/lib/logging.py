@@ -2,10 +2,12 @@ import logging
 import re
 from typing import Any
 
-from starlite.config.logging import LoggingConfig
-from starlite.status_codes import HTTP_200_OK
+from litestar.logging.config import LoggingConfig
+from litestar.status_codes import HTTP_200_OK
 
 from . import settings
+
+__all__ = ["AccessLogFilter"]
 
 
 class AccessLogFilter(logging.Filter):

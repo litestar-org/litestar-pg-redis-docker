@@ -4,44 +4,27 @@ docker`.
 I wanted to get the pattern working and will evolve more meaningful
 tests in due course.
 """
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 from httpx import AsyncClient
-from sqlalchemy.ext.asyncio import AsyncSession
-from starlite import get
+from litestar import get
 
 from app.lib import sqlalchemy_plugin
 
 if TYPE_CHECKING:
-    from redis.asyncio import Redis as AsyncRedis
-    from sqlalchemy.ext.asyncio import AsyncEngine
-    from starlite import Starlite
+    from litestar import Litestar
+    from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 
-def test_cache_on_app(app: "Starlite", redis: "AsyncRedis") -> None:
-    """Test that the app's cache is patched.
-
-    Args:
-        redis: The test Redis client instance.
-    """
-    assert app.cache.backend._redis is redis  # type:ignore[attr-defined]  # pylint: disable=protected-access
-
-
-def test_engine_on_app(app: "Starlite", engine: "AsyncEngine") -> None:
-    """Test that the app's engine is patched.
-
-    Args:
-        engine: The test SQLAlchemy engine instance.
-    """
+def test_engine_on_app(app: Litestar, engine: AsyncEngine) -> None:
+    """Test that the app's engine is patched."""
     assert app.state[sqlalchemy_plugin.config.engine_app_state_key] is engine
 
 
-async def test_db_session_dependency(app: "Starlite", engine: "AsyncEngine") -> None:
-    """Test that handlers receive session attached to patched engine.
-
-    Args:
-        engine: The patched SQLAlchemy engine instance.
-    """
+async def test_db_session_dependency(app: Litestar, engine: AsyncEngine) -> None:
+    """Test that handlers receive session attached to patched engine."""
 
     @get("/db-session-test", opt={"exclude_from_auth": True})
     async def db_session_dependency_patched(db_session: AsyncSession) -> dict[str, str]:

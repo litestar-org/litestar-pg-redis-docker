@@ -1,7 +1,16 @@
-from starlite import Router
+from litestar import Router
 
-from . import authors
+from app.domain.authors import Author
+from app.domain.countries import Country
 
-__all__ = ["router"]
+from . import authors, countries
 
-router = Router(path="/v1", route_handlers=[authors.router])
+__all__ = ["create_router"]
+
+
+def create_router() -> Router:
+    return Router(
+        path="/v1",
+        route_handlers=[authors.AuthorController, countries.CountryController],
+        signature_namespace={"Author": Author, "Country": Country},
+    )

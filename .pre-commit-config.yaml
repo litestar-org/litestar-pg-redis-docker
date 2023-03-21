@@ -12,24 +12,20 @@ repos:
       - id: end-of-file-fixer
       - id: mixed-line-ending
       - id: trailing-whitespace
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.4.0
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.0.270"
     hooks:
-      - id: pyupgrade
-        args: ["--py311-plus"]
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+      - id: ruff
+        args: ["--fix"]
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.4
     hooks:
-      - id: isort
+      - id: codespell
   - repo: https://github.com/psf/black
     rev: 23.3.0
     hooks:
       - id: black
         args: [--config=./pyproject.toml]
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.4
-    hooks:
-      - id: codespell
   - repo: https://github.com/asottile/blacken-docs
     rev: 1.13.0
     hooks:
@@ -45,64 +41,11 @@ repos:
       - id: bandit
         exclude: "test_*"
         args: ["-iii", "-ll", "-s=B308,B703"]
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.34.0
+  - repo: https://github.com/python-formate/flake8-dunder-all
+    rev: v0.3.0
     hooks:
-      - id: markdownlint
-        args:
-          [--disable=MD013, --disable=MD033, --disable=MD050, --disable=MD052]
-  - repo: https://github.com/PyCQA/docformatter
-    rev: v1.7.1
-    hooks:
-      - id: docformatter
-        args: [--in-place]
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        additional_dependencies:
-          [
-            "flake8-bugbear",
-            "flake8-comprehensions",
-            "flake8-mutable",
-            "flake8-print",
-            "flake8-simplify",
-            "flake8-type-checking",
-            "flake8-implicit-str-concat",
-            "flake8-noqa",
-            "flake8-return",
-            "flake8-secure-coding-standard",
-            "flake8-encodings",
-            "flake8-use-fstring",
-            "flake8-use-pathlib",
-          ]
-  - repo: https://github.com/johnfraney/flake8-markdown
-    rev: v0.4.0
-    hooks:
-      - id: flake8-markdown
-  - repo: https://github.com/pycqa/pylint
-    rev: "v3.0.0a6"
-    hooks:
-      - id: pylint
-        exclude: "alembic"
-        args: ["--unsafe-load-any-extension=y"]
-        additional_dependencies:
-          [
-            aiosmtplib,
-            alembic,
-            asyncpg,
-            asyncpg-stubs,
-            httpx,
-            pytest,
-            pytest-docker,
-            saq,
-            sentry-sdk,
-            sqlalchemy==2.0.0b4,
-            starlite,
-            starlite-jwt,
-            types-redis,
-            uvicorn,
-          ]
+      - id: ensure-dunder-all
+        exclude: "test*|examples*"
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v1.3.0"
     hooks:
@@ -115,13 +58,12 @@ repos:
             asyncpg,
             asyncpg-stubs,
             httpx,
+            litestar==2.0.0a7,
             pytest,
             pytest-docker,
             saq,
             sentry-sdk,
-            sqlalchemy==2.0.0b4,
-            starlite,
-            starlite-jwt,
+            sqlalchemy,
             types-redis,
             uvicorn,
           ]
@@ -137,13 +79,12 @@ repos:
             asyncpg,
             asyncpg-stubs,
             httpx,
+            litestar==2.0.0a7,
             pytest,
             pytest-docker,
             saq,
             sentry-sdk,
-            sqlalchemy==2.0.0b4,
-            starlite,
-            starlite-jwt,
+            sqlalchemy,
             types-redis,
             uvicorn,
           ]

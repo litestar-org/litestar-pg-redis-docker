@@ -1,21 +1,27 @@
-from typing import TYPE_CHECKING, Any, cast
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, cast
 from uuid import UUID
 
 import msgspec
-from sqlalchemy import event
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.pool import NullPool
-from starlite.plugins.sql_alchemy import SQLAlchemyConfig, SQLAlchemyPlugin
-from starlite.plugins.sql_alchemy.config import (
+from litestar.contrib.sqlalchemy.plugins.init import SQLAlchemyInitPlugin
+from litestar.contrib.sqlalchemy.plugins.init.config import SQLAlchemyAsyncConfig
+from litestar.contrib.sqlalchemy.plugins.init.config.common import (
     SESSION_SCOPE_KEY,
     SESSION_TERMINUS_ASGI_EVENTS,
 )
+from litestar.utils import delete_litestar_scope_state, get_litestar_scope_state
+from sqlalchemy import event
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.pool import NullPool
 
 from . import settings
 
 if TYPE_CHECKING:
-    from starlite.datastructures.state import State
-    from starlite.types import Message, Scope
+    from typing import Any
+
+    from litestar.datastructures.state import State
+    from litestar.types.asgi_types import Message, Scope
 
 __all__ = [
     "async_session_factory",
@@ -41,10 +47,10 @@ engine = create_async_engine(
     pool_timeout=settings.db.POOL_TIMEOUT,
     poolclass=NullPool if settings.db.POOL_DISABLE else None,
 )
-"""Configure via [DatabaseSettings][starlite_saqpg.settings.DatabaseSettings].
+"""Configure via DatabaseSettings.
 
 Overrides default JSON
-serializer to use `orjson`. See [`create_async_engine()`][sqlalchemy.ext.asyncio.create_async_engine]
+serializer to use `msgspec`. See [`create_async_engine()`][sqlalchemy.ext.asyncio.create_async_engine]
 for detailed instructions.
 """
 async_session_factory = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
@@ -91,7 +97,7 @@ def _sqla_on_connect(dbapi_connection: Any, _: Any) -> Any:
     )
 
 
-async def before_send_handler(message: "Message", _: "State", scope: "Scope") -> None:
+async def before_send_handler(message: Message, _: State, scope: Scope) -> None:
     """Custom `before_send_handler` for SQLAlchemy plugin that inspects the
     status of response and commits, or rolls back the database.
 
@@ -100,7 +106,7 @@ async def before_send_handler(message: "Message", _: "State", scope: "Scope") ->
         _:
         scope: ASGI scope
     """
-    session = cast("AsyncSession | None", scope.get(SESSION_SCOPE_KEY))
+    session = cast("AsyncSession | None", get_litestar_scope_state(scope, SESSION_SCOPE_KEY))
     try:
         if session is not None and message["type"] == "http.response.start":
             if 200 <= message["status"] < 300:
@@ -110,14 +116,14 @@ async def before_send_handler(message: "Message", _: "State", scope: "Scope") ->
     finally:
         if session is not None and message["type"] in SESSION_TERMINUS_ASGI_EVENTS:
             await session.close()
-            del scope[SESSION_SCOPE_KEY]  # type:ignore[misc]
+            delete_litestar_scope_state(scope, SESSION_SCOPE_KEY)
 
 
-config = SQLAlchemyConfig(
-    before_send_handler=before_send_handler,
-    dependency_key=settings.api.DB_SESSION_DEPENDENCY_KEY,
+config = SQLAlchemyAsyncConfig(
+    session_dependency_key=settings.api.DB_SESSION_DEPENDENCY_KEY,
     engine_instance=engine,
-    session_maker_instance=async_session_factory,
+    session_maker=async_session_factory,
+    before_send_handler=before_send_handler,
 )
 
-plugin = SQLAlchemyPlugin(config=config)
+plugin = SQLAlchemyInitPlugin(config=config)

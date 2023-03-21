@@ -1,44 +1,42 @@
-from datetime import date  # noqa: TC003
-from email.message import EmailMessage
+from datetime import date
+from typing import Annotated
+from uuid import UUID
 
-from sqlalchemy.orm import Mapped
+from litestar.contrib.sqlalchemy.base import UUIDAuditBase
+from litestar.contrib.sqlalchemy.dto import SQLAlchemyDTO
+from litestar.contrib.sqlalchemy.repository import SQLAlchemyAsyncRepository
+from litestar.dto.factory import DTOConfig, Mark, dto_field
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.lib import dto, email, orm, service, settings
-from app.lib.repository.sqlalchemy import SQLAlchemyRepository
-from app.lib.worker import queue
+from app.lib import service
+
+from . import countries
+
+__all__ = [
+    "Author",
+    "ReadDTO",
+    "Repository",
+    "Service",
+    "WriteDTO",
+]
 
 
-class Author(orm.Base):
+class Author(UUIDAuditBase):
     name: Mapped[str]
     dob: Mapped[date]
+    country_id: Mapped[UUID | None] = mapped_column(ForeignKey("country.id"))
+    nationality: Mapped[countries.Country | None] = relationship(lazy="joined", info=dto_field(Mark.READ_ONLY))
 
 
-class Repository(SQLAlchemyRepository[Author]):
+class Repository(SQLAlchemyAsyncRepository[Author]):
     model_type = Author
 
 
 class Service(service.Service[Author]):
-    async def create(self, data: Author) -> Author:
-        created = await super().create(data)
-        await queue.enqueue("author_created", data=ReadDTO.from_orm(created).dict())
-        return data
-
-    @staticmethod
-    async def send_author_created_email(message_content: str) -> None:
-        """Sends an email to alert that a new `Author` has been created.
-
-        Args:
-            message_content: The body of the email.
-        """
-        message = EmailMessage()
-        message["From"] = settings.email.SENDER
-        message["To"] = settings.email.RECIPIENT
-        message["Subject"] = settings.email.NEW_AUTHOR_SUBJECT
-        message.set_content(message_content)
-        async with email.client:
-            await email.client.send_message(message)
+    repository_type = Repository
 
 
-CreateDTO = dto.factory("AuthorCreateDTO", Author, purpose=dto.Purpose.write, exclude={"id"})
-ReadDTO = dto.factory("AuthorReadDTO", Author, purpose=dto.Purpose.read)
-WriteDTO = dto.factory("AuthorWriteDTO", Author, purpose=dto.Purpose.write)
+write_config = DTOConfig(exclude={"created", "updated", "nationality"})
+WriteDTO = SQLAlchemyDTO[Annotated[Author, write_config]]
+ReadDTO = SQLAlchemyDTO[Author]

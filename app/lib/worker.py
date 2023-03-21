@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 
 import msgspec
 import saq
-from starlite.utils.serialization import default_serializer
+from litestar.serialization import default_serializer
 
 from . import settings, type_encoders
 from .redis import redis
@@ -72,9 +72,7 @@ queue = Queue(redis)
 
 
 def create_worker_instance(functions: Collection[WorkerFunction]) -> Worker:
-    """
-
-    Args:
+    """Args:
         functions: Functions to be called via the async workers.
 
     Returns:
