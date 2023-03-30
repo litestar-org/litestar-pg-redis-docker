@@ -8,7 +8,8 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 # ensure domain in scope
 from app import domain  # noqa: F401 # pylint: disable=unused-import
-from app.lib import orm, settings
+from app.lib import settings
+from starlite.contrib.sqlalchemy.base import AuditBase
 
 __all__ = ["do_run_migrations", "run_migrations_offline", "run_migrations_online"]
 
@@ -23,7 +24,7 @@ fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-target_metadata = orm.Base.metadata
+target_metadata = AuditBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -42,10 +43,7 @@ def run_migrations_offline() -> None:
     script output.
     """
     context.configure(
-        url=settings.db.URL,
-        target_metadata=target_metadata,
-        literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
+        url=settings.db.URL, target_metadata=target_metadata, literal_binds=True, dialect_opts={"paramstyle": "named"},
     )
 
     with context.begin_transaction():
@@ -67,11 +65,7 @@ async def run_migrations_online() -> None:
     """
     configuration = config.get_section(config.config_ini_section)
     configuration["sqlalchemy.url"] = settings.db.URL
-    connectable = async_engine_from_config(
-        configuration,
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    connectable = async_engine_from_config(configuration, prefix="sqlalchemy.", poolclass=pool.NullPool,)
 
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
