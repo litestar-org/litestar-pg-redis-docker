@@ -124,7 +124,7 @@ test = ["flake8 (>=5.0.4,<5.1.0)", "uvloop (>=0.15.3)"]
 name = "attrs"
 version = "22.2.0"
 description = "Classes Without Boilerplate"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1067,7 +1067,7 @@ files = [
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1428,7 +1428,7 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.2.2)", "pytest (>=7.2.1)", "pytes
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1652,7 +1652,7 @@ files = [
 name = "pytest"
 version = "7.2.2"
 description = "pytest: simple powerful testing with Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1743,6 +1743,21 @@ files = [
 [package.dependencies]
 pytest = ">=5.0.0"
 python-dotenv = ">=0.9.1"
+
+[[package]]
+name = "pytest-lazy-fixture"
+version = "0.6.3"
+description = "It helps to use fixtures in pytest.mark.parametrize"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pytest-lazy-fixture-0.6.3.tar.gz", hash = "sha256:0e7d0c7f74ba33e6e80905e9bfd81f9d15ef9a790de97993e34213deb5ad10ac"},
+    {file = "pytest_lazy_fixture-0.6.3-py3-none-any.whl", hash = "sha256:e0b379f38299ff27a653f03eaa69b08a6fd4484e46fd1c9907d984b9f9daeda6"},
+]
+
+[package.dependencies]
+pytest = ">=3.2.5"
 
 [[package]]
 name = "python-dateutil"
@@ -2137,14 +2152,14 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "starlite"
-version = "1.51.7"
+version = "1.51.8"
 description = "Performant, light and flexible ASGI API Framework"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "starlite-1.51.7-py3-none-any.whl", hash = "sha256:f3b4d5b6a91a1045205e71a9ef2c289235b0457eacb551c34a186397959b82aa"},
-    {file = "starlite-1.51.7.tar.gz", hash = "sha256:7e4b25f002d8edbf928f1588d1e7eb85375c6ed0834c190072af662403110af6"},
+    {file = "starlite-1.51.8-py3-none-any.whl", hash = "sha256:db0f700573990443ddbedf18ec682d6e1666ce7f0cf924f7f984216a8ba7a2d7"},
+    {file = "starlite-1.51.8.tar.gz", hash = "sha256:8b682924f9584ae215bb46dc803397bb0f5632ab96dac6aa66cab9caf4789f18"},
 ]
 
 [package.dependencies]
@@ -2160,6 +2175,7 @@ multidict = ">=6.0.2"
 pydantic = "*"
 pydantic-factories = "*"
 pydantic-openapi-schema = ">=1.5.0"
+pytest-lazy-fixture = ">=0.6.3,<0.7.0"
 python-jose = {version = "*", optional = true, markers = "extra == \"jwt\" or extra == \"full\""}
 pyyaml = "*"
 redis = {version = "*", extras = ["hiredis"], optional = true, markers = "extra == \"redis\" or extra == \"full\""}
@@ -2441,4 +2457,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "~=3.11.0"
-content-hash = "04aea18e18f853f8ffd6b2309eddc9ef628af2325d3a9fe34868be78aaf1c6a9"
+content-hash = "0c454f707134899e32e6e92e6405a87c5bea1812d7c3cc5475f8b335c0bb27d0"
