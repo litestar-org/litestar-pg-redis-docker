@@ -5,10 +5,11 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
+from starlite.contrib.sqlalchemy.base import AuditBase
 
 # ensure domain in scope
 from app import domain  # noqa: F401 # pylint: disable=unused-import
-from app.lib import orm, settings
+from app.lib import settings
 
 __all__ = ["do_run_migrations", "run_migrations_offline", "run_migrations_online"]
 
@@ -23,7 +24,7 @@ fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-target_metadata = orm.Base.metadata
+target_metadata = AuditBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

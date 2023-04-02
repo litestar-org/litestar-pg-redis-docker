@@ -33,7 +33,7 @@ services:
       - mailhog
       - redis
     ports:
-      - "8000:8000"
+      - "8010:8000"
     env_file:
       - .env
     volumes:
