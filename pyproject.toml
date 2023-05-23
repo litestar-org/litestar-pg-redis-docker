@@ -13,7 +13,7 @@ aiosmtplib = "*"
 alembic = "*"
 asyncpg = "*"
 httpx = "*"
-litestar = { version = "==2.0.0a7" , extras = ["redis", "cli"] }
+litestar = { version = "==2.0.0a7",  extras = ["redis", "cli"] }
 pydantic = "*"
 python-dotenv = "*"
 redis = "*"
@@ -23,13 +23,13 @@ sqlalchemy = ">=2.0.0"
 uvloop = "*"
 
 [tool.poetry.group.dev.dependencies]
-#greenlet = "^2.0.2"
-
 # Testing
 pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
 pytest-dotenv = "*"
+# Needed for some reason
+greenlet = "^2.0.2"
 
 # Linting
 pre-commit = "*"
