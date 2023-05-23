@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import asyncpg
 import pytest
 from httpx import AsyncClient
-from litestar.contrib.sqlalchemy.base import Base
+from litestar.contrib.sqlalchemy.base import BigIntBase
 from redis.asyncio import Redis
 from redis.exceptions import ConnectionError as RedisConnectionError
 from sqlalchemy.engine import URL
@@ -98,7 +98,7 @@ async def db_responsive(host: str) -> bool:
         return False
 
     try:
-        return (await conn.fetchrow("SELECT 1"))[0] == 1  # type:ignore[index,no-any-return]
+        return (await conn.fetchrow("SELECT 1"))[0] == 1  # type:ignore[no-any-return]
     finally:
         await conn.close()
 
@@ -155,7 +155,7 @@ async def _seed_db(
     """Populate test database."""
     # get models into metadata
 
-    metadata = Base.registry.metadata
+    metadata = BigIntBase.registry.metadata
     async with engine.begin() as conn:
         await conn.run_sync(metadata.create_all)
 

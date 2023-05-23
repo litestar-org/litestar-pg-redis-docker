@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from litestar.contrib.sqlalchemy.base import AuditBase
+from litestar.contrib.sqlalchemy.base import BigIntAuditBase
 from litestar.contrib.sqlalchemy.dto import SQLAlchemyDTO
 from litestar.contrib.sqlalchemy.repository import SQLAlchemyAsyncRepository
 from litestar.dto.factory.config import DTOConfig
@@ -17,7 +17,7 @@ __all__ = [
 ]
 
 
-class Country(AuditBase):
+class Country(BigIntAuditBase):
     name: Mapped[str]
     population: Mapped[int]
 

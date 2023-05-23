@@ -8,35 +8,38 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "~=3.11.0"
+
 aiosmtplib = "*"
 alembic = "*"
 asyncpg = "*"
 httpx = "*"
+litestar = { version = "==2.0.0a7" , extras = ["redis", "cli"] }
 pydantic = "*"
 python-dotenv = "*"
 redis = "*"
 saq = "*"
 sentry-sdk = "*"
 sqlalchemy = ">=2.0.0"
-# litestar = { path = "../litestar", extras = ["redis", "jwt", "cli"], develop = true }
-litestar = { version = "==2.0.0a5" , extras = ["redis", "cli"] }
 uvloop = "*"
 
-[tool.poetry.group.testing]
-optional = true
+[tool.poetry.group.dev.dependencies]
+#greenlet = "^2.0.2"
 
-[tool.poetry.group.testing.dependencies]
+# Testing
 pytest = "*"
+pytest-cov = "*"
 pytest-asyncio = "*"
 pytest-dotenv = "*"
-# litestar = { path = "../litestar", extras = ["testing"], develop = true}
-litestar = { version = "==2.0.0a5" , extras = ["redis", "cli"] }
 
-[tool.poetry.group.coverage]
-optional = true
+# Linting
+pre-commit = "*"
+ruff = "*"
+mypy = "*"
+pyright = "*"
 
-[tool.poetry.group.coverage.dependencies]
-pytest-cov = "*"
+# Type stubs
+types-redis = "*"
+
 
 [tool.poetry.group.integration]
 optional = true
@@ -44,12 +47,6 @@ optional = true
 [tool.poetry.group.integration.dependencies]
 pytest-docker = "*"
 docker-compose = "*"
-
-[tool.poetry.group.linting]
-optional = true
-
-[tool.poetry.group.linting.dependencies]
-pre-commit = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

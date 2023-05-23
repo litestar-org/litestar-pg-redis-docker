@@ -2,7 +2,7 @@ from datetime import date
 from typing import Annotated
 from uuid import UUID
 
-from litestar.contrib.sqlalchemy.base import AuditBase
+from litestar.contrib.sqlalchemy.base import BigIntAuditBase
 from litestar.contrib.sqlalchemy.dto import SQLAlchemyDTO
 from litestar.contrib.sqlalchemy.repository import SQLAlchemyAsyncRepository
 from litestar.dto.factory import DTOConfig, Mark, dto_field
@@ -22,7 +22,7 @@ __all__ = [
 ]
 
 
-class Author(AuditBase):
+class Author(BigIntAuditBase):
     name: Mapped[str]
     dob: Mapped[date]
     country_id: Mapped[UUID | None] = mapped_column(ForeignKey("country.id"))

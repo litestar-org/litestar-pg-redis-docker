@@ -2,7 +2,7 @@ import asyncio
 from logging.config import fileConfig
 
 from alembic import context
-from litestar.contrib.sqlalchemy.base import AuditBase
+from litestar.contrib.sqlalchemy.base import BigIntAuditBase
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
@@ -24,7 +24,7 @@ fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-target_metadata = AuditBase.metadata
+target_metadata = BigIntAuditBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
