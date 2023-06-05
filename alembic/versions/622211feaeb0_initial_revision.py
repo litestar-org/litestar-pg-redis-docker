@@ -1,4 +1,4 @@
-"""initial revision.
+"""Initial revision.
 
 Revision ID: 622211feaeb0
 Revises:

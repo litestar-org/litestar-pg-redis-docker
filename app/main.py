@@ -3,11 +3,13 @@ other sub-packages of the application, and never be imported from. I.e., never
 do `from app.main import whatever` from within any other module of any other
 sub-package of the application.
 
-The main point of this restriction is to support unit-testing. We need to ensure that we can load
-any other component of the application for mocking things out in the unittests, without this module
-being loaded before that mocking has been completed.
+The main point of this restriction is to support unit-testing. We need
+to ensure that we can load any other component of the application for
+mocking things out in the unittests, without this module being loaded
+before that mocking has been completed.
 
-When writing tests, always use the `app` fixture, never import the app directly from this module.
+When writing tests, always use the `app` fixture, never import the app
+directly from this module.
 """
 from __future__ import annotations
 

@@ -72,8 +72,8 @@ def provide_updated_filter(
     before: DTorNone = Parameter(query="updated-before", default=None, required=False),
     after: DTorNone = Parameter(query="updated-after", default=None, required=False),
 ) -> BeforeAfter:
-    """
-    Return type consumed by `Repository.filter_on_datetime_field()`.
+    """Return type consumed by `Repository.filter_on_datetime_field()`.
+
     Parameters
     ----------
     before : datetime | None
@@ -93,8 +93,8 @@ def provide_limit_offset_pagination(
         required=False,
     ),
 ) -> LimitOffset:
-    """
-    Return type consumed by `Repository.apply_limit_offset_pagination()`.
+    """Return type consumed by `Repository.apply_limit_offset_pagination()`.
+
     Parameters
     ----------
     page : int
@@ -144,12 +144,11 @@ def provide_filter_dependencies(
 
 
 def create_collection_dependencies() -> dict[str, Provide]:
-    """
-    Creates a dictionary of provides for pagination endpoints.
+    """Creates a dictionary of provides for pagination endpoints.
+
     Returns
     -------
     dict[str, Provide]
-
     """
     return {
         LIMIT_OFFSET_DEPENDENCY_KEY: Provide(provide_limit_offset_pagination),
