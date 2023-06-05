@@ -147,7 +147,7 @@ class DatabaseSettings(BaseEnvSettings):
     POOL_MAX_OVERFLOW: int = 10
     POOL_SIZE: int = 5
     POOL_TIMEOUT: int = 30
-    URL: PostgresDsn = PostgresDsn(
+    URL: PostgresDsn = PostgresDsn(  # pyright:ignore
         "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres", scheme="postgresql+asyncpg"
     )
 
@@ -168,7 +168,7 @@ class RedisSettings(BaseEnvSettings):
         env_prefix = "REDIS_"
         case_sensitive = True
 
-    URL: AnyUrl = AnyUrl("redis://localhost:6379/0", scheme="redis")
+    URL: AnyUrl = AnyUrl("redis://localhost:6379/0", scheme="redis")  # pyright:ignore
 
 
 # noinspection PyUnresolvedReferences
