@@ -20,7 +20,9 @@ redis = "*"
 saq = "*"
 sentry-sdk = "*"
 sqlalchemy = ">=2.0.0"
+uvicorn = { extras = ["standard"], version = "*" }
 uvloop = "*"
+greenlet = "^2.0.2"
 
 [tool.poetry.group.dev.dependencies]
 # Testing
@@ -28,8 +30,6 @@ pytest = "*"
 pytest-cov = "*"
 pytest-asyncio = "*"
 pytest-dotenv = "*"
-# Needed for some reason
-greenlet = "^2.0.2"
 
 # Linting
 pre-commit = "*"
