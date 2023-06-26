@@ -1854,13 +1854,13 @@ pyasn1 = ">=0.1.3"
 
 [[package]]
 name = "saq"
-version = "0.9.4"
+version = "0.10.0"
 description = "Distributed Python job queue with asyncio and redis"
 optional = false
 python-versions = "*"
 files = [
-    {file = "saq-0.9.4-py3-none-any.whl", hash = "sha256:48c6c636faad266b5764c38893284ffadf62285d112930112cc38732a55cb79b"},
-    {file = "saq-0.9.4.tar.gz", hash = "sha256:b542fc2464b54c62f1de2ad21b382dea07a02961e39dda15a2ebfe599f05a61b"},
+    {file = "saq-0.10.0-py3-none-any.whl", hash = "sha256:29a66abf23b3bbf9172d03ee05579bd17ffc66788d7e9f70f86800ec62ead436"},
+    {file = "saq-0.10.0.tar.gz", hash = "sha256:da3d3eb1ab3e900d1465234dd535ea95c741955b5ed840ee4cb803a4c7e81087"},
 ]
 
 [package.dependencies]
