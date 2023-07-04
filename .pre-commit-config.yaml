@@ -13,12 +13,12 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.0.270"
+    rev: "v0.0.276"
     hooks:
       - id: ruff
         args: ["--fix"]
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.4
+    rev: v2.2.5
     hooks:
       - id: codespell
   - repo: https://github.com/psf/black
@@ -27,7 +27,7 @@ repos:
       - id: black
         args: [--config=./pyproject.toml]
   - repo: https://github.com/asottile/blacken-docs
-    rev: 1.13.0
+    rev: 1.14.0
     hooks:
       - id: blacken-docs
   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -35,30 +35,24 @@ repos:
     hooks:
       - id: prettier
         exclude: docs
-  - repo: https://github.com/pycqa/bandit
-    rev: 1.7.5
-    hooks:
-      - id: bandit
-        exclude: "test_*"
-        args: ["-iii", "-ll", "-s=B308,B703"]
   - repo: https://github.com/python-formate/flake8-dunder-all
     rev: v0.3.0
     hooks:
       - id: ensure-dunder-all
         exclude: "test*|examples*"
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.3.0"
+    rev: "v1.4.1"
     hooks:
       - id: mypy
         exclude: "alembic"
         additional_dependencies:
           [
+            "git+https://github.com/litestar-org/litestar",
             aiosmtplib,
             alembic,
             asyncpg,
             asyncpg-stubs,
             httpx,
-            litestar==2.0.0a7,
             pytest,
             pytest-docker,
             saq,
@@ -68,18 +62,18 @@ repos:
             uvicorn,
           ]
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.311
+    rev: v1.1.316
     hooks:
       - id: pyright
         exclude: "alembic"
         additional_dependencies:
           [
+            "git+https://github.com/litestar-org/litestar",
             aiosmtplib,
             alembic,
             asyncpg,
             asyncpg-stubs,
             httpx,
-            litestar==2.0.0a7,
             pytest,
             pytest-docker,
             saq,

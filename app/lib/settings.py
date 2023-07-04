@@ -54,7 +54,7 @@ class AppSettings(BaseEnvSettings):
     DEBUG: bool = False
     ENVIRONMENT: str = "local"
     LOG_LEVEL: str = "INFO"
-    NAME: str = "starlite-pg-redis-docker"
+    NAME: str = "litestar-pg-redis-docker"
 
     @property
     def slug(self) -> str:
@@ -117,7 +117,7 @@ class OpenAPISettings(BaseEnvSettings):
         env_prefix = "OPENAPI_"
         case_sensitive = True
 
-    TITLE: str | None = "My Starlite App"
+    TITLE: str | None = "My Litestar App"
     VERSION: str = "0.1.0"
     CONTACT_NAME: str = "My Name"
     CONTACT_EMAIL: str = "some_human@some_domain.com"
@@ -209,19 +209,12 @@ class EmailSettings(BaseEnvSettings):
         env_prefix = "EMAIL_"
         case_sensitive = True
 
-    HOST: str = "mailhog"
-    NEW_AUTHOR_SUBJECT: str = "New author created"
-    PORT: int = 1025
-    RECIPIENT: str = "admin@localhost"
-    SENDER: str = "admin@localhost"
-
 
 # `.parse_obj()` thing is a workaround for pyright and pydantic interplay, see:
 # https://github.com/pydantic/pydantic/issues/3753#issuecomment-1087417884
 api = APISettings.parse_obj({})
 app = AppSettings.parse_obj({})
 db = DatabaseSettings.parse_obj({})
-email = EmailSettings.parse_obj({})
 openapi = OpenAPISettings.parse_obj({})
 redis = RedisSettings.parse_obj({})
 sentry = SentrySettings.parse_obj({})

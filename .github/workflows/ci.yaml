@@ -56,7 +56,7 @@ jobs:
         with:
           name: coverage-xml
       - name: Fix coverage file for sonarcloud
-        run: sed -i "s/home\/runner\/work\/starlite-pg-redis-docker\/app/github\/workspace/g" coverage.xml
+        run: sed -i "s/home\/runner\/work\/litestar-pg-redis-docker\/app/github\/workspace/g" coverage.xml
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:

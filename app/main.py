@@ -16,7 +16,7 @@ from uuid import UUID
 
 import uvicorn
 from litestar import Litestar
-from litestar.contrib.repository.abc import FilterTypes
+from litestar.contrib.repository import FilterTypes
 from litestar.contrib.repository.exceptions import RepositoryError as RepositoryException
 from litestar.contrib.repository.filters import (
     BeforeAfter,
@@ -54,14 +54,15 @@ dependencies = create_collection_dependencies()
 
 def create_app(**kwargs: Any) -> Litestar:
     kwargs.setdefault("debug", settings.app.DEBUG)
+
     return Litestar(
         response_cache_config=cache.config,
         stores=StoreRegistry(default_factory=cache.redis_store_factory),
         compression_config=compression.config,
         dependencies=dependencies,
         exception_handlers={
-            RepositoryException: exceptions.repository_exception_to_http_response,
-            ServiceError: exceptions.service_exception_to_http_response,
+            RepositoryException: exceptions.repository_exception_to_http_response,  # type: ignore[dict-item]
+            ServiceError: exceptions.service_exception_to_http_response,  # type: ignore[dict-item]
         },
         logging_config=logging.config,
         openapi_config=openapi.config,
@@ -69,7 +70,6 @@ def create_app(**kwargs: Any) -> Litestar:
         on_shutdown=[redis.close],
         on_startup=[sentry.configure],
         plugins=[sqlalchemy_plugin.plugin],
-        preferred_validation_backend="pydantic",
         signature_namespace={
             "AsyncSession": AsyncSession,
             "FilterTypes": FilterTypes,

@@ -20,7 +20,6 @@ from . import settings
 if TYPE_CHECKING:
     from typing import Any
 
-    from litestar.datastructures.state import State
     from litestar.types.asgi_types import Message, Scope
 
 __all__ = [
@@ -72,7 +71,7 @@ def _sqla_on_connect(dbapi_connection: Any, _: Any) -> Any:
     following, which changes the behaviour of the dialect to expect a
     binary value from the serializer.
 
-    See Also
+    See Also:
     https://github.com/sqlalchemy/sqlalchemy/blob/14bfbadfdf9260a1c40f63b31641b27fe9de12a0/lib/sqlalchemy/dialects/postgresql/asyncpg.py#L934
     """
 
@@ -97,7 +96,7 @@ def _sqla_on_connect(dbapi_connection: Any, _: Any) -> Any:
     )
 
 
-async def before_send_handler(message: Message, _: State, scope: Scope) -> None:
+async def before_send_handler(message: Message, scope: Scope) -> None:
     """Custom `before_send_handler` for SQLAlchemy plugin that inspects the
     status of response and commits, or rolls back the database.
 

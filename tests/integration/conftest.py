@@ -193,7 +193,7 @@ def _patch_redis(app: Litestar, redis: Redis, monkeypatch: pytest.MonkeyPatch) -
 async def fx_client(app: Litestar) -> AsyncIterator[AsyncClient]:
     """Async client that calls requests on the app.
 
-    We need to use `httpx.AsyncClient` here, as `starlite.TestClient` creates its own event loop to
+    We need to use `httpx.AsyncClient` here, as `litestar.TestClient` creates its own event loop to
     run async calls to the underlying app in a sync context, resulting in errors like:
 
     ```text

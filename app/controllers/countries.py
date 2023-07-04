@@ -13,7 +13,7 @@ from app.domain.countries import ReadDTO, Repository, Service, WriteDTO
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from litestar.contrib.repository.abc import FilterTypes
+    from litestar.contrib.repository import FilterTypes
     from sqlalchemy.ext.asyncio import AsyncSession
 
     from app.domain.countries import Country

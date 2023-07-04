@@ -8,7 +8,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 # ensure domain in scope
-from app import domain  # noqa: F401 # pylint: disable=unused-import
+from app import domain  # noqa: F401
 from app.lib import settings
 
 __all__ = ["do_run_migrations", "run_migrations_offline", "run_migrations_online"]

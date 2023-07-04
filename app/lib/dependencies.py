@@ -1,8 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from litestar.contrib.repository.abc import FilterTypes
-from litestar.contrib.repository.filters import BeforeAfter, CollectionFilter, LimitOffset
+from litestar.contrib.repository.filters import BeforeAfter, CollectionFilter, FilterTypes, LimitOffset
 from litestar.di import Provide
 from litestar.params import Dependency, Parameter
 

@@ -8,7 +8,7 @@ __all__ = ["Service", "ServiceError"]
 
 
 if TYPE_CHECKING:
-    from litestar.contrib.repository.abc import AbstractAsyncRepository, FilterTypes
+    from litestar.contrib.repository import AbstractAsyncRepository, FilterTypes
 
 
 class ServiceError(Exception):

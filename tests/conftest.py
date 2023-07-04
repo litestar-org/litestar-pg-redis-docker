@@ -22,13 +22,13 @@ def app() -> "Litestar":
         The application instance.
     """
     # don't want main imported until everything patched.
-    from app.main import create_app  # pylint: disable=import-outside-toplevel
+    from app.main import create_app
 
     return create_app(debug=True)
 
 
 @pytest.fixture()
-def client(app: "Litestar") -> "abc.Iterator[TestClient]":  # pylint: disable=redefined-outer-name
+def client(app: "Litestar") -> "abc.Iterator[TestClient]":
     """Client instance attached to app.
 
     Args:

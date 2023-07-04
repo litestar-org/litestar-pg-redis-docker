@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # - runs Alembic migrations
-# - starts Starlite application
+# - starts Litestar application
 
 set -o errexit
 set -o pipefail
@@ -10,5 +10,5 @@ set -o nounset
 echo Running migrations...
 alembic upgrade head
 
-echo Starting Starlite App...
+echo Starting Litestar App...
 uvicorn app.main:app

@@ -1,55 +1,34 @@
 [tool.poetry]
-name = "starlite-pg-redis-docker"
-version = "0.1.0"
-description = "An example Starlite application with Redis, Postgres and Docker"
+name = "litestar-pg-redis-docker"
+version = "1.0.0"
+description = "An example Litestar application with Redis, Postgres and Docker"
 authors = []
-packages = [{include = "app" }]
+packages = [{ include = "app" }]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "~=3.11.0"
+python = ">=3.11.0,<4.0"
 aiosmtplib = "*"
 alembic = "*"
 asyncpg = "*"
 httpx = "*"
 pydantic = "*"
 python-dotenv = "*"
-redis = "*"
 saq = "*"
 sentry-sdk = "*"
 sqlalchemy = ">=2.0.0"
-# litestar = { path = "../litestar", extras = ["redis", "jwt", "cli"], develop = true }
-litestar = { version = "==2.0.0a7" , extras = ["redis", "cli"] }
+litestar = { extras = ["redis", "cli"], git = "https://github.com/litestar-org/litestar", branch = "main" }
 uvloop = "*"
 
-[tool.poetry.group.testing]
-optional = true
-
-[tool.poetry.group.testing.dependencies]
-pytest = "*"
-pytest-asyncio = "*"
-pytest-dotenv = "*"
-# litestar = { path = "../litestar", extras = ["testing"], develop = true}
-litestar = { version = "==2.0.0a7" , extras = ["redis", "cli"] }
-
-[tool.poetry.group.coverage]
-optional = true
-
-[tool.poetry.group.coverage.dependencies]
-pytest-cov = "*"
-
-[tool.poetry.group.integration]
-optional = true
-
-[tool.poetry.group.integration.dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest-docker = "*"
 docker-compose = "*"
-
-[tool.poetry.group.linting]
-optional = true
-
-[tool.poetry.group.linting.dependencies]
+pytest-cov = "*"
+pytest = "*"
+pytest-asyncio = "*"
 pre-commit = "*"
+pytest-dotenv = "*"
+greenlet = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -130,10 +109,11 @@ ignore = [
     "D205", # pydocstyle - 1 blank line required between summary line and description
     "D415", # pydocstyle - first line should end with a period, question mark, or exclamation point
     "A003", # flake8-builtins - class attribute {name} is shadowing a python builtin
-    "B010" # flake8-bugbear - do not call setattr with a constant attribute value
+    "B010", # flake8-bugbear - do not call setattr with a constant attribute value
+    "RUF012", # Ruff-specific rule
 ]
-line-length = 100
-src = ["src", "tests"]
+line-length = 120
+src = ["app", "tests"]
 target-version = "py311"
 
 [tool.ruff.pydocstyle]
