@@ -73,7 +73,7 @@ def _sqla_on_connect(dbapi_connection: Any, _: Any) -> Any:
     https://github.com/sqlalchemy/sqlalchemy/blob/14bfbadfdf9260a1c40f63b31641b27fe9de12a0/lib/sqlalchemy/dialects/postgresql/asyncpg.py#L934
     """
 
-    # Create Decoder once and reuse it for all encoding calls, 
+    # Create Decoder once and reuse it for all encoding calls,
     # to avoid paying setup cost for every call. More info:
     # https://jcristharif.com/msgspec/perf-tips.html#reuse-encoders-decoders
     _decoder = msgspec.json.Decoder()
