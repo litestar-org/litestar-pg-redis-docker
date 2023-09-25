@@ -7,9 +7,6 @@ The main point of this restriction is to support unit-testing. We need
 to ensure that we can load any other component of the application for
 mocking things out in the unittests, without this module being loaded
 before that mocking has been completed.
-
-When writing tests, always use the `app` fixture, never import the app
-directly from this module.
 """
 from typing import Any
 from uuid import UUID
@@ -86,9 +83,9 @@ def create_app(**kwargs: Any) -> Litestar:
     )
 
 
-app = create_app()
-
 if __name__ == "__main__":
+    app = create_app()
+    
     uvicorn.run(
         app,
         host=settings.server.HOST,
