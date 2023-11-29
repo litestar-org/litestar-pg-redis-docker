@@ -12,13 +12,15 @@ aiosmtplib = "*"
 alembic = "*"
 asyncpg = "*"
 httpx = "*"
-pydantic = "*"
+pydantic = "2.2.0"
 python-dotenv = "*"
 saq = "*"
 sentry-sdk = "*"
-sqlalchemy = ">=2.0.0"
-litestar = { extras = ["redis", "cli"], git = "https://github.com/litestar-org/litestar", branch = "main" }
+sqlalchemy = ">=2.0.20"
+litestar = { extras = ["redis", "cli" , "jwt" , "pydantic"], version = ">=2.0.1" }
 uvloop = "*"
+pydantic-settings = "^2.0.3"
+structlog = "^23.1.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest-docker = "*"
@@ -30,6 +32,7 @@ pre-commit = "*"
 pytest-dotenv = "*"
 greenlet = "*"
 sourcery = "*"
+pyyaml = "5.3.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

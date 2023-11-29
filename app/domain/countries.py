@@ -3,7 +3,7 @@ from typing import Annotated
 from litestar.contrib.sqlalchemy.base import UUIDAuditBase
 from litestar.contrib.sqlalchemy.dto import SQLAlchemyDTO
 from litestar.contrib.sqlalchemy.repository import SQLAlchemyAsyncRepository
-from litestar.dto.factory.config import DTOConfig
+from litestar.dto import DTOConfig
 from sqlalchemy.orm import Mapped
 
 from app.lib import service

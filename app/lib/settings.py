@@ -5,7 +5,8 @@ settings class, except `AppSettings`.
 """
 from typing import Literal
 
-from pydantic import AnyUrl, BaseSettings, PostgresDsn
+from pydantic import AnyUrl
+from pydantic_settings import BaseSettings,SettingsConfigDict
 
 __all__ = [
     "APISettings",
@@ -23,9 +24,8 @@ __all__ = [
 
 
 class BaseEnvSettings(BaseSettings):
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = SettingsConfigDict(env_file=".env")
+
 
 
 class AppSettings(BaseEnvSettings):
@@ -47,8 +47,8 @@ class AppSettings(BaseEnvSettings):
         App name.
     """
 
-    class Config:
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="APP_",case_sensitive=True)
+
 
     BUILD_NUMBER: str = "0"
     DEBUG: bool = False
@@ -81,10 +81,7 @@ class APISettings(BaseEnvSettings):
     DEFAULT_PAGINATION_LIMIT : int
         Max records received for collection routes.
     """
-
-    class Config:
-        env_prefix = "API_"
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="API_")
 
     CACHE_EXPIRATION: int = 60
     DB_SESSION_DEPENDENCY_KEY: str = "db_session"
@@ -113,9 +110,8 @@ class OpenAPISettings(BaseEnvSettings):
         OpenAPI document contact email.
     """
 
-    class Config:
-        env_prefix = "OPENAPI_"
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="OPENAPI_")
+
 
     TITLE: str | None = "My Litestar App"
     VERSION: str = "0.1.0"
@@ -137,9 +133,8 @@ class DatabaseSettings(BaseEnvSettings):
         URL for database connection.
     """
 
-    class Config:
-        env_prefix = "DB_"
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="DB_")
+
 
     ECHO: bool = False
     ECHO_POOL: bool | Literal["debug"] = False
@@ -147,9 +142,7 @@ class DatabaseSettings(BaseEnvSettings):
     POOL_MAX_OVERFLOW: int = 10
     POOL_SIZE: int = 5
     POOL_TIMEOUT: int = 30
-    URL: PostgresDsn = PostgresDsn(  # pyright:ignore
-        "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres", scheme="postgresql+asyncpg"
-    )
+    URL: str =  "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
 
 
 # noinspection PyUnresolvedReferences
@@ -164,11 +157,9 @@ class RedisSettings(BaseEnvSettings):
         A redis connection URL.
     """
 
-    class Config:
-        env_prefix = "REDIS_"
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="REDIS_")
 
-    URL: AnyUrl = AnyUrl("redis://localhost:6379/0", scheme="redis")  # pyright:ignore
+    URL: AnyUrl = AnyUrl("redis://localhost:6379/0")  # pyright:ignore
 
 
 # noinspection PyUnresolvedReferences
@@ -183,9 +174,8 @@ class SentrySettings(BaseEnvSettings):
         % of requests traced by sentry, `0.0` means none, `1.0` means all.
     """
 
-    class Config:
-        env_prefix = "SENTRY_"
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="SENTRY_")
+
 
     DSN: str = ""
     TRACES_SAMPLE_RATE: float = 0.0
@@ -193,11 +183,11 @@ class SentrySettings(BaseEnvSettings):
 
 # noinspection PyUnresolvedReferences
 class ServerSettings(BaseEnvSettings):
-    class Config:
-        env_prefix = "UVICORN_"
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="UVICORN_")
+
 
     HOST: str = "localhost"
+
     LOG_LEVEL: str = "info"
     PORT: int = 8000
     RELOAD: bool = True
@@ -205,17 +195,16 @@ class ServerSettings(BaseEnvSettings):
 
 
 class EmailSettings(BaseEnvSettings):
-    class Config:
-        env_prefix = "EMAIL_"
-        case_sensitive = True
+    model_config = SettingsConfigDict(env_prefix="EMAIL_")
 
 
-# `.parse_obj()` thing is a workaround for pyright and pydantic interplay, see:
+
+# `.model_validate()thing is a workaround for pyright and pydantic interplay, see:
 # https://github.com/pydantic/pydantic/issues/3753#issuecomment-1087417884
-api = APISettings.parse_obj({})
-app = AppSettings.parse_obj({})
-db = DatabaseSettings.parse_obj({})
-openapi = OpenAPISettings.parse_obj({})
-redis = RedisSettings.parse_obj({})
-sentry = SentrySettings.parse_obj({})
-server = ServerSettings.parse_obj({})
+api = APISettings.model_validate({})
+app = AppSettings.model_validate({})
+db = DatabaseSettings.model_validate({})
+openapi = OpenAPISettings.model_validate({})
+redis = RedisSettings.model_validate({})
+sentry = SentrySettings.model_validate({})
+server = ServerSettings.model_validate({})

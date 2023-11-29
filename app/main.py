@@ -20,9 +20,12 @@ from litestar.contrib.repository import FilterTypes
 from litestar.contrib.repository.exceptions import RepositoryError as RepositoryException
 from litestar.contrib.repository.filters import (
     BeforeAfter,
+    OnBeforeAfter,
     CollectionFilter,
     LimitOffset,
     OrderBy,
+    NotInCollectionFilter,
+    NotInSearchFilter,
     SearchFilter,
 )
 from litestar.stores.registry import StoreRegistry
@@ -40,16 +43,18 @@ from app.lib import (
     sqlalchemy_plugin,
     static_files,
 )
-from app.lib.dependencies import create_collection_dependencies
+from app.lib.dependencies import (
+    create_collection_dependencies,
+)
+from app.lib.exceptions import ServiceError
 from app.lib.health import health_check
 from app.lib.redis import redis
-from app.lib.service import ServiceError
 from app.lib.type_encoders import type_encoders_map
 
 __all__ = ["create_app"]
 
-
 dependencies = create_collection_dependencies()
+
 
 
 def create_app(**kwargs: Any) -> Litestar:
@@ -68,13 +73,15 @@ def create_app(**kwargs: Any) -> Litestar:
         openapi_config=openapi.config,
         route_handlers=[health_check, create_router()],
         on_shutdown=[redis.close],
-        on_startup=[sentry.configure],
         plugins=[sqlalchemy_plugin.plugin],
         signature_namespace={
             "AsyncSession": AsyncSession,
             "FilterTypes": FilterTypes,
             "BeforeAfter": BeforeAfter,
+            "OnBeforeAfter": OnBeforeAfter,
             "CollectionFilter": CollectionFilter,
+            "NotInCollectionFilter": NotInCollectionFilter,
+            "NotInSearchFilter": NotInSearchFilter,
             "LimitOffset": LimitOffset,
             "UUID": UUID,
             "OrderBy": OrderBy,
