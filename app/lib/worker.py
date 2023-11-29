@@ -33,7 +33,7 @@ decoder = msgspec.json.Decoder()
 class Queue(saq.Queue):
     """[SAQ Queue](https://github.com/tobymao/saq/blob/master/saq/queue.py)
 
-    Configures `orjson` for JSON serialization/deserialization if not otherwise configured.
+    Configures `msgspec` for JSON serialization/deserialization if not otherwise configured.
 
     Parameters
     ----------
